@@ -1,0 +1,140 @@
+.INWdth 
+{
+	WIDTH: 450px;
+}
+.INWdth2 
+{
+	WIDTH: 200px;
+}
+.picker TEXTAREA 
+{
+	WIDTH: 200px; 
+	HEIGHT: 50px;
+}
+.picker INPUT 
+{
+	WIDTH: 200px;
+}
+#txtCategoryName
+{
+	width:200px;
+}
+#txtOrderNo
+{
+	width:50px;
+	text-align:right;
+}
+.fldlbl 
+{
+	VERTICAL-ALIGN: top; 
+	WIDTH: 70px;
+	padding-top:5px;
+	padding-right:5px;
+}
+.fldlbl2
+{
+	VERTICAL-ALIGN: top; 
+	WIDTH: 40px;
+	padding-top:5px;
+	padding-right:5px;
+}
+.fldVal
+{
+	VERTICAL-ALIGN: top; 
+	padding-top:5px;
+}
+.fldDel
+{
+	padding:5px;
+}
+#btnUpdate, #btnCancel
+{
+	width: 70px;
+}
+
+#btnDelOK, #btnDelCancel, #btnShftOK, #btnShftCancel
+{
+	width:50px;margin-right:5px;
+}
+#btnShiftCat, #btnNewSubCat
+{
+	width: 180px;
+}
+.TDProps
+{
+	padding-left:6px;
+	vertical-align:top;
+}
+.TDCat
+{
+	vertical-align:top;
+}
+#divCategories
+{
+	padding-top:2px;
+	padding-left:6px;
+}
+.divPropertiesCntnt
+{
+	padding:6px;
+	padding-bottom:10px;
+}
+#divDelOpts
+{
+	width:300px;
+}
+#divShiftOpts
+{
+	width:400px;
+}
+.MsgDiv
+{
+	PADDING-TOP: 8px;
+	padding-right:5px;
+	text-align:right;
+}
+
+	/*msgbox stuff*/
+	/*.MsgBoxDiv
+	{
+		border:solid 1px lightslategray;
+		background-color:whitesmoke;
+	}*/
+	.MsgBoxTitle
+	{
+		font-weight:bold;
+		font-size:13px;
+		font-family:Arial, Verdana, Helvetica, sans-serif;
+		padding:2px;
+		padding-left:5px;
+		color: slategray;
+		background-color: none;
+		background-image: url(images/tabbg.jpg);
+		background-repeat: repeat-x;
+		background-position:  0% 100%;
+		border-bottom:solid 1px lightslategray;
+	}	
+	.MsgBoxCntnt
+	{
+		padding:5px;
+		border:solid 1px lightslategray;
+		background-color:whitesmoke;
+	}
+	.MsgBoxBtns
+	{
+		padding:3px;
+		text-align:center;
+	}
+	#btnClose
+	{
+		float:right;
+		margin-bottom:2px;
+		margin-left:3px;
+		color:navy;
+		width:50px;
+		height:18px;
+	}
+	.BarTitle
+	{
+		padding:5px;
+	}

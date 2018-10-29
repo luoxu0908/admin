@@ -1,0 +1,1 @@
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="404handler.aspx.vb" Inherits="IGWebAppSecure.handler404"%>

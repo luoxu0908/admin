@@ -1,0 +1,33 @@
+			
+			.tablist {
+				padding-top:4px;
+			}
+			
+			.tabs_TabActive {
+				background-color: #F7F7F7;
+				border-left:1px solid #999999;
+				border-top:1px solid #999999;
+				border-right:1px solid #999999;
+				
+				padding-top:5px;
+				padding-bottom:5px;
+			
+				/*margin-top:-4px;*/
+				/*height: 29px;*/
+			}
+			
+			.tabs_Tab,
+			.tabs_TabHover {
+				background-color: #E5E5E5;
+				border-left:1px solid #999999;
+				border-top:1px solid #999999;
+				border-right:1px solid #999999;
+				border-bottom:1px solid #999999;
+				
+				padding-top:5px;
+				padding-bottom:5px;
+				
+				/*margin-top:-1px;*/
+				/*height: 26px;*/
+			}
+			

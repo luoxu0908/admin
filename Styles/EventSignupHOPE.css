@@ -1,0 +1,210 @@
+﻿@import url('http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic');
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800');
+
+body 
+{
+	font-size: 12px;
+  font-family: 'Droid Serif', serif;
+  line-height: 1.3em;
+}
+
+.labelstyle
+{
+	color: #222222;
+	font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	font-style: normal;
+}
+
+.tableconfirm
+{
+	border: 1px solid #DDDDDD;
+  border-radius: 3px 3px 3px 3px;
+	margin: 10px 10px 10px;
+}
+
+.tableconfirm tbody tr td {
+	border: medium none;
+	color: #333333;
+	padding: 9px 10px;
+	vertical-align: top;
+}
+
+.TableStyle
+{
+	padding-top:5px;
+	padding-bottom:12px;
+	padding-left:8px;
+	padding-right:12px;
+	position:relative;
+	overflow:auto;
+	margin-bottom:5px;
+	top:-1px;
+	display:table;
+	z-index:102;
+	-moz-box-sizing: border-box; 
+	border-collapse: collapse;
+	width:900px;
+}
+
+.TableRowStyle
+{
+	border-bottom:solid 0px #C1CAD5; 
+	margin:0; 
+	padding:0;
+}
+
+.TableColStyle
+{
+	border-bottom: 0px solid #E6E6E6; 
+	margin:0; 
+	padding: 3px;
+}
+
+.HeaderStyle 
+{
+	font-size: 22px;
+	font-weight: bold; 
+	margin-top: 6px;
+}
+
+.HeaderStyleBlue
+{
+	color: #0350A6;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 6px;
+}
+
+.SubHeaderStyle
+{
+	color: #000000;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size:12px; 
+	margin-top: 2px; 
+	font-weight: bold;
+}
+
+.SubHeaderStyleBlue
+{
+	color: #2E64FE;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size:12px; 
+	margin-top: 2px; 
+	font-weight: bold;
+}
+
+.SubHeaderStyleRed
+{
+	color: #FE2E2E;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size:14px; 
+	margin-top: 2px; 
+}
+
+.SubHeaderStyleDarkOrange
+{
+	color: #DF7401;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size:14px; 
+	margin-top: 2px;
+}
+
+.OuterDiv
+{
+	width:100%
+}
+
+.InnerDiv
+{
+	width:900px;
+	margin: 0 auto;
+}
+
+input[type=text]  
+{
+	width: 350px; 
+  border: 1px solid #CCCCCC;
+  border-radius: 2px 2px 2px 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+  display: block;
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+  font-size: 14px;
+  height: 16px;
+  margin: 0 0 1px;
+  padding: 6px;
+  transition: all 0.15s linear 0s;
+}
+
+select
+{
+	color: #5F4C0B;
+	font-size:14px;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding: 5px;
+	line-height: 1;
+	border: 1px solid #CCCCCC;
+	border-radius: 2px 2px 2px 2px;
+  height: 30px;
+  background-color: #FFFFFF;
+  width: 365px;
+  margin: 0 0 1px;
+}
+
+input[type=password]  
+{
+	width: 250px; 
+	background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  border-radius: 2px 2px 2px 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+  color: rgba(0, 0, 0, 0.75);
+  display: block;
+  font-family: inherit;
+  font-size: 12px;
+  height: 14px;
+  margin: 0 0 1px;
+  padding: 6px;
+  transition: all 0.15s linear 0s;
+}
+
+.ButtonStyle
+{
+	color: #F5ECCE;
+	background-color: #F6944C;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-weight: bold;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset;
+	border-radius: 5px;
+	width: 150px;
+	height: 25px;
+}
+
+textarea {
+	width: 350px;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+  font-size: 14px;
+  margin: 0 0 1px;
+  padding: 6px;
+  transition: all 0.15s linear 0s;
+  height: 50px;
+  resize: none;
+}
+
+.textstyle 
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+  font-size: 14px;
+  margin: 0 0 1px;
+  padding: 4px;
+}
+
+.notestyle
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+  font-size: 12px;
+  color:Red;
+  margin: 0 0 1px;
+  padding: 4px;
+}

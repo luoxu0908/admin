@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]><html class="lt-ie9 lt-ie8 lt-ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 7]><html class="lt-ie9 lt-ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml"><!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title></title>
+	<link rel="stylesheet" href="../styles/normalize.css" />
+	<link rel="stylesheet" href="../styles/foundation.min.css" />
+	<link rel="stylesheet" href="../styles/ie8-grid-foundation-4.css" />
+	<link rel="stylesheet" href="../styles/jquery-ui-1.8.18.css" media="all" />
+	<link rel="stylesheet" href="../styles/jquery.jgrowl-1.2.12.min.css" />
+	<link rel="stylesheet" href="../styles/main_new.css">
+	<style>
+		.row .column, .row .columns { padding-left: 0.75em; padding-right: 0.75em; }
+	</style>
+	<noscript>Javascript is disabled<meta http-equiv="REFRESH" content="0; url=../EnableJavascript.htm"> </noscript>
+	<script src="../Scripts/vendor/custom.modernizr.js"></script>
+	<script src="../Scripts/jquery-1.9.1.min.js"></script>
+	<script src="../Scripts/foundation.min.js"></script>
+	<script src="../Scripts/jquery-ui-1.9.2.min.js"></script>
+	<script src="../Scripts/jquery.jgrowl-1.2.12.min.js"></script>
+	<script src="../Scripts/moment-2.0.0.min.js"></script>
+	<script src="../Scripts/Master.js"></script>
+</head>
+<body style="overflow:hidden">
+	<div id="all" class="row fullwidth bchide">
+		<div class="large-12 columns">
+			<div class="row">
+				<div class="large-12 columns">
+					<h2 class="pagetitle" style="line-height: 1; margin-top: 4px; margin-bottom: -1px;"></h2>
+					<h4 style="margin-top: 0px; margin-bottom: 0px;"><em class="subtitle"></em></h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-12 columns">
+					<div id="tabs"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="mobile" class="row fullwidth bchide">
+		<div class="large-12 columns">
+			<div class="row">
+				<div class="large-12 columns">
+					<h2 class="pagetitle" style="line-height: 1; margin-top: 4px; margin-bottom: -1px; "></h2>
+					<h4 style="margin-top: 0px; margin-bottom: 0px;"><em class="subtitle"></em></h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-4 columns" style="margin-top: 0px; margin-bottom: -9px; ">
+					<select id="mtabs"></select>
+				</div>
+			</div>
+			<div class="row">
+				<div id="dMF" class="large-12 columns">
+					<iframe id="contentframe" src="about:blank" frameborder="0"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+<script>
+	window.SetPageTitle = function (val) { val = (val || ''); document.title = val; $PT.html(val); }
+	window.SetPageSubTitle = function (val) { $ST.html((val || '')); }
+	window.SetTabByURL = function (url) {
+		var $t = $('#tabs a').filter(function () {
+			var test = $(this).data('url');
+			return (test && (test == url));
+		});
+		if ($t && $t.length !== 0) { $t.click(); return true; }
+		return false;
+	}
+	window.SetTabByTabKey = function (tabkey) {
+		var $t = $('#tabs a').filter(function () {
+			var test = $(this).data('tabkey');
+			return (test && (test == tabkey));
+		});
+		if ($t && $t.length !== 0) { $t.click(); return true; }
+		return false;
+	}
+	window.SetTabByTabName = function (tabname) {
+		var $t = $('#tabs a').filter(function () {
+			var test = $(this).text();
+			return (test && (test == tabname));
+		});
+		if ($t && $t.length !== 0) { $t.click(); return true; }
+		return false;
+	}
+	window.GenTabs = function (callback) {
+		$tabs.html(''); $mtabs.html('');
+		RetData = {};
+		RetData.ModulePrefix = (QS.Prefix || ""); RetData.TabType = (QS.Type || ""); RetData.TabParam = (QS.TabParam || "");
+		RetData.DynamicTabType = (QS.DynType || ""); RetData.DynamicTabParam = (QS.DynTabParam || ""); RetData.AllQS = (window.location.search.substring(1) || "");
+		$.JSONPost('Main1.GetTabs.json', RetData)
+			.done(function (data) {
+				if ((data.d.RetData.title || '').length > 0) SetPageTitle(data.d.RetData.title);
+				if ((data.d.RetData.subtitle || '').length > 0) SetPageSubTitle(data.d.RetData.subtitle);
+				var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+				if (RowCnt > 0) {
+					var $ul = $('<ul>');
+					for (var i = 0; i < RowCnt; i++) {
+						var tabURL = '';
+						if (R[i].Url.indexOf('{{') >= 0) { tabURL = absoluteURL + StripURL(R[i].Url); }
+						else { tabURL = absoluteURL + R[i].Url; }
+						$ul.append($('<li>').append($('<a>', { 'href': '#dAF', 'text': R[i].TabName, 'data-url': tabURL, 'data-tabkey': R[i].TabKey })));
+						$mtabs.append($('<option>', { 'value': tabURL, 'text': 'Tab: ' + R[i].TabName }));
+					}
+					$tabs.append($ul).append('<div id="dAF"></div>');
+				}
+				if (callback && typeof (callback) == 'function') { callback(); }
+			});
+	}
+	window.StripURL = function (url) {
+		while (url.indexOf('{{') >= 0) {
+			var startPos = 0, endPos = 0, param = '';
+			startPos = url.indexOf('{{'); // this will get {{
+			endPos = url.indexOf('}}'); // this will get }}
+			param = url.substring(startPos, endPos + 2);
+			key = param.substring(param.indexOf('{{') + 2, param.indexOf('}}'));
+			url = url.replace(param, (encodeURIComponent(window.QS[key]) || ''));
+		}
+		return url;
+	}
+	window.RecalcUI = function () { //rebuilds UI, sets a 200ms timer, calls itself again. Will stop calling after several times with no changes.
+		if (window.tbtimer !== null) { clearTimeout(window.tbtimer); }
+		if ((window.lastWindowHeight != $(window).height()) || (window.lastWindowWidth != $(window).width())) {
+			window.lastWindowHeight = $(window).height(); window.lastWindowWidth = $(window).width();
+			if (!Utils.iOS()) window.tbtimerCnt = 0; //Still changing so we reset
+		}
+		if (window.tbtimerCnt < 8) { //resizing code here
+			if (($ST.html()) && ($ST.html().length > 0)) {
+				$PT.css({ 'margin-bottom': '-1px' });
+			} else {
+				$PT.css({ 'margin-bottom': '5px' });
+			}
+			var TgtW = $iFr.parent().width(), CssSize = {};
+			if (Utils.iOS()) TgtW = $(window).width();
+			if ($(window).width() > 500) { //normal
+				$dA.removeClass('bchide'); $dM.addClass('bchide');
+				if ($iFr.parent().attr('id') != 'dAF') $iFr.appendTo("#dAF");
+				CssSize = { 'height': (($(window).height() - $iFr.offset().top) - 14) + 'px', 'width': TgtW + 'px' };
+			}
+			else { //mobile
+				$dM.removeClass('bchide'); $dA.addClass('bchide');
+				if ($iFr.parent().attr('id') != 'dMF') $iFr.appendTo("#dMF");
+				CssSize = { 'height': (($(window).height() - $iFr.offset().top) - 3) + 'px', 'width': TgtW + 'px' };
+			}
+			if (Utils.iOS()) $iFr.parent().css({ 'overflow': 'auto', 'overflow-x': 'auto', 'overflow-y': 'auto', '-webkit-overflow-scrolling': 'touch' }).css(CssSize);
+			$iFr.css(CssSize);
+			window.tbtimerCnt += 1;
+			window.tbtimer = setTimeout(function () { RecalcUI(); }, 225);
+		}
+	}
+	$(window).resize(function () { if (!Utils.iOS()) { window.tbtimerCnt = 0; } RecalcUI(); });
+	$(window).load(function () {
+		var protocol = window.location.protocol, host = window.location.host, pathname = window.location.pathname;
+		var appname = pathname.split('/')[1];
+		window.absoluteURL = protocol + '//' + host + '/' + appname;
+		window.tbtimer = null; window.tbtimerCnt = 0; window.lastWindowHeight = -1; window.lastWindowWidth = -1;
+		window.QS = $.parseQS() || {};
+		window.$dA = $('#all'); window.$tabs = $('#tabs');
+		window.$dM = $('#mobile'); window.$mtabs = $('#mtabs');
+		window.$PT = $('.pagetitle'); window.$ST = $('.subtitle');
+		window.$iFr = $('#contentframe');
+		window.$iFr.load(function () { $('#overlay').addClass('bchide'); });
+
+		SetPageTitle(QS.title); SetPageSubTitle(QS.subtitle);
+		GenTabs(function () {
+			$tabs.tabs({
+				'activate': function (event, ui) {
+					var url = ui.newTab.children('a').data('url');
+					$iFr.attr('src', url);
+					$mtabs.val(url);
+				}
+			});
+			$(document).on('change', '#mtabs', function () { SetTabByURL($(this).val()); });
+			window.$PT.on("click", function () { RecalcUI(); });
+			//set the initial tab - if TabName or TabKey is provided we try to set
+			var url = $('#mtabs > option:first').val();
+			$iFr.attr('src', url); $mtabs.val(url);
+			if (QS.TabName) SetTabByTabName(QS.TabName);
+			if (QS.TabKey) SetTabByTabKey(QS.TabKey);
+			RecalcUI();
+		});
+	});
+</script>
+</body>
+</html>

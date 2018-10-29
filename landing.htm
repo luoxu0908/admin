@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]><html class="lt-ie9 lt-ie8 lt-ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 7]><html class="lt-ie9 lt-ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Landing Page</title>
+	<link rel="stylesheet" href="styles/normalize.css" />
+	<link rel="stylesheet" href="styles/foundation.min.css" />
+	<link rel="stylesheet" href="styles/ie8-grid-foundation-4.css" />
+	<link rel="stylesheet" href="styles/jquery-ui-1.8.18.css" media="all" />
+	<link rel="stylesheet" href="Select2-3.5.4/select2.css" />
+	<link rel="stylesheet" href="styles/jquery.jgrowl-1.2.12.min.css" />
+	<link rel="stylesheet" href="styles/MetroJs.ltt.min.css" />
+	<link rel="stylesheet" href="styles/main_new.css">
+	<script src="scripts/vendor/custom.modernizr.js"></script>
+	<script type="text/javascript" src="Scripts/plotly-1.12.0.min.js"></script>
+	<style>
+		.FullBGImg { -webkit-background-size: cover !important; -moz-background-size: cover !important; -o-background-size: cover !important; background-size: cover !important; }
+	</style>
+</head>
+<body>
+  <div class="row fullwidth" style="padding-left: 7px; padding-right: 7px;">
+		<form>
+			<div id="tiles_container" style="width: 100%; min-width: 140px;"></div>
+		</form>
+  </div>
+	<script src="scripts/jquery-1.9.1.min.js"></script>
+  <script src="scripts/foundation.min.js"></script>
+	<script src="scripts/jquery-ui-1.9.2.min.js"></script>
+	<script src="Select2-3.5.4/select2.min.js"></script>
+	<script src="Scripts/jquery.jgrowl-1.2.12.min.js"></script>
+	<script src="scripts/moment-2.0.0.min.js"></script>
+	<script src="scripts/jquery.isotope.min.js"></script>
+  <script src="scripts/MetroJs.ltt.min.js"></script>
+	<script src="scripts/Master.js"></script>
+  <script>
+		function GetWidgets(callback) {
+			$.JSONPost('Main1.GetLandingPageSettings.json', {})
+			.done(function (data) {
+				if (data.d.RetData.Tbl.Rows.length > 0) {
+					var InitData = data.d.RetData.Tbl.Rows[0]; //first row
+					if (InitData.BackgroundImage) {
+						$("body").css("background", ("url(" + InitData.BackgroundImage + ") no-repeat center center fixed")).addClass('FullBGImg');
+					}
+					window.H2Color = (InitData.H2Color || 'Black');
+				}
+			});
+  		$.JSONPost('Main1.GetWidgets.json', { 'Module': 'Dashboard' })
+			.done(function (data) {
+				var R = data.d.RetData.Tbl.Rows, RowCnt = R.length, prevHeader = '', tileGroupCnt = 0, $CurGrp;
+				if (RowCnt > 0) {
+					var $tilescontainer = $('#tiles_container');
+					for (var i = 0; i < RowCnt; i++) {
+						var menuHeader = R[i].WidgetName.split('\\')[0];
+						if (prevHeader === '' || prevHeader !== menuHeader) {
+							if (prevHeader !== '') { tileGroupCnt += 1; }
+							prevHeader = menuHeader;
+							$tilescontainer.append($('<h2 style="margin-left: 5px; color:' + window.H2Color + ';">' + menuHeader + '</h2>'));
+							$CurGrp = $('<div class="tiles magenta tile-group"></div></div>');
+							$tilescontainer.append($CurGrp);
+						}
+						addTile($CurGrp, R[i]);
+					}
+				}
+				window.lndtimerCnt = 0;
+				$(window).resize(function () { if (!Utils.iOS()) { window.lndtimerCnt = 0; } window.RecalcLndUI(); });
+				window.RecalcLndUI();
+			});
+		}
+		function addTile($TileGrp, TileCfg) {
+			$group = $TileGrp;
+			var relativeurl = (TileCfg.RelativeURL) ? TileCfg.RelativeURL.substr(1) : '', webpartid = (TileCfg.WebPartID) || '', template = '';
+			var params = (TileCfg.UIOtherParams) || '';
+			var $tile = $('<div data-widgetname="' + TileCfg.WidgetName + '" data-relativeurl="' + relativeurl + '" data-webpart="' + webpartid + '" data-widgetid="' + TileCfg.WidgetID + '" data-params="' + params + '">');
+			switch (TileCfg.Type.toLowerCase()) {
+				case 'hyperlink':
+					template = 'UI/GenericLink.BCW.htm';
+					break;
+				case 'custom':
+					template = TileCfg.RelativeURL.substr(1);
+					break;
+			}
+			$group.append($tile.load(template, function () {
+				switch (TileCfg.Type.toLowerCase()) {
+					case 'hyperlink':
+						if (typeof (LinkInit) === 'function') LinkInit($tile);
+						break;
+					case 'custom':
+						if (typeof (CustomInit) === 'function') CustomInit($tile);
+				}
+			}));
+		}
+		window.GetFullWideWidth = function () { //Used by widget tiles to resize
+			var WW = $(window).width();
+			var W = 120;
+			while (W + 130 <= WW - 23) W += 130;
+			return WW;
+		}
+		window.GetFullWideWidthAll = function () { //Used by widget tiles to resize
+			var WA = $(window).width() - 23;
+			return WA;
+		}
+		window.RecalcLndUI = function () { //rebuilds UI, sets a 200ms timer, calls itself again. Will stop calling after several times with no changes.
+			if (window.lndtimer !== null) { clearTimeout(window.lndtimer); }
+			if ((window.lastWindowHeight != $(window).height()) || (window.lastWindowWidth != $(window).width())) {
+				window.lastWindowHeight = $(window).height(); window.lastWindowWidth = $(window).width();
+				if (!Utils.iOS()) window.lndtimerCnt = 0; //Still changing so we reset
+			}
+			if (window.lndtimerCnt < 5) { //resizing code here
+				var W = 120, WA = window.lastWindowWidth - 23;
+				while (W + 130 <= window.lastWindowWidth - 23) W += 130;
+				$('.full-wide').width(W);
+				$('.full-wideall').width(WA);
+				window.lndtimerCnt += 1;
+				window.lndtimer = setTimeout(function () { window.RecalcLndUI(); }, 250);
+			} else {
+				jQuery.event.trigger({ type: "resizeOver" });
+			}
+		}
+		$(document).ready(function () {
+			GetWidgets(function () {
+				var $container = $('.tiles');
+				$container.isotope({
+					itemSelector: '.live-tile'
+				});
+				$('.live-tile, .flip-list').not('.exclude').liveTile();
+			});
+		});
+  </script>
+	<script>
+		window.Utils.CheckBrowserWarn();
+	</script>
+</body>
+</html>

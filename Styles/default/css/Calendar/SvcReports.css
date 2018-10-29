@@ -1,0 +1,66 @@
+.ColHrs, .ColPartThereOf
+{
+	width:80px;
+}
+.SvcFooter TD
+{
+	font-weight:bold;
+	font-size:14px;
+	text-align:right;
+	background-color:lightsteelblue;
+}
+#txtStartDate, #txtEndDate
+{
+	width:75px;
+}
+#txtNewRecp, #txtPNewRecp
+{
+	width:300px;
+}
+#btnShow
+{
+	background-image:url(../../images/bgsil20.jpg);
+	width:100px;
+}
+.btnTips
+{
+	font-weight:bold;
+	color:white;
+	background-color:blue;
+	padding:3px;
+	width:40px;
+	cursor:pointer;
+	cursor:hand;
+}
+a.tip
+{
+	text-decoration:none;
+	float:right;
+}
+a.tip UL
+{
+	margin:0 0 0 18;
+	padding:0;
+}
+a.tip UL LI
+{
+	margin:6 0 0 0;
+	padding:0;
+}
+a:link.tip .cmts, a:visited.tip .cmts, a:active.tip .cmts
+{
+	display:none;
+}
+a:hover.tip .cmts
+{
+	display:block;
+	margin-bottom:12px;
+	width:500px;
+	color:#555555;
+	padding:6px;
+	border:solid 1px blue;
+}
+a:hover.tip
+{
+	height:auto;
+}

@@ -1,0 +1,106 @@
+body
+{
+	margin:0px;
+	padding:0px;
+	padding-left:5px;
+	border-right:solid 1px #676767;
+	border-right:solid 1px gainsboro;
+}
+.GSearchTitleLnk
+{
+	font-size:15px;
+}
+body.OO
+{
+	border:none;
+	padding-left:0px;
+}
+.GSearchDesc
+{
+	font-size:12px;
+	padding-top:2px;
+}
+.SearchTitle
+{
+	font-size:12px;
+	font-weight:bold;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	color:#676767;
+}
+
+/*#UP Table
+{
+	background-color:Yellow;
+}
+#UP
+{
+	background-color:pink;
+}
+.SearchCatList
+{
+	height:400px;
+	background-color:Blue;
+}*/
+.SearchPnl
+{
+}
+.SearchCats
+{
+	font-weight:bold;
+	font-size:11px;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	padding:1px;
+	color:whitesmoke;
+	color:#676767;
+	/*background-color:#898989;*/
+}
+#txtSearch
+{
+	width:101px;
+}
+#btnSearch
+{
+	border:solid 2px gainsboro;
+	color:#676767;
+	font-weight:bold;
+	font-size:1px;
+	margin-left:3px;
+	width:32px;
+	height:20px;
+	background-image:url(../../images/searchwhitearrow.gif);
+	background-repeat:no-repeat;
+	background-color:#FEAF1E;
+	background-position:50% 0%;
+}
+.chkLiveOnly label
+{
+	color:White;
+	font-size:10px;
+	font-weight:normal;
+}
+#tblMain
+{
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	background-color:Green;
+}
+.SearchTxt, .SearchCatList
+{
+	padding-left:0px;
+	padding-right:5px;
+	padding-top:1px;
+	margin-bottom:2px;
+}
+.SearchCatList
+{
+	
+}
+.Panel
+{
+	
+}
+.KaramasoftPanel
+{
+	height:100%;
+}

@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+	<title>Community Outreach</title>
+	<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<style type="text/css">
+		.NoTop { margin: 0 0 0 0; }
+		.STop { margin: 6px 0 0 0; }
+		.MTop { margin: 12px 0 0 0; }
+		.LTop { margin: 18px 0 0 0; }
+		.lstupd { font-style:italic; font-size: smaller; }
+		.Upd { color: Green; }
+		.NoUpd { color: Red; }
+		.SkipNotIn { color: Blue; }
+	</style>
+	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+	<script type="text/javascript" src="../Scripts/CommOutreach.js"></script>
+	<script type="text/javascript">
+		//Table structure
+		//Load / Save
+		//
+		window.MyRoleID = 0; //Person logged in
+		window.MyName = ''; window.AddrPart = ''; window.PostalCode = ''; window.GroupingCode = ''; window.VisitID = 0;
+		window.ShortDescription = ''; window.VisitRemarks = ''; window.UnitSelIdx = -1; window.UnitData = {};
+		window.Language = "CN";
+		//window.UnitData.Rows = [{"UnitNo": "12-197", "Title": "Mr", "FirstName": "Lenny", "LastName": "Choo", "Sex": "M", "Race": "Chinese", "Religion": "Christian", "ContactNo": "91234567", "Email": "lenny@myemail.com", "SpokenLang": "English", "FamilyGroup": "Adults,Children", "Responsiveness": "N", "Remarks": "", "VisitResult": "", "LastModifiedBy_Name": "Lee Kok Meng", "LastModifiedDate": "2013-02-14T00:00:00.000"},
+		//{"UnitNo": "12-198", "Title": "Mr", "FirstName": "Mark", "LastName": "Lim", "Sex": "M", "Race": "Chinese", "Religion": "", "ContactNo": "", "Email": "", "SpokenLang": "English", "FamilyGroup": "Adults", "Responsiveness": "N", "Remarks": "", "VisitResult": "", "LastModifiedBy_Name": "Lee Kok Meng", "LastModifiedDate": "2013-02-14T00:00:00.000"}];
+
+		$(document).ready(function () { //this is only called on first load
+			//first time load so definitely not logged in - init
+			$.mobile.changePage("#login", { transition: "slideup" });
+			$('#ValidateAccess').on('click', '', function (event) { RefreshVisitList(); });
+			$('#UnitListing_Refresh').on('click', '', function (event) {
+				//save scroll position first
+				window.scrollPosTop = $(window).scrollTop();
+				RefreshVisitList();
+			});
+			$('#UnitListing').on('pagebeforeshow', '', function (event) { RebuildUnitListing(); });
+			$('#UnitListing').on('pageshow', '', function (event) { if (window.scrollPosTop) { $(jQuery.browser.webkit ? "body" : "html").scrollTop(window.scrollPosTop); } });
+			$('#UnitList').on('click', 'a', function (event) {
+				//save scroll position first
+				window.scrollPosTop = $(window).scrollTop();
+				window.UnitSelIdx = parseInt($(this).attr('idx'), 10);
+				$.mobile.changePage("#UnitDetails", { transition: "slide" });
+			});
+			$("#FilterAll").on('click', '', function (event) { $(".ui-input-search .ui-input-text").val(""); RebuildUnitListing(); });
+			$("#FilterPending").on('click', '', function (event) { $(".ui-input-search .ui-input-text").val("(未探访)"); RebuildUnitListing(); });
+			$("#FilterVisited").on('click', '', function (event) { $(".ui-input-search .ui-input-text").val("(已探访)"); RebuildUnitListing(); });
+			$('#login').on('pagebeforeshow', '', function (event) { $("#GroupingCode").val(""); $("#ID").val(""); $("#AccessKey").val(""); });
+			$('#UnitDetails').on('pagebeforeshow', '', function (event) { RefreshUnitDetails(); });
+			$('#btnCancel').on('click', '', function (event) {
+				$.mobile.changePage("#UnitListing", { transition: "slide", reverse: true });
+			});
+			$('#btnUpdate').on('click', '', function (event) { UpdateUnitDetails(); });
+		});
+	</script>
+</head> 
+<body>
+	<div data-role="page" id="login">
+		<div data-role="header" align="center">
+			<a href="CO.htm" data-ajax="false">English</a>
+			<h2 style="white-space:normal">登录</h2>
+			<a href="#" class="ui-disabled">&nbsp;华&nbsp;语&nbsp;</a>
+		</div>
+		<div data-role="content">
+			<div data-role="fieldcontain" class="ui-hide-label">
+				<label for="GroupingCode">Postal Code:</label>
+				<input type="text" name="GroupingCode" id="GroupingCode" value="" placeholder="邮区"/><br /><br />
+				<label for="ID">身份证号码:</label>
+				<input type="text" name="ID" id="ID" value="" placeholder="身份证号码"/><br /><br />
+				<label for="AccessKey">密码:</label>
+				<input type="text" name="AccessKey" id="AccessKey" value="" placeholder="密码"/>
+			</div>
+			<button id="ValidateAccess" type="button">提交</button>
+		</div>
+	</div>
+
+	<div data-role="page" id="UnitListing">
+		<div data-role="header">
+			<a href="#login" data-icon="back">退出</a>
+			<h2 id="UnitListingAddrPart" style="white-space:normal"></h2>
+			<a id="UnitListing_Refresh" href="#" data-icon="refresh">重新启动</a>
+			<div data-role="navbar">
+				<ul>
+					<li><a id="FilterAll">全部显示</a></li>
+					<li><a id="FilterPending">未探访</a></li>
+					<li><a id="FilterVisited">已探访</a></li>
+				</ul>
+			</div><!-- /navbar -->		
+		</div>
+		<div data-role="content">
+			<ul id="UnitList" data-role="listview" data-filter="true"></ul>
+		</div>
+	</div>
+
+	<div data-role="page" id="UnitDetails">
+		<div data-role="header">
+			<h2 style="white-space:normal" id="unit_header"></h2>
+		</div>
+		<div data-role="content">
+			<div data-role="fieldcontain" class="ui-hide-label STop">
+				<div id="UnitDetails_LastUpd" style="float:right;"></div>
+				<h3 style="margin: 0 0 0 0;">主要居民:</h3>
+				<div class="MTop">
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+						<div>
+							<label><input type="radio" name="Sal" id="Sal_Mr" value="Mr" />先生</label>
+							<label><input type="radio" name="Sal" id="Sal_Mrs" value="Mrs" />太太</label>
+							<label><input type="radio" name="Sal" id="Sal_Miss" value="Miss" />小姐</label>
+							<label><input type="radio" name="Sal" id="Sal_Mdm" value="Mdm" />女士</label>
+						</div>
+					</fieldset>
+				</div>
+				<div class="MTop">
+					<input type="text" name="LastName" id="LastName" placeholder="- 姓 -"/>
+				</div>
+				<div class="MTop">
+					<input type="text" name="FirstName" id="FirstName" placeholder="- 名字 -"/>
+				</div>
+				<div class="MTop">
+					<input type="text" name="ContactNo" id="ContactNo" placeholder="- 联络电话 (家/手机) -"/>
+				</div>
+				<div class="MTop">
+					<input type="text" name="Email" id="Email" placeholder="- 电邮地址 -"/>
+				</div>
+				<div class="MTop">
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+						<div>
+							<label><input type="radio" name="Sex" id="Sex_M" value="M" />男性</label>
+							<label><input type="radio" name="Sex" id="Sex_F" value="F" />女性</label>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div data-role="fieldcontain" class="ui-hide-label LTop">
+				<h3 style="margin: 0 0 0 0;">备注:</h3>
+				<div class="STop">
+					<textarea name="Remarks" id="Remarks" style="height: 110px;"></textarea>
+				</div>
+			</div>
+			<div data-role="fieldcontain" class="ui-hide-label LTop">
+				<h3 style="margin: 0 0 0 0;">结果<span style="color:Red">*</span>:</h3>
+				<div id="prevvisit"></div>
+				<div class="STop">
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+						<div>
+							<label><input type="radio" name="Result" id="Result_1" value="1" />接受礼物</label>
+							<label><input type="radio" name="Result" id="Result_D" value="D" />拒绝</label>
+							<label><input type="radio" name="Result" id="Result_N" value="N" />不在家</label>
+							<label><input type="radio" name="Result" id="Result_S" value="S" />跳</label>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div data-role="fieldcontain" class="ui-hide-label LTop">
+				<h3 style="margin: 0 0 0 0;">回应:</h3>
+				<div class="STop">
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+						<div>
+							<label><input type="radio" name="Resp" id="Resp_R" value="R" />喇合</label>
+							<label><input type="radio" name="Resp" id="Resp_N" value="N" />还好</label>
+							<label><input type="radio" name="Resp" id="Resp_U" value="U" />不友善</label>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div data-role="fieldcontain" class="ui-hide-label LTop">
+				<h3 style="margin: 0 0 0 0;">宗教:</h3>
+				<div class="STop">
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+						<div>
+							<label><input type="radio" name="Religion" id="Rel_C" value="Christian" />基督教</label>
+							<label><input type="radio" name="Religion" id="Rel_B" value="Buddhist" />佛教</label>
+							<label><input type="radio" name="Religion" id="Rel_T" value="Taoist" />道教</label>
+							<label><input type="radio" name="Religion" id="Rel_M" value="Muslim" />回教</label>
+							<label><input type="radio" name="Religion" id="Rel_H" value="Hindu" />印度教</label>
+							<label><input type="radio" name="Religion" id="Rel_O" value="Other" />其他</label>
+							<label><input type="radio" name="Religion" id="Rel_X" value="NoRel" />没有宗教</label>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div data-role="fieldcontain" class="ui-hide-label LTop">
+				<h3 style="margin: 0 0 0 0;">家庭背景:</h3>
+				<div class="STop">
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+						<div>
+							<label><input type="radio" name="Race" id="Race_C" value="Chinese" />华人</label>
+							<label><input type="radio" name="Race" id="Race_M" value="Malay" />马来人</label>
+							<label><input type="radio" name="Race" id="Race_I" value="Indian" />印度人</label>
+							<label><input type="radio" name="Race" id="Race_E" value="Eurasian" />欧亚人</label>
+							<label><input type="radio" name="Race" id="Race_O" value="Other" />其他</label>
+						 </div>
+					</fieldset>
+				</div>
+				<div class="MTop">
+					<fieldset data-role="controlgroup" data-mini="true">
+						<div>
+							<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_C" value="Children" />儿童 (11岁以下)</label>
+							<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_Y" value="Youth" />青年 (12 - 20岁)</label>
+							<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_YWA" value="YWA" />年轻成人 (20至30多岁)</label>
+							<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_A" value="Adults" />成人</label>
+							<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_E" value="Elderly" />乐龄 (60岁及以上)</label>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div data-role="fieldcontain" class="ui-hide-label LTop">
+				<h3 style="margin: 0 0 0 0;">沟通语言:</h3>
+				<div class="STop">
+					<fieldset data-role="controlgroup" data-mini="true">
+						 <div>
+							 <label><input type="checkbox" name="SLang" id="SL_Eng" value="English" />英语</label>
+							 <label><input type="checkbox" name="SLang" id="SL_Mand" value="Mandarin" />华语</label>
+							 <label><input type="checkbox" name="SLang" id="SL_Hok" value="Hokkien" />福建</label>
+							 <label><input type="checkbox" name="SLang" id="SL_Teo" value="Teochew" />潮州</label>
+							 <label><input type="checkbox" name="SLang" id="SL_Can" value="Cantonese" />广东话</label>
+							 <label><input type="checkbox" name="SLang" id="SL_Mal" value="Malay" />马来语</label>
+							 <label><input type="checkbox" name="SLang" id="SL_Tam" value="Tamil" />谈米尔语</label>
+							 <label><input type="checkbox" name="SLang" id="SL_Oth" value="Other" />其他</label>
+						 </div>
+					</fieldset>
+				</div>
+			</div>
+			<div id="UnitDetails_Btns" class="ui-body ui-body-b LTop">
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-a"><button id="btnCancel" type="button" data-theme="d">取消</button></div>
+					<div class="ui-block-b"><button id="btnUpdate" type="button" data-theme="a">提交</button></div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+
+	<div data-role="dialog" id="PleaseWait">
+		<div data-role="header">
+			<h1>Please wait...</h1>
+		</div>
+		<div data-role="content">
+			Fetching / updating server information, please wait...
+		</div>
+	</div>​
+</body>
+</html>

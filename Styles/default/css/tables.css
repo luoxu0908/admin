@@ -1,0 +1,111 @@
+.dgTable
+{
+	border-bottom:solid 1px gainsboro;
+	border-collapse:collapse;
+}
+.dgTable TD
+{
+	font-size:11px;
+	padding:3px;
+	color:#333333;
+	border:solid 1px gainsboro;
+	border-top:none;
+	border-bottom:none;
+}
+.dgHeader TD
+{
+	font-size:12px;
+	font-weight:bold;
+	background-color:#DCDCDC;
+	color:#676767;
+	background-image:url(../images/tblhdrgrad1.gif);
+	background-position: 0% 0%;
+	background-repeat:repeat-x;
+
+	/*border-bottom:solid 1px gainsboro;*/
+}
+.dgHeader a:link, .dgHeader a:visited, .dgHeader a:active
+{
+	color:#676767;
+}
+.dgHeader a:hover
+{
+	color:#738FDF;
+}
+.dgItem
+{
+	background-color:whitesmoke;
+}
+.dgAltItem
+{
+	background-color:white;
+}
+.dgSubTable
+{
+	border-collapse:collapse;
+}
+.dgSubTable TD
+{
+	font-size:11px;
+	padding:3px;
+	color:#333333;
+	border:solid 1px gainsboro;
+	border-top:none;
+	border-bottom:none;
+}
+.dgSubHeader TD
+{
+	font-size:12px;
+	font-weight:bold;
+	color:#676767;
+}
+.dgSubHeader
+{
+	background-image:url(../images/tblhdrgrad1.gif);
+	background-position: 0% 0%;
+	background-repeat:repeat-x;
+}
+.dgSubHeader a:link, .dgSubHeader a:visited, .dgSubHeader a:active
+{
+	color:#676767;
+}
+.dgSubHeader a:hover
+{
+	color:#738FDF;
+}
+.dgSubItem TD
+{
+	border-bottom:solid 1px gainsboro;
+}
+.dgSubAltItem TD
+{
+	border-bottom:solid 1px gainsboro;
+}
+
+.hgh TD
+{
+	background-color:lemonchiffon;
+}
+.dgFooterFixed
+{
+	border-top:solid 1px black;
+	position:relative;
+	top:expression(this.offsetParent.clientHeight<this.offsetParent.scrollHeight?this.offsetParent.clientHeight-this.offsetParent.scrollHeight+this.offsetParent.scrollTop:0); 
+}
+.dgHeaderFixed
+{
+ 	position:relative;
+	top:expression(this.offsetParent.scrollTop);
+}
+TD.subIndent
+{
+	padding-left:6px;
+}
+TD.subsubIndent
+{
+	padding-left:6px;
+}
+.TopAlign
+{
+	vertical-align:top;
+}

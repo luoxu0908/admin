@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]><html class="lt-ie9 lt-ie8 lt-ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 7]><html class="lt-ie9 lt-ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>COReport</title>
+	<link rel="stylesheet" href="../styles/normalize.css" />
+	<link rel="stylesheet" href="../styles/foundation.min.css" />
+	<link rel="stylesheet" href="../styles/ie8-grid-foundation-4.css" />
+	<link rel="stylesheet" href="../styles/slick.grid.css" type="text/css" />
+	<link rel="stylesheet" href="../styles/slick-default-theme.css" type="text/css" />
+	<link rel="Stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css"
+		type="text/css" media="all" />
+	<link rel="stylesheet" href="../styles/main_new.css">
+	<script src="../scripts/vendor/custom.modernizr.js"></script>
+</head>
+<body>
+	<div id="content" class="row automarginoff">
+		<div class="large-12 columns">
+			<form>
+			<div class="row">
+				<div class="large-12 columns">
+					<h2 class="pagetitle">
+						COReport</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-3 columns">
+					<label for="VisitID">
+						Visit:
+					</label>
+					<select id="VisitID">
+					</select>
+				</div>
+				<div class="large-3 columns">
+					<label for="Responsiveness">
+						Responsiveness:</label>
+					<select id="Responsiveness">
+					</select>
+				</div>
+				<div class="large-3 columns end">
+					<br />
+					<button id="Generate" onclick="refreshData();return false;">
+						Generate</button>
+					<button id="Export">
+						Export</button>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	<div class="row fullwidth">
+		<div class="large-12 columns">
+			<div id="myGrid">
+			</div>
+		</div>
+	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>		window.jQuery || document.write('<script src="../scripts/jquery.min.js"><\/script>')</script>
+	<script src="../scripts/foundation.min.js"></script>
+	<!-- get the scripts from google cdn. if unavailable, fallback to the local copy -->
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+	<script>		window.jQueryUI || document.write('<script src="../scripts/jquery-ui.min.js"><\/script>')</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+	<script src="../scripts/Master.js"></script>
+	<script src="../scripts/jquery.event.drag-2.2.min.js"></script>
+	<script src="../scripts/slick.bcdefault.js"></script>
+	<script src="../scripts/slick.grid.helper.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var SGH;
+		var QS = $.parseQS();
+		window.GroupID = QS.GroupID;
+		$(document).ready(function () {
+			$('button').button(); window.GridImgFolder = '../styles/images';
+			SGH = new SlickGridHelper("#myGrid", "CO.VisitReport",
+			{ enableCellNavigation: true, enableColumnReorder: true, autoHeight: false, autoEdit: false, editable: true,
+				enableAddRow: false, asyncEditorLoading: false, forceFitColumns: true, multiColumnSort: true
+			},
+			{ AddSelColumn: true, GetDataURL: "CO1.VisitReport_Get.json", AddRowURL: "CO1.VisitReport_AddRow.json", DelRowURL: "CO1.VisitReport_DelRow.json",
+				UpdRowURL: "", UpdRowFldURL: "CO1.VisitReport_UpdRowFld.json", CustomURL: "", ExportURL: "CO1.VisitReport_Export.part"
+			});
+			PopulateResponsiveness();
+			PopulateVisit();
+			refreshData();
+
+		});
+		function ResizeMe() { SGH.resize(); };
+		var resizeTimer;
+		$(window).resize(function () {
+			clearTimeout(resizeTimer); resizeTimer = setTimeout(ResizeMe, 100);
+		});
+
+		function refreshData() {
+			SGH.GridLoadData({ GroupID: window.GroupID, VisitID: $('#VisitID').val(), Responsiveness: $('#Responsiveness').val() });
+		}
+
+
+		function PopulateResponsiveness(callback) {
+			$.JSONPost('CO1.VisitReport_GetResultType.json').done(function (data) {
+				var R = data.d.RetData.Tbl.Rows;
+				var RowCnt = R.length; $Sel = $("#Responsiveness"); $Sel.html('');
+				$Sel.append($('<option>', { value: '' }).text('---ALL---'));
+				for (var j = 0; j < RowCnt; j++) {
+					$Sel.append($('<option>', { value: R[j].LookupKey }).text(R[j].Description));
+				}
+				if (callback && typeof (callback) === 'function') { callback(); }
+			});
+		}
+
+		function PopulateVisit(callback) {
+			$.JSONPost('CO1.VisitReport_GetVisitID.json').done(function (data) {
+				var R = data.d.RetData.Tbl.Rows;
+				var RowCnt = R.length; $Sel = $("#VisitID"); $Sel.html('');
+				for (var j = 0; j < RowCnt; j++) {
+					$Sel.append($('<option>', { value: R[j].VisitID }).text(R[j].ShortDescription));
+				}
+				if (callback && typeof (callback) === 'function') { callback(); }
+			});
+		}
+	</script>
+</body>
+</html>

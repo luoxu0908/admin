@@ -1,0 +1,95 @@
+﻿<div id="filters" class="large-12 columns">
+	<div class="row">
+		<div class="large-3 columns">
+			<label for="search">Search Term</label><input type="text" id="search" />
+		</div>
+		<div class="large-3 columns">
+			<label for="datefrom">Date From</label><input id="datefrom" type="text" class="datepicker" readonly="readonly" />
+		</div>
+		<div class="large-3 columns end">
+			<label for="dateto">Date To</label><input id="dateto" type="text" class="datepicker" readonly="readonly" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-3 columns">
+			<label for="selSingleDropdown">Single Option Selection</label><input type="hidden" id="selSingleDropdown" tabindex="-1" title="" style="width:100%" />
+		</div>
+		<div class="large-3 columns">
+			<label for="selSingleDropdownAJAX">Single Option Selection (AJAX on Init)</label><input type="hidden" id="selSingleDropdownAJAX" tabindex="-1" title="" style="width:100%" />
+		</div>
+		<div class="large-3 columns end">
+			<label for="selMultiDropdownAJAX">Multiple Option Selection (AJAX on Init)</label><input type="hidden" id="selMultiDropdownAJAX" tabindex="-1" title="" style="width:100%" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-3 columns">
+			<label for="selAutocompleteSingle">Autocomplete (Single)</label><input type="hidden" id="selAutocompleteSingle" tabindex="-1" title="" style="width:100%" />
+		</div>
+		<div class="large-3 columns end">
+			<label for="selAutocompleteMulti">Autocomplete (Multiple)</label><input type="hidden" id="selAutocompleteMulti" tabindex="-1" title="" style="width:100%" />
+		</div>
+	</div>
+</div>
+<div id="MTool" class="large-12 columns">
+	<button onclick="refreshData(); return false;">Search</button>
+	<button>Export XLSX</button>
+</div>
+<script>
+	//bind to custom togShowHide event
+	var $filters = $('#filters'), $MTool = $('#MTool');
+	$(document).on("togShowHide", function (e) {
+		if (e.Show) { $filters.show(); $MTool.show(); } else { $filters.hide(); $MTool.hide();}
+	});
+	//init date fields
+	$('#datefrom').datepicker();
+	$('#dateto').datepicker();
+	//Data from array
+	$("#selSingleDropdown").select2({
+		data:[{id:"id_1",text:"Selection 1"},{id:"id_2",text:"Option 2"},{id:"id_3",text:"Choice 3"}]
+	});
+	//Data from lookup table, not dynamic, load before init (i.e. less than 1000+ items)
+	$.JSONPost('Main1.Test_Get.json', { "SearchTerm": "" }).done(function (data) {
+		var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+		var return_data = { results: [] };
+		for (var i = 0; i < RowCnt; i++) {
+			return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
+		}
+		//Init the controls once data is returned
+		$("#selSingleDropdownAJAX").select2({
+			data: return_data
+		});
+		$("#selMultiDropdownAJAX").select2({
+			multiple: true,
+			data: return_data
+		});
+	});
+
+
+	$("#selAutocompleteSingle").select2({
+		minimumInputLength: 2,
+		query: GetSearchMatches
+	});
+	$("#selAutocompleteMulti").select2({
+		minimumInputLength: 2,
+		multiple: true,
+		query: GetSearchMatches
+	});
+
+	function GetSearchMatches(query) {
+		$.JSONPost('Main1.Test_Get.json', { "SearchTerm": query.term }).done(function (data) {
+			var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+			var return_data = { results: [] };
+			for (var i = 0; i < RowCnt; i++) {
+				return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
+			}
+			query.callback(return_data);
+		});
+	}
+	//provide function to return data for filtering (e.g. for slickgrid)
+	function GetFilterData() {
+		var FilterData = { 'SearchTerm': $('#search').val(), 'DateFrom': $('#datefrom').val(), 'DateTo': $('#dateto').val(), 'selSingleDropdown': $('#selSingleDropdown').val(), 'selSingleDropdownAJAX': $('#selSingleDropdownAJAX').val(), 'selMultiDropdownAJAX': $('#selMultiDropdownAJAX').val(), 'selAutocompleteSingle': $('#selAutocompleteSingle').val(), 'selAutocompleteMulti': $('#selAutocompleteMulti').val() };
+		return FilterData;
+	}
+	function refreshData() { jQuery.event.trigger({ type: "refreshSG" }); }
+	window.DoGridInit = true; //ready for SG to init
+</script>

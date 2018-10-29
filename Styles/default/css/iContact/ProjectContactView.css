@@ -1,0 +1,11 @@
+body, body table tr td
+{
+	font-family: DIN-Regular, Arial, Verdana, Times New Roman;
+	font-size:10.5pt;
+}
+
+.PageTitle2
+{
+	font-family: DIN-Medium, Arial, Verdana, Times New Roman;
+	font-size:15pt;
+}

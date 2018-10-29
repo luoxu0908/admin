@@ -1,0 +1,100 @@
+.CurrDir {
+	font-size: 14px;
+	font-weight:bold;
+}
+
+.FMfiledg
+{
+	background-color:#FFFFFF;
+	width:100%;
+	/*height:100%;*/
+	/*border-bottom:solid 1px gainsboro;*/
+	/*border-collapse:collapse;*/
+}
+
+.FMfiledg TD
+{
+	font-size:11px;
+	padding:3px;
+	color:#333333;
+	/*border:solid 1px gainsboro;*/
+	border-top:none;
+	border-bottom:none;
+	vertical-align:middle;
+}
+
+.FMfiledgExtHeader{
+	height:20px;
+}
+.FMfiledgExtHeader TD {
+	font-size:11px;
+	font-weight:normal;
+	background-color:RGB(235,234,219);
+	color:#222222;
+	background-image:url(../../images/iFM/FMfiledgHeader.png);
+	background-position: 0% 100%;
+	background-repeat:repeat-x;
+}
+
+.FMfiledgHeader TD
+{
+	font-size:11px;
+	font-weight:normal;
+	background-color:RGB(235,234,219);
+	color:#222222;
+	background-image:url(../../images/iFM/FMfiledgHeader.png);
+	background-position: 0% 100%;
+	background-repeat:repeat-x;
+
+	/*border-bottom:solid 1px gainsboro;*/
+}
+.FMfiledgHeader a:link, .FMfiledgHeader a:visited, .FMfiledgHeader a:active
+{
+	color:#676767;
+}
+.FMfiledgHeader a:hover
+{
+	color:#738FDF;
+}
+.FMfiledgItem
+{
+	background-color:#FFFFFF;
+}
+.FMfiledgAltItem
+{
+	background-color:#F6F6F6;
+}
+
+.FileNameDiv {width:100%; overflow:hidden;}
+
+.FileNameDiv IMG,
+.FileNameDiv IMG
+{
+	height:16px;
+	width:16px;
+	vertical-align:middle;
+}
+
+.FileNameDiv A,
+.FileNameDiv A
+{
+	color:#333333;
+	text-decoration:none;
+}
+.FileNameDiv A:Hover,
+.FileNameDiv A:Hover
+{
+	color:#4444DD;
+	text-decoration:underline;
+}
+
+.NoItemsLabel {
+	color:#666666;
+	width:100%;
+	text-align:center;
+}
+
+.ActionColumn input {
+	margin-left:2px;
+	margin-right:2px;
+}

@@ -1,0 +1,294 @@
+.BRSubTitle
+{
+	padding-left:2px;
+	font-size:12px;
+	font-family:Arial, Verdana;
+	font-style:italic;
+	font-weight:bold;
+	display:block;
+}
+
+#btnRefresh
+{
+	width:104px;
+	font-size:11px;
+	float:right;
+	margin-top:4px;
+	margin-right:4px;
+}
+
+.BPSaveDraft
+{
+}
+
+.BPCancel
+{
+}
+
+.BPSubmit
+{ 
+	width:150px;
+}
+
+.IAmNotHere
+{
+	font-size:1px;
+	width:1px;
+	height:1px;
+	border:none;
+	background-color:whitesmoke;
+}
+
+.BPDetails
+{
+	background-image:url(../../images/titlegrad.gif);
+	background-repeat:repeat-y;
+	padding-left:5px;
+	border:solid 1px gainsboro;
+}
+
+.Prmptbtns
+{
+	width:auto;
+	padding-left:3px;
+	padding-right:3px;
+}
+/* Additional Charges */
+.AddChrgSubTotal, .AddChrgGrandTotal
+{
+	font-size:14px;
+	font-weight:bold;
+	padding-top:3px;	
+}
+.AddChrgItem
+{
+	font-size:12px;
+	padding-top:3px;
+}
+
+.DaysLate1 /* Late */
+{
+	background-color: #F5C4C4
+}
+
+.DaysLate2 /* Very Late! */
+{
+	background-color: #E56969
+}
+
+.DaysLate3 /* VERY VERY Late! */
+{
+	background-color: #D92424;
+	color:white;
+}
+
+.CostSumItemTitle
+{
+	font-weight:bold;
+}
+
+.CostSumItemRow
+{
+	padding-left: 10px;
+}
+
+.CostSumItemSubTotal
+{
+	background-color: #e1e1f9;
+}
+
+.CostSumItemTotal
+{
+	background-color: #b4b4ff;
+	font-weight:bold;
+}
+
+.CostSumItemWarning
+{
+	color:red;
+}
+
+.CostSumAmtWidth
+{
+	width: 70px;
+	text-align: right;
+	padding-left: 5px;
+}
+
+.BPFloatRightCmd
+{
+	float:right;
+	margin-top:6px;
+}
+
+#btnTemplate
+{
+	margin-left:8px;
+}
+
+#btnPrintList
+{
+	margin-left:8px;
+}
+
+.SaveLnk
+{
+	margin:2px;
+	padding-top:2px;
+	padding-left:21px;
+	padding-right:4px;
+	border:outset 1px #F0F0F0;
+	border-left:none;
+	border-top:none;
+	height:20px;
+	background: #F0F0F0 url(../../images/BP/save.gif) no-repeat 3px 3px;
+	color:#B68D54;
+	color:#334444;
+	text-decoration:none;
+	font-weight:bold;
+	font-size:11px;
+	display:inline-block;
+}
+
+.UndoLnk
+{
+	margin:2px;
+	padding-top:2px;
+	padding-left:20px;
+	padding-right:4px;
+	border:outset 1px #F0F0F0;
+	border-left:none;
+	border-top:none;
+	height:20px;
+	background: #F0F0F0 url(../../images/BP/undo.gif) no-repeat 2px 1px;
+	color:#B68D54;
+	color:#334444;
+	text-decoration:none;
+	font-weight:bold;
+	font-size:11px;
+	display:inline-block;
+}
+
+.CancelLnk
+{
+	margin:2px;
+	padding-top:2px;
+	padding-left:20px;
+	padding-right:4px;
+	border:outset 1px #F0F0F0;
+	border-left:none;
+	border-top:none;
+	height:20px;
+	background: #F0F0F0 url(../../images/BP/del.gif) no-repeat 2px 1px;
+	color:#B68D54;
+	color:#334444;
+	text-decoration:none;
+	font-weight:bold;
+	font-size:11px;
+	display:inline-block;
+}
+
+.FindLnk
+{
+	padding-left:17px;
+	background: url(images/find.gif) no-repeat;
+	display:inline-block;
+}
+
+.MvUpLnk
+{
+	padding:3px;
+	width:18px;
+	height:15px;
+	border:outset 1px slategray;
+	border-left:none;
+	border-top:none;
+	margin:2px;
+	background: gainsboro url(../../images/BP/up.gif) no-repeat 2px 2px;
+	color:gainsboro;
+	text-decoration:none;
+	font-size:1px;
+	display:block;
+}
+
+.MvDwnLnk
+{
+	padding:3px;
+	width:18px;
+	height:15px;
+	border:outset 1px slategray;
+	border-left:none;
+	border-top:none;
+	margin:2px;
+	background: silver url(../../images/BP/dwn.gif) no-repeat 2px 1px;
+	color:silver;
+	text-decoration:none;
+	font-size:1px;
+	display:block;
+}
+
+.AddLnk
+{
+	margin:2px;
+	padding:2px;
+	padding-left:17px;
+	padding-right:4px;
+	border:outset 1px lightgreen;
+	border-right:outset 2px lightgreen;
+	border-bottom:outset 2px lightgreen;
+	height:23px;
+	line-height:21px;
+	background: white url(../../images/BP/additem.gif) no-repeat 1px 2px;
+	color:#006D00;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.EditLnk
+{
+	padding-top:1px;
+	padding-right:3px;
+	padding-left:23px;
+	width:55px;
+	height:17px;
+	border:outset 1px gainsboro;
+	border-left:solid 1px gainsboro;
+	border-top:solid 1px gainsboro;
+	margin:2px;
+	background: #EDEDFF url(../../images/BP/edit.gif) no-repeat 1px 0px;
+	color:slategray;
+	text-decoration:none;
+	font-size:11px;
+	display:block;
+}
+
+.DelLnk
+{
+	padding-top:1px;
+	padding-right:3px;
+	padding-left:18px;
+	width:55px;
+	height:17px;
+	border:outset 1px gainsboro;
+	border-left:solid 1px gainsboro;
+	border-top:solid 1px gainsboro;
+	margin:2px;
+	background: #EDEDFF url(../../images/BP/del.gif) no-repeat 1px 0px;
+	color:slategray;
+	text-decoration:none;
+	font-size:11px;
+	display:block;
+}
+
+.ViewListOFADiv
+{
+	height:445px;
+}
+.EditListOFADiv
+{
+	height:410px;
+}
+.EditListTbl
+{
+	height:445px;
+}

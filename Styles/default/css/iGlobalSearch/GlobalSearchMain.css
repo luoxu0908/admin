@@ -1,0 +1,106 @@
+.GSearchTitleLnk
+{
+	font-size:15px;
+}
+.GSearchDesc
+{
+	font-size:12px;
+
+}
+.SearchTitle
+{
+	font-weight:bold;
+	font-size:12px;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding:2px;
+	padding-left:5px;
+	background-color:#676767;
+	color:whitesmoke;
+}
+
+.SearchTitle A:visited, .SearchTitle A:hover, .SearchTitle A:Active, .SearchTitle A:Link
+{
+	font-weight:normal;
+}
+
+.AwayFromTop
+{
+	padding-top:5px;
+	margin-left:4px;
+	margin-right:5px;
+	border-color:slategray;
+	border-style:solid;
+	border-width:1px;
+}
+
+#rblMatchType
+{
+	display:block;
+}
+
+.SearchOpt
+{
+	position:relative;
+	top:5;
+	left:7;
+	background-color:white;
+	margin:0;
+	padding:0;
+	padding-left:2;
+	font-size:11px;
+	font-weight:550;
+	color:#333333;
+}
+
+#pnlMatchType label, #pnlFields label
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	color:#575757;
+}
+
+.SearchTxt, .SearchCatList
+{
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:1px;
+	margin-bottom:2px;
+}
+
+#lbnAdvOpt
+{
+	margin-top:8px;
+	margin-left:5px;
+	font-size:11px;
+	display:block;
+}
+
+#btnSearch
+{
+	border:solid 1 px white;
+	color:#676767;
+	font-weight:bold;
+	margin-left:3px;
+	width:32px;
+	background-image:url(../../images/searchwhitearrow.gif);
+	background-repeat:no-repeat;
+	background-color:#FEAF1E;
+}
+
+.chkLiveOnly label
+{
+	color:White;
+	font-size:10px;
+	font-weight:normal;
+}
+#tblMain
+{
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	background-color:Green;
+}
+
+#txtSearch
+{
+	width:115px;
+}

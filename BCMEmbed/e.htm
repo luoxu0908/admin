@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]><html class="lt-ie9 lt-ie8 lt-ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 7]><html class="lt-ie9 lt-ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title></title>
+	<link rel="stylesheet" href="../styles/normalize.css" />
+	<link rel="stylesheet" href="../styles/foundation.min.css" />
+	<link rel="stylesheet" href="../styles/ie8-grid-foundation-4.css" />
+	<link rel="stylesheet" href="../styles/jquery-ui-1.8.18.css" media="all" />
+	<link rel="stylesheet" href="../Select2-3.5.4/select2.css" />
+	<link rel="stylesheet" href="../styles/jquery.jgrowl-1.2.12.min.css" />
+	<link rel="stylesheet" href="../styles/main_new.css">
+	<noscript>Javascript is disabled<meta http-equiv="REFRESH" content="0; url=../EnableJavascript.htm"> </noscript>
+	<script src="../Scripts/vendor/custom.modernizr.js"></script>
+	<script src="../Scripts/jquery-1.9.1.min.js"></script>
+	<script src="../Scripts/foundation.min.js"></script>
+	<script src="../Scripts/jquery-ui-1.9.2.min.js"></script>
+	<script src="../Scripts/jquery.validate-1.13.1.min.js"></script>
+	<script src="../Select2-3.5.4/select2.min.js"></script>
+	<script src="../Scripts/jquery.jgrowl-1.2.12.min.js"></script>
+	<script src="../Scripts/moment-2.0.0.min.js"></script>
+	<script src="../Scripts/Master.js"></script>
+	<script>
+		window.SetPageTitle = function (val) { val = (val || ''); document.title = val; $PT.html(val); if (val) $("#Titles").show(); }
+		window.SetPageSubTitle = function (val) { val = (val || ''); $ST.html(val); if (val) $("#Titles").show(); }
+		function LoadEmbed() {
+			var EID = (QS.EID || "");
+			if (!EID) { alert("Invalid embed code!"); return; }
+			$.JSONPost('Main1.GetEmbedContent.json', { "EID": EID }, { "LoginHideSuccessMsg": true, "LoginSuccessCallbackFn": LoadEmbed }).done(function (data) {
+				document.title = (data.d.RetMsg || "");
+				if (data.d.RetData) { $("#Embed").html(data.d.RetData); }
+			});
+		}
+		function RecalcUI() { //rebuilds UI, sets a 200ms timer, calls itself again. Will stop calling after several times with no changes.
+			if (window.bptimer !== null) { clearTimeout(window.bptimer); }
+			if ((window.lastWindowHeight != $(window).height()) || (window.lastWindowWidth != $(window).width())) {
+				window.lastWindowHeight = $(window).height(); window.lastWindowWidth = $(window).width();
+				window.bptimerCnt = 0; //Still changing so we reset
+			}
+			if (window.bptimerCnt < 5) { //resizing code here
+				if (($ST.html()) && ($ST.html().length > 0)) {
+					$PT.css({ 'margin-bottom': '-1px', 'font-size': '2em', 'font-weight': 480 });
+				} else {
+					$PT.css({ 'margin-bottom': '5.5px', 'font-size': '3em', 'font-weight': 300 });
+				}
+				//Sizing based on window width
+				jQuery.event.trigger({ type: "RecalcUI" });
+				window.bptimerCnt += 1; window.bptimer = setTimeout(function () { RecalcUI(); }, 200);
+			}
+		}
+		$(window).resize(function () { window.bptimerCnt = 0; RecalcUI(); });
+		$(window).load(function () {
+			window.bptimer = null; window.bptimerCnt = 0; window.lastWindowHeight = -1; window.lastWindowWidth = -1;
+			window.$PT = $('#pagetitle'); window.$ST = $('#subtitle');
+			window.QS = $.parseQS();
+			SetPageTitle(QS.title);
+			SetPageSubTitle(QS.subtitle);
+			LoadEmbed();
+		});
+	</script>
+</head>
+<body>
+	<div id="Titles" class="row fullwidth" style="display: none;">
+		<h2 id="pagetitle" class="pagetitle" style="line-height: 1; margin-top: 4px; margin-bottom: -1px;"></h2>
+		<h4 style="margin-top: 0px; margin-bottom: 3px;"><em id="subtitle" class="subtitle"></em></h4>
+	</div>
+	<div id="Embed" class="row fullwidth"></div>
+</body>
+</html>

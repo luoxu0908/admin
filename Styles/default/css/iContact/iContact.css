@@ -1,0 +1,345 @@
+.CtcFloatRightCmd
+{
+	float:right;
+	margin-top:6px;
+	margin-left:12px;
+}
+
+.aODF
+{
+	background:aliceblue;
+	display:block;
+	padding:6px;
+	padding-bottom:3px;
+	padding-bottom:expression('6px');
+}
+
+.aODF:hover
+{
+	color:gold;
+}
+
+.CtCCardsOpts
+{
+	margin-bottom:6px;
+	margin-top:6px;
+}
+
+.CtCCardsOpts span
+{
+	white-space:nowrap;
+}
+
+.CtcDT
+{
+	border:solid 1px gainsboro;
+	height:60px;
+	width:170px;
+	overflow:hidden;
+}
+
+.CtcDTWithImage
+{
+	height:190px;
+}
+
+.CtcDTImage
+{
+	padding-left:5px;
+	height:130px;
+}
+
+.CtcDTImage img
+{
+	border:dashed 1px gainsboro;
+}
+
+.CtcDTLItem
+{
+	padding-left:6px;
+}
+
+.CtcSpace
+{
+	height:5px;
+	font-size:5px;
+}
+
+.CtcLItem Span
+{
+	white-space:nowrap;
+}
+
+.Ctc
+{
+	border:solid 1px gainsboro;
+	height:119px;
+	width:288px;
+}
+
+.CtcWithImage
+{
+	height:130px;
+	width:378px;
+}
+
+.CtcTitle
+{
+	background-image:url(../../images/bggray20.jpg);
+	padding-left:3px;
+	color:#6858FF;
+	text-decoration:underline;
+	font-weight:bold;
+	height: 17px;
+	cursor:hand;
+}
+
+.CtcLItem
+{
+	height:16px;
+	padding-left:6px;
+	width:72px;
+	white-space:nowrap;	
+}
+
+.CtcRItem
+{
+	height:16px;
+	padding-left:6px;
+}
+
+.CtcBottom, .CtcPadding
+{
+	font-size:0px;
+}
+
+.CtcImage
+{
+	width:85px;
+	padding-left:5px;
+}
+
+.RCWidth
+{
+	width:20px;
+}
+
+.OverdueET td, .TodayET td
+{
+	font-weight: bold;
+}
+
+.OverdueET
+{
+	background-color: #FFA07A;
+}
+
+.TodayET
+{
+	background-color: #FFDAB9;
+}
+
+.OverdueET, .TodayET
+{
+	float:left;
+	width:10px;
+}
+
+.OrgDetails
+{
+	width:74%;
+}
+
+.FloatR
+{
+	/*float:right;*/
+	position:absolute;
+	z-index: 199;
+	top:0;
+	right:0;
+	overflow:auto;
+	width:50%;
+}
+
+.AwayFromRight
+{
+	margin-right:10px;
+}
+
+.nobottom
+{
+	margin-bottom:0px;
+}
+
+FORM TD
+{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+.PaddingLeft20
+{
+	padding-left:30px;
+}
+
+.PaddingLeft40
+{
+	padding-left:40px;
+	padding-right:10px;
+}
+
+.PaddingLeft60
+{
+	padding-left:50px;
+	padding-right:10px;
+}
+
+.DisplayNone
+{
+	display:none;
+}
+
+.ANPit /*used in Add New Person.aspx*/
+{
+	font-weight:bold;
+	font-size:12px;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	border-bottom:solid 1px gainsboro;
+	color:slategray;
+}
+
+.small
+{
+	font-size:10px;
+	line-height:10px;
+	line-height:expression('normal');
+	margin-bottom:1px;
+}
+
+A:visited.nottoosmall, A:active.nottoosmall, A:hover.nottoosmall, A:link.nottoosmall
+{
+	font-size:11px;
+	height:22px;
+}
+
+.RightAlignText
+{
+	text-align: right;
+}
+
+.PaddingB
+{
+	padding-bottom:8px;
+}
+
+.SpecialTbl
+{
+	background:none url(../../images/iContact/transtile.gif);
+	border: inset 2px gray;
+	margin-bottom: 8px;
+}
+
+.SpecialTbl td
+{
+	padding: 0px 0px 1px 1px;
+	font-size: 11px;
+}
+
+.btnRevert
+{
+	margin-right:3px;
+}
+
+.Padleft, .Padleft td
+{
+	padding-left:5px;
+}
+
+.Padleft2
+{
+	padding-left:8px;
+}
+
+.HRef
+{
+	color:Blue;
+	cursor:hand;
+	text-decoration:underline;
+}
+
+A:visited.NText, A:hover.NText, A:active.NText, A:link.NText
+{
+	color:Black;
+	cursor:default;
+	text-decoration:none;
+}
+
+.pnContactDetails
+{
+	margin-top:5px;
+	overflow:auto;
+}
+
+a.ContactedDetails
+{
+	text-decoration:none;
+	display:block;
+	width:100%;
+	border:solid 1px black;
+	margin-bottom:-1px;
+	cursor:default;
+}
+.ContactedDetails div
+{
+	padding-top:5px;
+	padding-bottom:5px;
+	color:Black;
+	text-decoration:none;
+	font-size:11px;
+	cursor:default;
+}
+
+a:hover.ContactedDetails
+{
+	background-color:#ffffd0;
+	border:solid 1px blue;
+}
+
+.PartTitle
+{
+	padding-top:6px;
+	padding-left:4px;
+	vertical-align:top;
+}
+
+.PartText
+{
+	padding-left:10px;
+	white-space:nowrap;
+}
+
+.PTC1
+{
+	width:100px;
+}
+
+.OthDetails
+{
+	width:26%;
+	height:50%;
+	border:solid 1px gainsboro;
+	vertical-align:text-top;
+}
+
+.PartCtrlSpecial
+{
+	width:190px;
+}
+
+.PartAreaSpecial
+{
+	padding-bottom:5px;
+	padding-top:5px;
+	padding-left:5px;
+	padding-right:5px;
+}

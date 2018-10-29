@@ -1,0 +1,144 @@
+.CSCCalendar
+{
+   font-size: 8pt;
+   /*border-right: lightgrey ridge;
+   border-top: lightgrey ridge;
+   filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=3, OffY=3, Color= 'gray' , Positive= 'true' ) progid:DXImageTransform.Microsoft.Alpha( Opacity=100, FinishOpacity=20, Style=1, StartX=96, FinishX=100, StartY=0, FinishY=0) progid:DXImageTransform.Microsoft.Alpha( Opacity=100, FinishOpacity=20, Style=1, StartX=0, FinishX=0, StartY=97, FinishY=100);
+   border-left: lightgrey ridge;
+   border-bottom: lightgrey ridge;*/
+   filter:none;
+   font-family: Arial;
+   background-color: white;
+}
+
+.SD_OCCUPIED
+{
+   background-color: powderblue;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.SD_TodayOccupied
+{
+	background-color: powderblue;
+   cursor: pointer;
+   cursor: hand;
+   font-weight:bold;
+}
+
+#pnTabs
+{
+	/*z-index:103;
+	position:relative;
+	white-space:nowrap;
+	margin-top:5px;
+	/*line-height:25px;
+	line-height:expression('normal');*/
+	z-index:103;
+	white-space:nowrap;
+	margin-top:0px;
+	margin-bottom:1px;
+	/*padding-top:175px;*/
+	margin-right:10px
+}
+
+
+.outdated
+{
+	background-color:mistyrose;
+}
+
+.today
+{
+	background-color:powderblue;
+}
+
+.ontime
+{
+}
+
+.CSCAL
+{
+	padding-top:10px;
+	padding-left:15px;
+
+}
+
+.LeftCtrls
+{
+	padding-left:10px;
+	padding-right:10px;
+	padding-top: 180px;
+}
+
+.TDLeftCtrlGrp
+{
+	border-Top:solid 1px lightsteelblue;
+	border-left:solid 1px lightsteelblue;
+	border-right:solid 1px gainsboro;
+	border-bottom:solid 3px lightsteelblue;
+	background-color:aliceblue;
+	
+}
+
+.TDMidCtrlGrp
+{
+	padding-left:16px;
+	padding-right:16px;
+	padding-bottom:10px;
+	padding-top:10px;
+	border-Top:solid 1px lightsteelblue;
+	border-left:solid 1px white;
+	border-right:solid 1px lightsteelblue;
+	border-bottom:solid 3px lightsteelblue;
+	background-color:aliceblue;
+}
+
+.TDRightCtrlGrp
+{
+	padding-top:0px;
+	padding-left:16px;
+	padding-right:0px;
+}
+
+#TaskMain TD
+{
+	padding-top:1px;
+	padding-bottom:1px;
+}
+#rlbtnAddTask
+{
+	margin-bottom:5px;
+	height:14px;
+	
+}
+
+.QuickAddPanel
+{
+	border-bottom: solid 1px lightgrey ridge;
+	padding-left: 4px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	float:none;
+}
+
+.dgTask
+{
+	margin-top: 5px;
+
+}
+
+
+.QuickAddTitle
+{
+	Height: 15px;
+
+}
+
+.testg
+{
+	width:100%;
+}
+
+
+

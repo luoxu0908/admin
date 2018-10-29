@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<license version="1.1">
+  <Customer>
+    <name>advancedintellect-3589
+Paul Yeo   (Yeo, Paul)
+282A River Valley Road
+Singapore, 	 238323
+SG Singapore
++6567370321
+num:1</name>
+  </Customer>
+  <products>
+    <Product>
+      <name>aspNetMime</name>
+      <version>2</version>
+      <licensetype>developer</licensetype>
+      <expires>-1</expires>
+    </Product>
+  </products>
+  <LicenseInformation>
+    <Version>1.1</Version>
+    <H1>0</H1>
+    <H2>a8zkjvxC2B4lW9K2xc5iSw==</H2>
+  </LicenseInformation>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>NN/ys8QsuP0VQyKbBewvcMJWEys=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>L0ppvTmeQE+cLtSGhmruGITTZIAronMLZguLjKhp2mbGggZ++0M7KOQ7MYrjFrNp8rOZ8C2gw/aTRMC6zmDl9ib/qphpU1CA1JJsSSsla7jGUzhvzzAWQgwHeJB3tIW1Vk0sz+hQG+G4vca3/Re2yECnmTug/sOqQVDsOm/SItA=</SignatureValue>
+  </Signature>
+</license>

@@ -1,0 +1,22 @@
+﻿<div id="NavBar" class="large-12 columns" style="max-width:1280px; display:none;">
+	<input action="action" type="button" value="Back" class="abutton" onclick="window.history.go(-1); return false;" />
+</div>
+<div id="ResourceContent" class="large-12 columns" style="max-width:1280px;">
+</div>
+<script>
+	if (QS.ShowNav) { $('#NavBar').show() } else { $('#NavBar').hide() };
+	$.JSONPost('Main1.GetRefResourceID.json', { 'RefResID': (QS.RefResID || "") })
+		.done(function (data) {
+			$("#pagetitle").hide();
+			$('#ResourceContent').html(data.d.RetMsg);
+			var Title = ($('#ResourceContent h1:first').html() || "");
+			if (Title) {
+				window.SetPageTitle(Title, true);
+			} else { //final try
+				setTimeout(function () {
+					var Title = ($('#ResourceContent h1:first').html() || "");
+					if (Title) window.SetPageTitle(Title, true);
+				}, 1000);
+			}
+		});
+</script>

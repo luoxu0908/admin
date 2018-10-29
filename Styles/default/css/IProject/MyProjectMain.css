@@ -1,0 +1,127 @@
+.MyTitle1
+{
+	font-weight:bold;
+	font-size:12px;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding:2px;
+	padding-left:5px;
+	display:inline-block;
+	color:#575757;
+	color:Whitesmoke;
+}
+
+FORM TD
+{
+	font-size:11px;
+}
+
+A:hover
+{
+	color:darkorange;
+}
+
+.divSTR
+{
+	Float:right;
+}
+
+.divSTR, .divSTR SELECT
+{
+	font-size:10px;
+}
+
+.MydgTblA
+{
+	padding-top:8px;
+	padding-left:5px;
+	background-color:#F6F9FF;
+	overflow:auto;
+}
+
+.MydgHeaderA td
+{
+	font-size:11px;
+	font-weight:bold;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding:2px;
+	background-color:#575757;
+	color:whitesmoke;
+}
+
+.MydgItemA, .MydgAltItemA
+{
+	font-size:11px;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding:2px;
+	padding-left:4px;
+	color:#575757;
+}
+
+.MydgTBodyA
+{
+	overflow:auto;
+}
+
+.TDA
+{
+	border-right-style:solid;
+	border-right-color:ghostwhite;
+	border-right-width:1px;
+}
+
+.TDB
+{
+	border-right-style:solid;
+	border-right-color:#cfcfcf;
+	border-right-width:1px;
+}
+
+
+#pnlPaging, #pnlPaging select
+{
+	font-size: 10px;
+}
+
+body
+{
+	background-color:#F6F9FF;
+}
+
+#pnlPaging
+{	
+	/*filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFFFF', EndColorStr='#FFCFCFCF');*/
+	padding:0px;
+	padding-top:3px;
+	padding-left:2px;
+	padding-right:2px;
+	background: url(images/pnlpgbg.gif);
+}
+
+a:hover.PagingEnabled, a:visited.PagingEnabled, a:link.PagingEnabled, a:active.PagingEnabled
+{
+	font-family: Verdana;
+	color: white;
+	border:solid 1px white;
+	padding-top:0px;
+	padding-left:1px;
+	padding-right:1px;
+	padding-bottom:1px;
+	text-decoration:none;
+	display:inline-block;
+	font-size:8px;
+}
+
+a:hover.PagingDisabled, a:visited.PagingDisabled, a:link.PagingDisabled, a:active.PagingDisabled
+{
+	font-family: Verdana;
+	border:solid 1px white;
+	padding-top:0px;
+	padding-left:1px;
+	padding-right:1px;
+	padding-bottom:1px;
+	cursor:default;
+	text-decoration:none;
+	color:#A0A0A0;
+	display:inline-block;
+	font-size:8px;
+}

@@ -1,0 +1,146 @@
+/* Artfully masterminded by ZURB  */
+
+/* -------------------------------------------------- 
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Group Registration Page
+:: Grouping Page
+:: eCollection Page
+:: Slickgrid
+*/
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+.hide { display: none; }
+.nonvisible { visibility: hidden; }
+.required { color: Red; }
+.center { text-align: center; }
+.middle { vertical-align: middle; }
+select 
+{
+  background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  border-radius: 2px 2px 2px 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+  color: rgba(0, 0, 0, 0.75);
+  display: block;
+  font-family: inherit;
+  font-size: 14px;
+  height: 32px;
+  margin: 0 0 12px;
+  padding: 6px;
+  width: 100%;
+}
+.ui-widget { font-size: 0.9em !important; font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif !important; }
+.inline { display: inline; float: left; }
+br.clearboth { clear: both; }
+.ui-datepicker .ui-datepicker-title select { display: inline; }
+.instruction { padding-left: 10px; }
+ul.breadcrumbs { background-color: #FFA500; border-right:0 !important; }
+.current { color: black !important; font-weight: bold !important; }
+ul.breadcrumbs li a { color: #000 !important; }
+#faqDiv { background-color:#FFA500; text-align:right;display: block;padding: 6px 10px 7px;margin-left:0px;border-right: 1px solid #E9E9E9;border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;border-radius: 2px 2px 2px 2px; }
+[class*="foundicon-"]:before { font-size: 26px; }
+input.lightblue { background-color: #79D3CE; }
+
+/* -----------------------------------------
+   Group Registration Page
+----------------------------------------- */
+
+.frmtitle { text-align: left; border-bottom: 1px solid #DDDDDD; }
+.uparrow { url('styles/images/up-arrow.png'); }
+.detaildiv, .grpdiv, .agreementdiv
+{
+  border: 1px solid #DDDDDD;
+  border-radius: 3px 3px 3px 3px;
+  padding: 12px 12px 0;
+  margin-bottom: 20px;
+}
+
+/* -----------------------------------------
+   Grouping Page
+----------------------------------------- */
+
+.roomer { height: 80px; border: 1px solid #000; border-radius: 2px 2px 2px 2px; padding: 10px; text-align: center; vertical-align: middle; }
+.namediv { border: 1px solid #DDDDDD; padding: 7px;  border-radius: 3px 3px 3px 3px; }
+.user { padding: 10px; margin: 10px 0; border-radius: 4px; }
+.ui-droppable-disabled { opacity: 1.0 !important; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)" !important; filter: alpha(opacity=100) !important; -moz-opacity: 1 !important; -khtml-opacity: 1 !important; }
+#groupfrm { width: 650px; }
+.userdiv 
+{
+  border: 1px solid #DDDDDD;
+  border-radius: 3px 3px 3px 3px;
+  margin: 18px 0;
+  padding: 12px 12px 0;
+  height:80px;
+  text-align: center;
+  vertical-align: middle;
+}
+div.adult 
+{
+  border: 1px solid #000 !important;
+  background: rgb(255, 102, 102);
+  background: rgba(255, 102, 102, 0.5);
+}
+div.child, div.cwb, div.cwob
+{
+  border: 1px solid #000 !important;
+  background: rgb(102, 255, 178);
+  background: rgba(102, 255, 178, 0.5);
+}
+div.inf, div.infant
+{
+  border: 1px solid #000 !important;
+  background: rgb(102, 178, 255);
+  background: rgba(102, 178, 255, 0.5);
+}
+div.yth, div.youth
+{
+  border: 1px solid #000 !important;
+  background: rgb(252, 214, 98);
+  background: rgba(252, 214, 98, 0.5);
+}
+div.nwa
+{
+  border: 1px solid #000 !important;
+  background: rgb(178, 102, 255);
+  background: rgba(178, 102, 255, 0.5);
+}
+ul.breadcrumbs li:before 
+{
+  content: ">";
+}
+
+
+/* -----------------------------------------
+   eCollection Page
+----------------------------------------- */
+
+#paymentfrm { width: 850px; overflow: hidden; }
+
+
+/* -----------------------------------------
+   Slickgrid
+----------------------------------------- */
+
+#myGrid * {
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+#myGrid [class*="column"]:last-child {
+  float: none;
+}
+.slick-header-column {
+   -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+}
+.slick-header
+{
+  text-align: center;
+}
+.slick-column-name { vertical-align: middle; }

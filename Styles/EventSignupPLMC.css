@@ -1,0 +1,155 @@
+﻿@import url('http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic');
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800');
+
+/* general styling */
+
+body 
+{
+  font-size: 12px;
+  font-family: 'Droid Serif', serif;
+  line-height: 1.4em;
+}
+
+
+h1, h2, h3, h4, h5, h6, p { margin-left: 10px; }
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Open Sans', sans-serif; }
+
+#wrapper 
+{
+  width: 960px;
+  margin: 0 auto;
+}
+
+div.inline 
+{
+  display: inline;
+  float: left;
+  padding: 7px 10px;
+}
+
+div.rinline
+{
+  display: inline;
+  float:right;
+  padding: 7px 10px;
+}
+
+input[type=text] { width: 100%; }
+.hide { display: none; visibility: hidden; }
+.show { display: block; visibility: visible; }
+.right { text-align: right; }
+.center { text-align: center; }
+.left { text-align: left; }
+.one { width: 10%; }
+.two { width: 20%; }
+.three { width: 30%; }
+.four { width: 40%; }
+.six { width: 60%; }
+.seven { width: 70%; }
+.nine { width: 90%; }
+.ten { width: 100%; }
+br.clearboth { clear: both; }
+
+/* steps tabs styling */
+
+div#tabs div 
+{
+  width: 318px;
+  padding: 3px 0;
+}
+
+#tabs div { background-color: #F0F0F0; }
+#tabs div.sel { background-color: #D1D1D1; }
+
+#step1, #step2, #step3 
+{
+  border: 1px solid #000;
+}
+
+#step1 
+{
+  border-radius: 4px 0 0 0;
+  -moz-border-radius : 4px 0 0 0;
+  -webkit-border-radius: 4px 0 0 0;
+}
+
+#step3
+{
+  border-radius: 0 4px 0 0;
+  -moz-border-radius : 0 4px 0 0;
+  -webkit-border-radius: 0 4px 0 0;
+}
+
+ul#steps 
+{
+  list-style: none;
+  width: 100%;
+  border: 1px solid #000;
+  border-radius: 4px 4px 0 0;
+  -moz-border-radius : 4px 4px 0 0;
+  -webkit-border-radius: 4px 4px 0 0;
+  padding: 0;
+}
+
+ul#steps li 
+{
+  display:inline-block;
+  width: 33%;
+}
+
+
+/* main content styling */
+
+#main 
+{
+  padding-top: 15px;
+  border: 1px solid #000;
+  border-radius: 0 0 4px 4px;
+  -moz-border-radius : 0 0 4px 4px;
+  -webkit-border-radius: 0 0 4px 4px;
+  padding: 3px;
+}
+
+.infoheader 
+{
+  border: 1px solid #000;
+  padding: 7px 5px;
+  margin: 3px;
+}
+
+.user 
+{
+  border: 1px solid #000;
+  border-radius: 4px;
+  -moz-border-radius : 4px;
+  -webkit-border-radius: 4px;
+  padding: 3px;
+  display:inline-block;
+  margin: 5px 3px;
+}
+
+#applicant-list { min-height: 600px; border-right: 1px solid #000; }
+
+.groupdiv 
+{
+  border: 1px solid #000;
+  border-radius: 4px;
+  -moz-border-radius : 4px;
+  -webkit-border-radius: 4px;
+  padding: 3px;
+  width: 100%;
+  height: 140px;
+}
+
+/* jquery ui styling */
+
+.ui-widget 
+{
+  font-size: 1em;
+}
+
+.ui-accordion .ui-accordion-header-active
+{
+  padding: 6px;
+}

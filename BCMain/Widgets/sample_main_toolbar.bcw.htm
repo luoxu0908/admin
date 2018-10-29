@@ -1,0 +1,12 @@
+﻿<div id="MTool" class="large-12 columns">
+	<button onclick="refreshData(); return false;">Search</button>
+	<button>Export XLSX</button>
+</div>
+<script>
+	//bind to custom togShowHide event
+	var $MTool = $('#MTool');
+	$(document).on("togShowHide", function (e) {
+		if (e.Show) { $MTool.show(); } else { $MTool.hide(); }
+	});
+	function refreshData() { jQuery.event.trigger({ type: "refreshSG" }); }
+</script>

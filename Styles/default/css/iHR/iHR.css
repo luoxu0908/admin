@@ -1,0 +1,47 @@
+table.RadCalendar_Default *
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+table.RadCalendarMonthView_Default *
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+table.RadCalendarTimeView_Default *
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+.RadCalendarMonthView_Default #rcMView_Today, #rcMView_OK, #rcMView_Cancel
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+html body form .RadInput_Default .riTextBox, .RadComboBox_Default .rcbInputCell .rcbInput
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+.Hide
+{
+  display: none;
+}
+.Req
+{
+  color: Red;
+}
+.NoBackground
+{
+  background-image:none;
+}
+.MTabLinkPanel_iHR
+{
+  background-image:none;
+	background-color:#F5F5F5;
+	border:none;
+	position:relative;
+	overflow:hide;
+	/*width:100%;*/
+	-moz-box-sizing: border-box; /*BLESS MY TEN TOES!!! IT WORKS!!! */
+}
+.GridTitle
+{
+  font-size:12px;
+  font-weight:bold;
+}

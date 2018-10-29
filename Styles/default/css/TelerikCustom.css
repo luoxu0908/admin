@@ -1,0 +1,49 @@
+table.RadCalendar_Default *
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+table.RadCalendarMonthView_Default *
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+table.RadCalendarTimeView_Default *
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+.RadCalendarMonthView_Default #rcMView_Today, #rcMView_OK, #rcMView_Cancel
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+html body form .RadInput_Default .riTextBox, .RadComboBox_Default .rcbInputCell .rcbInput
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+.RadUpload_Web20 *
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+.RadUploadProgressArea_Web20 .ruProgress
+{
+  background-image: none;
+  padding: 15px 0 0 0;
+}
+.RadUpload_Default *
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+.RadUploadProgressArea_Default .ruProgress
+{
+  background-image: none;
+  padding: 15px 0 0 0;
+}
+.RadUpload_Default .ruButton
+{
+  font: 11px arial,tahoma,sans-serif;
+}
+.RadUpload_Default, .RadUpload_Default a, .RadUpload_Default input, .RadUploadProgressArea_Default, .RadUploadProgressArea_Default input {
+  font: 11px arial,tahoma,sans-serif;
+}
+.RadDatePicker_Default *
+{
+  text-align:right;
+}

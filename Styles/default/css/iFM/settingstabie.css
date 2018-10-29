@@ -1,0 +1,60 @@
+			
+			.tablist {
+				padding-top:4px;
+			}
+			
+			.tabs_TabActive {
+				background-color: #F7F7F7;
+				border-left:1px solid #999999;
+				border-top:1px solid #999999;
+				border-right:1px solid #999999;
+				
+				padding-top:5px;
+				padding-left:20px;
+				padding-right:20px;
+				padding-bottom:5px;
+			
+				margin-top:-4px;
+				margin-left:-1px;
+				height: 29px;
+				
+				background-image:url(activetabback.gif);
+				background-repeat:repeat-x;
+				font-weight:bold;
+				
+				float:left;
+				clear: none;
+				/*z-index:200;*/
+			}
+			
+			.tabs_Tab,
+			.tabs_TabHover {
+				background-color: #E5E5E5;
+				border-left:1px solid #999999;
+				border-top:1px solid #999999;
+				border-right:1px solid #999999;
+				border-bottom:1px solid #999999;
+				
+				padding-top:5px;
+				padding-left:20px;
+				padding-right:20px;
+				padding-bottom:5px;
+				
+				margin-top:-1px;
+				margin-left:-1px;
+				height: 26px;
+				
+				background-repeat:repeat-x;
+				background-position:top;
+				
+				float:left;
+				clear: none;
+			}
+			
+			.tabs_Tab {
+				background-image:url(tabback.gif);
+			}
+			
+			.tabs_TabHover {
+				background-image:url(hovertabback.gif);
+			}

@@ -1,0 +1,182 @@
+#pnTabs, #pnTabs .tablink, .pnTabs
+{
+	z-index:103;
+	position:relative;
+	white-space:nowrap;
+	margin-top:4px;
+	/*line-height:25px;
+	line-height:expression('normal');*/
+}
+
+#pnTabs, #pnTabs .tablink
+{
+	z-index:103;
+	position:relative;
+	white-space:nowrap;
+	margin-top:5px;
+}
+
+
+.tablink, .selectedtablink
+{
+	font-size:11px;
+}
+
+A:visited.tablink, A:active.tablink, A:link.tablink
+{
+	text-decoration: none;
+	font-weight:800;
+	padding-bottom:3px;
+	padding-top:1px;
+	padding-left:5px;
+	padding-right:12px;
+	color: #787878;
+	background-color: none;
+	background-image: url(../images/tabbg.jpg);
+	background-repeat: repeat-x;
+	background-position: 0% 100%;
+	border:solid 1px lightslategray;
+	border-bottom:none;
+	line-height:20px;
+	line-height:expression('normal');
+	height:20px;
+	top:-1;
+}
+
+A:hover.tablink
+{
+	color: #738FDF;
+}
+
+A:visited.selectedtablink, A:active.selectedtablink, A:link.selectedtablink,A:hover.selectedtablink,  .selectedtablink
+{
+	text-decoration: none;
+	font-weight:800;
+	font-size:13px;
+	padding-top:2px;
+	padding-bottom:3px;
+	padding-left:5px;
+	padding-right:12px;
+	background-color: none;
+	background-image: url(../images/tabbg.jpg);
+	background-repeat: repeat-x;
+	background-position: 0% 100%;
+	border:solid 1px lightslategray;
+	border-right:solid 1px lightslategray;
+	border-bottom:none;
+	height:25px;
+	color:#333333;
+	cursor:default;
+}
+
+.TabLinkPanel
+{
+	padding-top:5px;
+	padding-bottom:12px;
+	padding-left:8px;
+	padding-right:12px;
+	background-color:#F5F5F5;
+	border:solid 1px lightslategray;
+	position:relative;
+	overflow:auto;
+	margin-bottom:5px;
+	top:-1px;
+	width:100%;
+	display:table; /* TO REMOVE SCROLL BAR FROM CHROME & IE */
+	z-index:102;
+	-moz-box-sizing: border-box; /*BLESS MY TEN TOES!!! IT WORKS!!! */
+}
+
+.MTablinkPanel
+{
+	background-color:#F5F5F5;
+	border:none;
+	position:relative;
+	overflow:auto;
+	width:100%;
+	display:table; /* TO REMOVE SCROLL BAR FROM CHROME & IE */
+	-moz-box-sizing: border-box; /*BLESS MY TEN TOES!!! IT WORKS!!! */
+}
+
+.TabBG
+{
+    background-color:#F5F5F5;
+}
+
+.pnMTabs
+{
+	z-index:102;
+	position:relative;
+	top:3px;
+	width:100%;
+}
+.pnMTabs td, .pnLastMTabs td
+{
+	padding-right:5px;
+}
+
+.pnLastMTabs
+{
+	z-index:103;
+	position:relative;
+	width:100%;
+}
+
+A:visited.MTablink, A:active.MTablink, A:link.MTablink
+{
+	white-space:nowrap;
+	text-align:center;
+	margin-top:3px;
+	margin-bottom:1px;
+	text-decoration: none;
+	font-weight:800;
+	padding-bottom:3px;
+	padding-top:3px;
+	padding-left:5px;
+	padding-right:12px;
+	color: #787878;
+	background-color: none;
+	background-image: url(../images/tabbg.jpg);
+	background-repeat: repeat-x;
+	background-position: 0% 100%;
+	border:solid 1px lightslategray;
+	border-bottom:none;
+	height:auto;
+	height:expression('20px');
+	width:auto;
+	display:block;
+}
+
+A:hover.MTablink
+{
+	color: #738FDF;
+}
+
+
+A:visited.SelectedMTablink, A:active.SelectedMTablink, A:link.SelectedMTablink,A:hover.SelectedMTablink
+{
+	text-align:center;
+	text-decoration: none;
+	font-weight:800;
+	font-size:13px;
+	padding-top:5px;
+	padding-top:expression('2px');
+	padding-bottom:3px;
+	padding-left:5px;
+	padding-right:12px;
+	background-color: none;
+	background-image: url(../images/tabbg.jpg);
+	background-repeat: repeat-x;
+	background-position: 0% 100%;
+	border:solid 1px lightslategray;
+	border-bottom:none;
+	height:25px;
+	color:#333333;
+	cursor:default;
+	width:auto;
+	display:block;
+}
+#pnlFilter
+{
+	padding-top:6px;	
+}

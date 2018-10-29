@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+	<title>Community Outreach</title>
+	<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+	<style type="text/css">
+		.NoTop { margin: 0 0 0 0; }
+		.STop { margin: 6px 0 0 0; }
+		.MTop { margin: 12px 0 0 0; }
+		.LTop { margin: 18px 0 0 0; }
+		.lstupd { font-style:italic; font-size: smaller; }
+		.Upd { color: Green; }
+		.NoUpd { color: Red; }
+	</style>
+	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+	<script type="text/javascript" src="../Scripts/CommOutreach.js"></script>
+	<script type="text/javascript">
+		//Table structure
+		//Load / Save
+		//
+		window.MyRoleID = 0; //Person logged in
+		window.MyName = ''; window.AddrPart = ''; window.PostalCode = ''; window.GroupingCode = ''; window.VisitID = 0;
+		window.ShortDescription = ''; window.VisitRemarks = ''; window.UnitSelIdx = -1; window.UnitData = {};
+		window.Language = "Eng";
+		//window.UnitData.Rows = [{"UnitNo": "12-197", "Title": "Mr", "FirstName": "Lenny", "LastName": "Choo", "Sex": "M", "Race": "Chinese", "Religion": "Christian", "ContactNo": "91234567", "Email": "lenny@myemail.com", "SpokenLang": "English", "FamilyGroup": "Adults,Children", "Responsiveness": "N", "Remarks": "", "VisitResult": "", "LastModifiedBy_Name": "Lee Kok Meng", "LastModifiedDate": "2013-02-14T00:00:00.000"},
+		//{"UnitNo": "12-198", "Title": "Mr", "FirstName": "Mark", "LastName": "Lim", "Sex": "M", "Race": "Chinese", "Religion": "", "ContactNo": "", "Email": "", "SpokenLang": "English", "FamilyGroup": "Adults", "Responsiveness": "N", "Remarks": "", "VisitResult": "", "LastModifiedBy_Name": "Lee Kok Meng", "LastModifiedDate": "2013-02-14T00:00:00.000"}];
+
+		$(document).ready(function () { //this is only called on first load
+			//first time load so definitely not logged in - init
+			$.mobile.changePage("#login", { transition: "slideup" });
+			$('#ValidateAccess').on('click', '', function (event) { RefreshVisitList(); });
+			$('#UnitListing_Refresh').on('click', '', function (event) {
+				//save scroll position first
+				window.scrollPosTop = $(window).scrollTop();
+				RefreshVisitList();
+			});
+			$('#UnitListing').on('pagebeforeshow', '', function (event) { RebuildUnitListing(); });
+			$('#UnitListing').on('pageshow', '', function (event) { if (window.scrollPosTop) { $(jQuery.browser.webkit ? "body" : "html").scrollTop(window.scrollPosTop); } });
+			$('#UnitList').on('click', 'a', function (event) {
+				//save scroll position first
+				window.scrollPosTop = $(window).scrollTop();
+				window.UnitSelIdx = parseInt($(this).attr('idx'), 10);
+				$.mobile.changePage("#UnitDetails", { transition: "slide" });
+			});
+			$("#FilterAll").on('click', '', function (event) { $(".ui-input-search .ui-input-text").val(""); RebuildUnitListing(); });
+			$("#FilterPending").on('click', '', function (event) { $(".ui-input-search .ui-input-text").val("(pending)"); RebuildUnitListing(); });
+			$("#FilterVisited").on('click', '', function (event) { $(".ui-input-search .ui-input-text").val("(visited)"); RebuildUnitListing(); });
+			$('#login').on('pagebeforeshow', '', function (event) { $("#GroupingCode").val(""); $("#ID").val(""); $("#AccessKey").val(""); });
+			$('#UnitDetails').on('pagebeforeshow', '', function (event) { RefreshUnitDetails(); });
+			$('#btnCancel').on('click', '', function (event) {
+				$.mobile.changePage("#UnitListing", { transition: "slide", reverse: true });
+			});
+			$('#btnUpdate').on('click', '', function (event) { UpdateUnitDetails(); });
+		});
+	</script>
+</head> 
+<body>
+	<div data-role="page" id="login">
+		<div data-role="header" align="center">
+			<a href="#" class="ui-disabled">English</a>
+			<h2 style="white-space:normal">Login</h2>
+			<a href="CO_CN.htm" data-ajax="false">&nbsp;华&nbsp;语&nbsp;</a>
+		</div>
+		<div data-role="content">
+			<div data-role="fieldcontain" class="ui-hide-label">
+				<label for="GroupingCode">Postal Code:</label>
+				<input type="text" name="GroupingCode" id="GroupingCode" value="" placeholder="Postal Code"/><br /><br />
+				<label for="ID">NRIC/FIN:</label>
+				<input type="text" name="ID" id="ID" value="" placeholder="NRIC/FIN"/><br /><br />
+				<label for="AccessKey">Password:</label>
+				<input type="text" name="AccessKey" id="AccessKey" value="" placeholder="Password"/>
+			</div>
+			<button id="ValidateAccess" type="button">Submit</button>
+		</div>
+	</div>
+
+	<div data-role="page" id="UnitListing">
+		<div data-role="header">
+			<a href="#login" data-icon="back">Logout</a>
+			<h2 id="UnitListingAddrPart" style="white-space:normal"></h2>
+			<a id="UnitListing_Refresh" href="#" data-icon="refresh">Refresh</a>
+			<div data-role="navbar">
+				<ul>
+					<li><a id="FilterAll">Show All</a></li>
+					<li><a id="FilterPending">Pending</a></li>
+					<li><a id="FilterVisited">Visited</a></li>
+				</ul>
+			</div><!-- /navbar -->		
+		</div>
+		<div data-role="content">
+			<ul id="UnitList" data-role="listview" data-filter="true"></ul>
+		</div>
+	</div>
+
+	<div data-role="page" id="UnitDetails">
+		<div data-role="header">
+			<h2 style="white-space:normal" id="unit_header"></h2>
+		</div>
+		<div data-role="content">
+			<div id="UnitDetails_LastUpd" style="float:right;"></div>
+			<div data-role="fieldcontain" class="ui-hide-label STop">
+				<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+					<div data-role="collapsible" data-collapsed="false" data-mini="true" data-theme="b">
+						<h3 style="margin: 0 0 0 0;">Resident:</h3>
+						<div class="STop">
+							<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+								<div>
+									<label><input type="radio" name="Resp" id="Resp_R" value="R" />Rahab</label>
+									<label><input type="radio" name="Resp" id="Resp_N" value="N" />Neutral</label>
+									<label><input type="radio" name="Resp" id="Resp_U" value="U" />Unfriendly</label>
+								</div>
+							</fieldset>
+						</div>
+						<div class="MTop">
+							<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+								<div>
+									<label><input type="radio" name="Sal" id="Sal_Mr" value="Mr" />Mr</label>
+									<label><input type="radio" name="Sal" id="Sal_Mrs" value="Mrs" />Mrs</label>
+									<label><input type="radio" name="Sal" id="Sal_Miss" value="Miss" />Miss</label>
+									<label><input type="radio" name="Sal" id="Sal_Mdm" value="Mdm" />Mdm</label>
+								</div>
+							</fieldset>
+						</div>
+						<div class="STop">
+							<input type="text" name="LastName" id="LastName" placeholder="- Surname/Family Name -"/>
+						</div>
+						<div class="STop">
+							<input type="text" name="FirstName" id="FirstName" placeholder="- Given Name -"/>
+						</div>
+						<div class="STop">
+							<input type="text" name="ContactNo" id="ContactNo" placeholder="- Contact Nos (Tel / Hph) -"/>
+						</div>
+						<div class="STop">
+							<input type="text" name="Email" id="Email" placeholder="- Email -"/>
+						</div>
+						<div class="STop">
+							<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+								<div>
+									<label><input type="radio" name="Sex" id="Sex_M" value="M" />Male</label>
+									<label><input type="radio" name="Sex" id="Sex_F" value="F" />Female</label>
+								</div>
+							</fieldset>
+						</div>
+						<div class="STop">
+							<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+								<div>
+									<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_C" value="Child" />Child (11 yrs &amp; below)</label>
+									<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_Y" value="Youth" />Youth (12 - 20 yrs)</label>
+									<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_YWA" value="YWA" />Young Working Adult (20s &amp; 30s)</label>
+									<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_A" value="Adult" />Adult</label>
+									<label><input type="checkbox" name="FamilyGroup" id="FamilyGroup_E" value="Elderly" />Elderly (60 yrs &amp; above)</label>
+								</div>
+							</fieldset>
+						</div>
+						<div data-role="fieldcontain" class="ui-hide-label STop">
+							<h4 style="margin: 0 0 0 0;">Demographics:</h4>
+							<div class="STop">
+								<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+									<div>
+										<label><input type="radio" name="Religion" id="Rel_C" value="Christian" />Christian</label>
+										<label><input type="radio" name="Religion" id="Rel_B" value="Buddhist" />Buddhist</label>
+										<label><input type="radio" name="Religion" id="Rel_T" value="Taoist" />Taoist</label>
+										<label><input type="radio" name="Religion" id="Rel_M" value="Muslim" />Muslim</label>
+										<label><input type="radio" name="Religion" id="Rel_H" value="Hindu" />Hindu</label>
+										<label><input type="radio" name="Religion" id="Rel_O" value="Other" />Other</label>
+										<label><input type="radio" name="Religion" id="Rel_X" value="NoRel" />None</label>
+									</div>
+								</fieldset>
+							</div>
+							<div class="STop">
+								<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+									<div>
+										<label><input type="radio" name="Race" id="Race_C" value="Chinese" />Chinese</label>
+										<label><input type="radio" name="Race" id="Race_M" value="Malay" />Malay</label>
+										<label><input type="radio" name="Race" id="Race_I" value="Indian" />Indian</label>
+										<label><input type="radio" name="Race" id="Race_E" value="Eurasian" />Eurasian</label>
+										<label><input type="radio" name="Race" id="Race_O" value="Other" />Other</label>
+									 </div>
+								</fieldset>
+							</div>
+						</div>
+						<div data-role="fieldcontain" class="ui-hide-label STop">
+							<h4 style="margin: 0 0 0 0;">Spoken Languages:</h4>
+							<div class="STop">
+								<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+									 <div>
+										 <label><input type="checkbox" name="SLang" id="SL_Eng" value="English" />English</label>
+										 <label><input type="checkbox" name="SLang" id="SL_Mand" value="Mandarin" />Mandarin</label>
+										 <label><input type="checkbox" name="SLang" id="SL_Hok" value="Hokkien" />Hokkien</label>
+										 <label><input type="checkbox" name="SLang" id="SL_Teo" value="Teochew" />Teochew</label>
+										 <label><input type="checkbox" name="SLang" id="SL_Can" value="Cantonese" />Cantonese</label>
+										 <label><input type="checkbox" name="SLang" id="SL_Mal" value="Malay" />Malay</label>
+										 <label><input type="checkbox" name="SLang" id="SL_Tam" value="Tamil" />Tamil</label>
+										 <label><input type="checkbox" name="SLang" id="SL_Oth" value="Other" />Other</label>
+									 </div>
+								</fieldset>
+							</div>
+						</div>
+						<div data-role="fieldcontain" class="ui-hide-label STop">
+							<h4 style="margin: 0 0 0 0;">Follow-up Required:</h4>
+							<div class="STop">
+								<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+									 <div>
+										 <label><input type="checkbox" name="Foll" id="Checkbox1" value="Salvation" />Salvation</label>
+										 <label><input type="checkbox" name="Foll" id="Checkbox2" value="Healing" />Healing</label>
+										 <label><input type="checkbox" name="Foll" id="Checkbox3" value="FinAid" />Financial Assistance</label>
+										 <label><input type="checkbox" name="Foll" id="Checkbox8" value="Other" />Other</label>
+									 </div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+
+					<div data-role="collapsible" data-mini="true" data-theme="b">
+						<h3 style="margin: 0 0 0 0;">Additional Resident</h3>
+						<div class="STop">
+							<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+								<div>
+									<label><input type="radio" name="Resp" id="Radio1" value="R" />Rahab</label>
+									<label><input type="radio" name="Resp" id="Radio2" value="N" />Neutral</label>
+									<label><input type="radio" name="Resp" id="Radio3" value="U" />Unfriendly</label>
+								</div>
+							</fieldset>
+						</div>
+						<div class="MTop">
+							<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+								<div>
+									<label><input type="radio" name="Sal" id="Radio4" value="Mr" />Mr</label>
+									<label><input type="radio" name="Sal" id="Radio5" value="Mrs" />Mrs</label>
+									<label><input type="radio" name="Sal" id="Radio6" value="Miss" />Miss</label>
+									<label><input type="radio" name="Sal" id="Radio7" value="Mdm" />Mdm</label>
+								</div>
+							</fieldset>
+						</div>
+						<div class="STop">
+							<input type="text" name="LastName" id="Text1" placeholder="- Surname/Family Name -"/>
+						</div>
+						<div class="STop">
+							<input type="text" name="FirstName" id="Text2" placeholder="- Given Name -"/>
+						</div>
+						<div class="STop">
+							<input type="text" name="ContactNo" id="Text3" placeholder="- Contact Nos (Tel / Hph) -"/>
+						</div>
+						<div class="STop">
+							<input type="text" name="Email" id="Text4" placeholder="- Email -"/>
+						</div>
+						<div class="STop">
+							<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+								<div>
+									<label><input type="radio" name="Sex" id="Radio8" value="M" />Male</label>
+									<label><input type="radio" name="Sex" id="Radio9" value="F" />Female</label>
+								</div>
+							</fieldset>
+						</div>
+						<div class="STop">
+							<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+								<div>
+									<label><input type="checkbox" name="FamilyGroup" id="Checkbox4" value="Child" />Child (11 yrs &amp; below)</label>
+									<label><input type="checkbox" name="FamilyGroup" id="Checkbox5" value="Youth" />Youth (12 - 20 yrs)</label>
+									<label><input type="checkbox" name="FamilyGroup" id="Checkbox6" value="YWA" />Young Working Adult (20s &amp; 30s)</label>
+									<label><input type="checkbox" name="FamilyGroup" id="Checkbox7" value="Adult" />Adult</label>
+									<label><input type="checkbox" name="FamilyGroup" id="Checkbox9" value="Elderly" />Elderly (60 yrs &amp; above)</label>
+								</div>
+							</fieldset>
+						</div>
+						<div data-role="fieldcontain" class="ui-hide-label STop">
+							<h4 style="margin: 0 0 0 0;">Demographics:</h4>
+							<div class="STop">
+								<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+									<div>
+										<label><input type="radio" name="Religion" id="Radio10" value="Christian" />Christian</label>
+										<label><input type="radio" name="Religion" id="Radio11" value="Buddhist" />Buddhist</label>
+										<label><input type="radio" name="Religion" id="Radio12" value="Taoist" />Taoist</label>
+										<label><input type="radio" name="Religion" id="Radio13" value="Muslim" />Muslim</label>
+										<label><input type="radio" name="Religion" id="Radio14" value="Hindu" />Hindu</label>
+										<label><input type="radio" name="Religion" id="Radio15" value="Other" />Other</label>
+										<label><input type="radio" name="Religion" id="Radio16" value="NoRel" />None</label>
+									</div>
+								</fieldset>
+							</div>
+							<div class="STop">
+								<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+									<div>
+										<label><input type="radio" name="Race" id="Radio17" value="Chinese" />Chinese</label>
+										<label><input type="radio" name="Race" id="Radio18" value="Malay" />Malay</label>
+										<label><input type="radio" name="Race" id="Radio19" value="Indian" />Indian</label>
+										<label><input type="radio" name="Race" id="Radio20" value="Eurasian" />Eurasian</label>
+										<label><input type="radio" name="Race" id="Radio21" value="Other" />Other</label>
+									 </div>
+								</fieldset>
+							</div>
+						</div>
+						<div data-role="fieldcontain" class="ui-hide-label STop">
+							<h4 style="margin: 0 0 0 0;">Spoken Languages:</h4>
+							<div class="STop">
+								<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+									 <div>
+										 <label><input type="checkbox" name="SLang" id="Checkbox10" value="English" />English</label>
+										 <label><input type="checkbox" name="SLang" id="Checkbox11" value="Mandarin" />Mandarin</label>
+										 <label><input type="checkbox" name="SLang" id="Checkbox12" value="Hokkien" />Hokkien</label>
+										 <label><input type="checkbox" name="SLang" id="Checkbox13" value="Teochew" />Teochew</label>
+										 <label><input type="checkbox" name="SLang" id="Checkbox14" value="Cantonese" />Cantonese</label>
+										 <label><input type="checkbox" name="SLang" id="Checkbox15" value="Malay" />Malay</label>
+										 <label><input type="checkbox" name="SLang" id="Checkbox16" value="Tamil" />Tamil</label>
+										 <label><input type="checkbox" name="SLang" id="Checkbox17" value="Other" />Other</label>
+									 </div>
+								</fieldset>
+							</div>
+						</div>
+						<div data-role="fieldcontain" class="ui-hide-label STop">
+							<h4 style="margin: 0 0 0 0;">Follow-up Required:</h4>
+							<div class="STop">
+								<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+									 <div>
+										 <label><input type="checkbox" name="Foll" id="Checkbox18" value="Salvation" />Salvation</label>
+										 <label><input type="checkbox" name="Foll" id="Checkbox19" value="Healing" />Healing</label>
+										 <label><input type="checkbox" name="Foll" id="Checkbox20" value="FinAid" />Financial Assistance</label>
+										 <label><input type="checkbox" name="Foll" id="Checkbox21" value="Other" />Other</label>
+									 </div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div data-role="fieldcontain" class="ui-hide-label MTop">
+				<h3 style="margin: 0 0 0 0;">Remarks:</h3>
+				<div class="STop">
+					<textarea name="Remarks" id="Remarks" style="height: 110px;"></textarea>
+				</div>
+			</div>
+			<div data-role="fieldcontain" class="ui-hide-label MTop">
+				<h3 style="margin: 0 0 0 0;">Result<span style="color:Red">*</span>:</h3>
+				<div id="prevvisit"></div>
+				<div class="STop">
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+						<div>
+							<label><input type="radio" name="Result" id="Result_1" value="1" />Accepted Gift</label>
+							<label><input type="radio" name="Result" id="Result_D" value="D" />Declined</label>
+							<label><input type="radio" name="Result" id="Result_N" value="N" />Not In</label>
+							<label><input type="radio" name="Result" id="Result_S" value="S" />Skip</label>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+
+			<div id="UnitDetails_Btns" class="ui-body ui-body-b LTop">
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-a"><button id="btnCancel" type="button" data-theme="d">Cancel</button></div>
+					<div class="ui-block-b"><button id="btnUpdate" type="button" data-theme="a">Update</button></div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+
+	<div data-role="dialog" id="PleaseWait">
+		<div data-role="header">
+			<h1>Please wait...</h1>
+		</div>
+		<div data-role="content">
+			Fetching / updating server information, please wait...
+		</div>
+	</div>​
+</body>
+</html>

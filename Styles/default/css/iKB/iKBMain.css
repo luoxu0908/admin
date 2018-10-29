@@ -1,0 +1,751 @@
+/* Default CSS Stylesheet for a new Web Application project */
+TH
+{
+	font-weight: bold;
+}
+
+
+TD.label
+{
+	vertical-align:top;
+}
+
+label
+{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+input
+{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+textarea
+{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+select
+{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+IMG
+{
+	border:none;
+}
+
+A:link, A:visited, A:active
+{
+	color:blue;
+}
+A:hover
+{
+	color:orange;
+}
+.Success
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:700;
+	color:Blue;
+}
+
+.Fail
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:700;
+	color:red;
+}
+
+.warning
+{
+	color:Red;
+}
+.Bold
+{
+	font-weight:bold;
+}
+.Instruction
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#556677;
+}
+.Small
+{
+	font-size:10px;
+}
+/*.PageTitle
+{
+
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:21px;
+	font-weight:bold;
+	color:#676767;
+	padding-right:25px;
+	background-color:none;
+	background-image:url(images/titlebg.gif);
+	background-repeat:no-repeat;
+	background-position: 100% 100%;
+}
+
+.PageTitleSansIcon
+{
+	
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:21px;
+	font-weight:800;
+	font-style:normal;
+	text-decoration:none;
+	word-spacing:normal;
+	letter-spacing:normal;
+	text-transform:none;
+	background: lightslategray;
+	color:white;
+	padding-right:5px;
+	padding-left:3px;
+}
+
+.Title1
+{
+	font-weight:bold;
+	font-size:16px;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	padding-right:18px;
+	background-color: none;
+	background-image: url(images/subtitlebg.gif);
+	background-repeat: no-repeat;
+	background-position: 100% 100%;
+	color:slategray;
+}
+.Title1c
+{
+	font-weight:bold;
+	font-size:16px;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding:2px;
+	padding-left:5px;
+	color:slategray;
+	background-color: none;
+	background-image: url(images/tabbg.jpg);
+	background-repeat: repeat-x;
+	background-position:  0% 100%;
+	border-bottom:solid 2px #898989;
+}
+.Title2
+{
+	font-weight:bold;
+	font-size:14px;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	padding-right:15px;
+	background-color: none;
+	background-image: url(images/subtitlebg2.gif);
+	background-repeat: no-repeat;
+	background-position: 100% 100%;
+	color:slategray;
+}
+.Title2c
+{
+	font-weight:bold;
+	font-size:14px;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding:2px;
+	padding-left:5px;
+	color:slategray;
+	background-color: none;
+	background-image: url(images/tabbg.jpg);
+	background-repeat: repeat-x;
+	background-position:  0% 100%;
+	border-bottom:solid 2px #898989;
+}
+.Title3
+{
+	font-weight:bold;
+	font-size:13px;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	padding:1px;
+	padding-left:5px;
+	background-color: #676767;
+	background-color: #898989;
+	background-color: lightslategray;
+	color:whitesmoke;
+	width:70%;
+			color:slategray;
+	background-color: none;
+	background-image: url(images/tabbg.jpg);
+	background-repeat: repeat-x;
+	background-position:  0% 80%;
+	border:solid 1px lightslategray;
+	border-left:none;
+}
+.Title3c
+{
+	font-weight:bold;
+	font-size:13px;
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	padding:1px;
+	padding-left:5px;
+	background-color: #676767;
+	color:whitesmoke;
+}
+.ParaDiv
+{
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:3px;
+	margin-bottom:8px;
+}
+*/
+.DGSpecialRow
+{
+	background-color:Azure;
+}
+
+.dgHeaderA
+{
+	color:white;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:11px;
+	background-color:#818080;
+	padding:3px;
+}
+
+ .dgHeaderA TD A:visited,  .dgHeaderA TD A:hover, .dgHeaderA TD A:active, .dgHeaderA TD A:link
+{
+	color:White; /*fix for hyperlink visiblity in header*/
+}
+
+.dgFooterA
+{
+	color:#141654;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:11px;
+	background-color:lightsteelblue;
+
+}
+
+.dgFooterA TD
+{
+	border: solid 1px lightsteelblue;
+}
+
+.dgFooterFixedA
+{
+	border-top:solid 1px black;
+	position:relative;
+	top:expression(this.offsetParent.clientHeight<this.offsetParent.scrollHeight?this.offsetParent.clientHeight-this.offsetParent.scrollHeight+this.offsetParent.scrollTop:0); 
+}
+
+.dgHeaderFixedA
+{
+	color:#141654;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:11px;
+ 	position:relative;
+	top:expression(this.offsetParent.scrollTop);
+}
+
+.dgHeaderFixedA TD
+{
+	border: none;
+	background-color:#8A8A8A;
+}
+
+TR.dgHeaderA TD
+{
+	border: solid 1px whitesmoke;
+	padding-left:5px;
+}
+
+.dgHeaderA A:visited, .dgHeaderA A:hover, .dgHeaderA A:active, .dgHeaderA A:link
+{
+	color: blue;
+}
+ 
+.dgItemA, .dgAltItemA, .dgEditItemA
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	background-color:ghostwhite;
+	color: #141654;
+}
+
+.dgItemA TD, .dgAltItemA TD, .dgEditItemA TD
+{
+	padding-left:5px;
+}	
+
+.dgItemB
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	background-color: lemonchiffon;
+	color: #141654;
+}
+
+.dgItemB TD
+{
+	padding-left:5px;
+}
+
+.dgItemB Input, .dgItemB Select
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+.dgItemC
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	background-color: lightsalmon;
+	color: #141654;
+}
+
+.dgItemD
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	background-color: white;
+	color: #141654;
+}
+
+.dgItemD TD, .dgAltItemD TD, .dgEditItemD TD
+{
+	padding-left:5px;
+}	
+
+.dgTbl
+{
+	margin-top:5px;
+	border-left:double 5px #CCCCFF;
+	border-top:double 5px #CCCCFF;
+	border-bottom:double 5px #141654;
+	border-right:double 5px #141654;
+}
+
+.dgTbl TD
+{
+	border-left: solid 1px whitesmoke;
+	border-right: solid 1px whitesmoke;
+	border-bottom: solid 1px gainsboro;
+	padding:4px;
+	vertical-align:middle;
+}
+
+.dgTbl TD input
+{
+	font-size:12px;
+}
+
+.SpecialTbl
+{
+	background:none url(../Images/transtile.gif);
+	border: inset 2px gray;
+	margin-bottom: 8px;
+}
+
+.SpecialTbl td
+{
+	padding: 0px 0px 1px 1px;
+	font-size: 11px;
+}
+
+.NoWrap
+{
+	white-space:nowrap;
+}
+
+.scrllfixedtop
+{
+	position:relative;
+	top:expression(this.offsetParent.scrollTop);
+}
+
+.overflowDiv
+{
+	overflow:auto;
+	scrollbar-arrow-color: #ffffff;
+	scrollbar-base-color: slategray;
+	scrollbar-dark-shadow-color: white;
+	scrollbar-track-color: gainsboro;
+	padding-right:1px;
+}
+
+.Validator
+{
+	font-family:Arial, Verdana, Helvetica, sans-serif;
+	font-size:11px;
+	color:Red;
+}
+/*jeff option sys 67477177*/
+A:link.TabA, A:visited.TabA, A:active.TabA
+{
+	padding-left:5px;
+	padding-top:2px;
+	padding-right:10px;
+	padding-bottom:5px;
+	font-weight: bold;
+	font-size:11px;
+	color: slategray;
+	background-color: none;
+	background-image: url(images/tabbg2.jpg);
+	background-repeat: repeat-x;
+	background-position:  0% 100%;
+	border:solid 1px lightsteelblue;
+	border-left:solid 1px gainsboro;
+	border-bottom:none;
+	z-index:201;
+	
+	line-height:22px;
+	line-height:expression('normal');
+	height:22px;
+}
+
+A:hover.TabA
+{
+	color:#F6851F;
+	text-decoration:underline;
+}
+
+A:link.TabACur, A:visited.TabACur, A:active.TabACur, A:hover.TabACur, .TabACur
+{
+	position:relative;
+	top:expression('1px');
+	z-index:202;
+	padding-left:5px;
+	padding-top:2px;
+	padding-right:10px;
+	padding-bottom:8px;
+	font-size:11px;
+	font-weight: bold;
+	text-decoration:none;
+	color:slategray;
+	background-color: none;
+	background-image: url(images/tabbg.jpg);
+	background-repeat: repeat-x;
+	background-position:  0% 100%;
+	border:solid 1px lightslategray;
+	border-right: solid 2px lightslategray;
+	border-bottom:none;
+	cursor:default;
+	
+	line-height:24px;
+	line-height:expression('normal');
+	height:24px;
+}
+.TabLinkPanel
+{
+	text-decoration: none;
+	padding-top:5px;
+	padding-bottom:3px;
+	padding-left:8px;
+	padding-right:12px;
+	background-color:#F5F5F5;
+	border:outset 1px lightslategray;
+	border-bottom:solid 2px lightslategray;
+	border-right:solid 2px lightslategray;
+	position:relative;
+	overflow:auto;
+	margin-bottom:5px;
+	top:-2px;
+	width:100%;
+}
+.TabPnlA
+{
+	padding: 5px;
+	padding-left:8px;
+	padding-bottom:10px;
+	border: solid 1px lightslategray;
+	border-right: inset 2px lightslategray;
+	border-bottom: inset 2px lightslategray;
+	background-color:#F5F5F5;
+}
+.SaveLnk
+{
+	margin:2px;
+	padding-top:2px;
+	padding-left:21px;
+	padding-right:4px;
+	border:outset 1px #F0F0F0;
+	border-left:none;
+	border-top:none;
+	height:20px;
+	background: #ababab url(images/save.gif) no-repeat 3px 3px;
+	color:#B68D54;
+	color:#334444;
+	text-decoration:none;
+	font-weight:bold;
+	font-size:11px;
+}
+.UndoLnk
+{
+	margin:2px;
+	padding-top:2px;
+	padding-left:20px;
+	padding-right:4px;
+	border:outset 1px #F0F0F0;
+	border-left:none;
+	border-top:none;
+	height:20px;
+	background: #F0F0F0 url(images/undo.gif) no-repeat 2px 1px;
+	color:#B68D54;
+	color:#334444;
+	text-decoration:none;
+	font-weight:bold;
+	font-size:11px;
+}
+.CancelLnk
+{
+	margin:2px;
+	padding-top:2px;
+	padding-left:20px;
+	padding-right:4px;
+	border:outset 1px #F0F0F0;
+	border-left:none;
+	border-top:none;
+	height:20px;
+	background: #F0F0F0 url(images/del.gif) no-repeat 2px 1px;
+	color:#B68D54;
+	color:#334444;
+	text-decoration:none;
+	font-weight:bold;
+	font-size:11px;
+}
+.FindLnk
+{
+	padding-left:17px;
+	background: url(images/find.gif) no-repeat;
+}
+.MvUpLnk
+{
+	padding:3px;
+	width:18px;
+	height:15px;
+	border:outset 1px slategray;
+	border-left:none;
+	border-top:none;
+	margin:2px;
+	background: gainsboro url(images/up.gif) no-repeat 2px 2px;
+	color:gainsboro;
+	text-decoration:none;
+	font-size:1px;
+}
+.MvDwnLnk
+{
+	padding:3px;
+	width:18px;
+	height:15px;
+	border:outset 1px slategray;
+	border-left:none;
+	border-top:none;
+	margin:2px;
+	background: silver url(images/dwn.gif) no-repeat 2px 1px;
+	color:silver;
+	text-decoration:none;
+	font-size:1px;
+}
+.AddLnk
+{
+	margin:2px;
+	padding:2px;
+	padding-left:17px;
+	padding-right:4px;
+	border:outset 1px gainsboro;
+	border-right:outset 2px gainsboro;
+	border-bottom:outset 2px gainsboro;
+	height:23px;
+	background: gainsboro url(images/additem.gif) no-repeat 1px 2px;
+	color:#006D00;
+	color:black;
+	text-decoration:none;
+}
+.EditLnk
+{
+	padding-top:1px;
+	padding-right:3px;
+	padding-left:23px;
+	width:53px;
+	height:18px;
+	border:outset 1px gainsboro;
+	border-left:solid 1px gainsboro;
+	border-top:solid 1px gainsboro;
+	margin:2px;
+	background: silver url(images/edit.gif) no-repeat 1px 0px;
+	color:slategray;
+	text-decoration:none;
+	font-size:11px;
+}
+.DelLnk
+{
+	padding-top:1px;
+	padding-right:3px;
+	padding-left:18px;
+	width:53px;
+	height:18px;
+	border:outset 1px gainsboro;
+	border-left:solid 1px gainsboro;
+	border-top:solid 1px gainsboro;
+	margin:2px;
+	background: silver url(images/del.gif) no-repeat 1px 0px;
+	color:slategray;
+	text-decoration:none;
+	font-size:11px;
+}
+.hndCursor
+{
+	cursor:hand;
+	cursor:pointer;
+}
+.disabled, .DisableStyle
+{
+	color:#ABABAB;
+}
+/* Search Page CSS */
+#pnTabs
+{
+	z-index:103;
+	position:relative;
+}
+#pnlPaging
+{	
+	/*filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFFFFFFF', EndColorStr='#FFCFCFCF');*/
+	height:20px;
+	padding-left:8px;
+	padding-right:8px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+a:hover.PagingEnabled, a:visited.PagingEnabled, a:link.PagingEnabled, a:active.PagingEnabled
+{
+	color: blue;
+}
+a:hover.PagingDisabled, a:visited.PagingDisabled, a:link.PagingDisabled, a:active.PagingDisabled
+{
+	cursor:default;
+	text-decoration:none;
+	color:black;
+}
+#lblError
+{
+	font-weight:bold;
+	color: Red;
+}
+
+.divPnlPgRecCnt
+{
+	FONT-SIZE: 10px; 
+	FLOAT: right;
+	padding:5px;
+	padding-right:15px;
+	padding-bottom:0px;
+}
+#lblResultCount
+{
+	text-decoration:underline;
+	font-weight:bold;
+}
+.divPnlPgLbtns
+{
+	FONT-SIZE: 10px; 
+	padding-top: 5px;
+}
+
+.Width100p
+{
+	width:99.4%;
+	width:expression('100%');
+}
+
+.Height100p
+{
+	height:99.4%;
+	height:expression('100%');
+}
+
+/* CUSTOM FOR IKB */
+.KBpnlPaging
+{
+	float:right;
+}
+.divBlPgTle
+{
+	margin-top:5px;
+}
+
+
+.divContA
+{
+	padding-bottom:10px;
+	border: solid 1px lightslategray;
+	border-right: inset 2px lightslategray;
+	border-bottom: inset 2px lightslategray;
+	background-color:#F5F5F5;
+}
+
+
+
+.dlgCtrlBar
+{
+	margin-top:8px;
+}
+.divprompt
+{
+	border:solid 1px #676767;
+	border-right:solid 2px #676767;
+	border-bottom:solid 2px #676767;
+	background-color: whitesmoke;
+	padding:5px;
+	padding-top:15px;
+	padding-bottom:15px;
+}
+.StatusBar
+{
+	background-color:#E0E0E0;
+	width:100%;
+	font-weight:bold;
+	padding:2px;
+}
+.InfoBar
+{
+	background-color:lemonchiffon;
+	border:solid 1px burlywood;
+	padding:5px;
+	padding-left:5px;
+	margin-bottom:2px;
+	margin-left:-5px;
+}
+.InfoBar UL
+{
+	background-color:lemonchiffon;
+	margin:0px;
+	padding:0px;
+	list-style-type:disc;
+	list-style-position:inside;
+}
+.InfoBar UL LI
+{	
+	list-style-type:disc;
+}
+.GreyoutBG
+{
+	position:absolute;
+	top:30px;
+	left:0px;
+	text-align:center;
+	filter:progid:DXImageTransform.Microsoft.alpha(opacity=50);
+	background-image:url(images/op50tile.png);
+	z-index:199;
+}
+/* END OF IKB */
+
+
+

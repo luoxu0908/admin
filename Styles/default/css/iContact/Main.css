@@ -1,0 +1,511 @@
+/* Default CSS Stylesheet for a new Web Application project */
+
+BODY
+{
+
+}
+
+
+H1, H2, H3, H4, H5, TH, THEAD, TFOOT
+{
+	color: #003366;
+}
+H1
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	font-weight: 700;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+H2
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+H3
+{
+	font-family:  Arial, Verdana, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight:600;
+	font-style: normal;
+	color: darksteelblue;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	
+}
+
+H4
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	color: #333399;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+H5, DT
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+H6
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	font-style: normal;
+	text-decoration: none;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+}
+
+.NoLineBreak
+{
+	margin-bottom:0em;
+}
+
+TFOOT, THEAD
+{
+	font-size: 14px;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+TABLE
+{
+	font-size: 12px;
+}
+
+TH
+{
+	vertical-align: baseline;
+	font-size: 120px;
+	font-weight: bold;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+TD
+{
+	font-family: Arial, Verdana,  Helvetica, sans-serif;
+}
+
+	
+A:link
+{
+	text-decoration: underline;
+	color: #333399;
+}
+
+A:visited
+{
+	text-decoration: underline;
+	color: #333399;
+}
+
+A:active
+{
+	text-decoration: underline;
+	color: #333399;
+}
+
+A:hover
+{
+	text-decoration: underline;
+	color:green;
+}
+
+SMALL
+{
+	font-size: 10px;
+}
+
+BIG
+{
+	font-size: 14px;
+}
+
+BLOCKQUOTE, PRE
+{
+	font-family: Courier New, monospace;
+}
+
+
+UL LI
+{
+	list-style-type: square;
+}
+
+UL LI LI
+{
+	list-style-type: disc;
+}
+
+UL LI LI LI
+{
+	list-style-type: circle;
+}
+
+OL LI
+{
+	list-style-type: decimal;
+}
+
+OL OL LI
+{
+	list-style-type: lower-alpha;
+}
+
+OL OL OL LI
+{
+	list-style-type: lower-roman;
+}
+
+OL, UL
+{
+	margin-bottom:5px;
+	margin-top:0px;
+}
+
+.ListTitle
+{
+	font-weight:800;
+	font-style:italic;
+	padding-left:8px;
+}
+
+input
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+label
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+textarea
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+select
+{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+IMG
+{
+	border:none;
+}
+
+
+.SubCat
+{
+	background-color: #8A8A8A;
+	font-size:12px;
+	font-weight:bold;
+	color:white;
+	padding:3px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+.MngDiv
+{
+	background-color: whitesmoke;
+	border:solid 1px gainsboro;
+	padding:3px;
+}
+#MainDiv
+{
+	padding:5px;
+	Z-INDEX: 103; 
+	LEFT: 12px; 
+	WIDTH: 738px; 
+	POSITION: absolute; 
+	TOP: 36px; 
+	HEIGHT: 80%
+}
+
+.SeperatorA
+{
+	color:gainsboro;
+	
+}
+
+/* dg styles */
+
+.datagridDiv
+{
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left:2px;
+	padding-right:2px;
+	background-color:#FDF9EB;
+	border:solid 1px #D8D0BB;
+}
+
+.DGridPagingLinkButton
+{
+	margin-left: 2px;
+	margin-right: 2px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+}
+
+.DGridPagingControlsDiv
+{
+	text-align:right;
+	float:right;
+}
+
+.DGridHeaderControlDiv
+{
+	padding: 2px;
+	padding-left: 4px;
+}
+
+.AlphaBtn
+{
+	margin-right:5px;
+}
+
+
+.dgTbl
+{
+	border:none;
+
+}
+
+.dgTbl TD
+{
+	border-left: solid 1px whitesmoke; /*#D4D0C8*/
+	border-right: solid 1px whitesmoke;
+	border-bottom: solid 1px gainsboro;
+	padding:4px;
+}
+
+#tblRight
+{
+	RIGHT:8px;
+	FLOAT:right;
+	POSITION:absolute;
+	HEIGHT:95%;
+	HEIGHT:expression('100%')
+}
+
+#tblRight .Top
+{
+	padding-top:expression('5%');
+}
+
+#tblRight .Bottom
+{
+	padding-bottom:expression('5%');
+}
+
+
+/* notification styles */
+
+.CatTitle
+{
+	font-family:   Arial,  Helvetica, Verdana, sans-serif;
+	font-size: 12px;
+	font-weight:bold;
+	margin-bottom:2px;
+	padding:3px;
+	background:#767676;
+	color:white;
+}
+.TskNteTabDiv
+{
+	padding:12px;
+	padding-top:0px;
+	padding-bottom:0px;
+}
+
+.TskNteWarn
+{
+	color:Red;
+}
+
+.BltnTitle
+{
+	font-family:  Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:bold;
+	font-style: normal;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	padding-left:10px;
+	color: royalblue;
+}
+
+.BltnTxt
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	margin-left:10px;
+	margin-top:0px;
+	padding-bottom:15px;
+	border-bottom: solid 1px whitesmoke;
+	color: lightslategray;
+}
+
+.BltnDte
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	font-style:italic;
+	color: steelblue;
+}
+
+.BltnNew
+{
+	font-style:italic;
+	color:goldenrod;
+	padding-left:5px;
+}
+
+
+.CalTitle
+{
+	font-family:  Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:bold;
+	font-style: normal;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	padding-left:10px;
+	color: royalblue;
+}
+
+.CalTxt
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	padding-left:10px;
+	margin-top:0px;
+	padding-bottom:15px;
+	color: lightslategray;
+}
+
+.CalDte
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	word-spacing: normal;
+	letter-spacing: normal;
+	text-transform: none;
+	padding-left:10px;
+	color: steelblue;
+}
+
+.CalNew
+{
+	font-style:italic;
+	color:goldenrod;
+	padding-left:5px;
+}
+
+
+
+/* tab hyperlinks and stuff */
+A:link.TabA, A:visited.TabA, A:visited.TabA, A:active.TabA
+{
+	padding-left:5px;
+	padding-top:2px;
+	padding-right:10px;
+	font-weight: bold;
+	font-size:11px;
+	color: #878787;
+	height:22px;
+	background: none url(images/tabbg.jpg) repeat-x 0% 100%;
+	/*filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#FFE9E9FC', EndColorStr='#8FFFFFFF');*/
+	border:solid 1px lightsteelblue;
+	border-bottom:none;
+	z-index:202;
+}
+
+A:hover.TabA
+{
+	color:#738FDF;
+	text-decoration:underline;
+}
+
+A:visited.TabACur, A:active.TabACur, A:hover.TabACur, A:link.TabACur
+{
+	position:relative;
+	top:1px;
+	padding-left:5px;
+	padding-top:2px;
+	padding-right:10px;
+	font-size:12px;
+	font-weight: bold;
+	color:#333333;
+	height:24px;
+	background: none url(images/tabbg.jpg) repeat-x 0% 100%;
+	border:solid 1px lightslategray;
+	border-right: inset 2px lightslategray;
+	border-bottom:none;
+	z-index:202;
+	cursor:default;
+	text-decoration:none;
+
+}
+
+.TabPnlA
+{
+	padding: 5px;
+	padding-left:8px;
+	border: solid 1px lightslategray;
+	background-color:#F5F5F5;
+}
+
+
+
+
+#MngDiv, #MngDiv2
+{
+	border:solid 1px lightslategray;
+}

@@ -1,0 +1,21 @@
+/* Default CSS Stylesheet for a new Web Application project */
+
+.Barcode1
+{
+	font-family: 3 of 9 Barcode;
+	font-size: 16px;
+}
+
+.Barcode2
+{
+	font-family: 3 of 9 Barcode;
+	font-size: 16px;
+	position:relative; top:-20px
+}
+
+.BarcodeDesc
+{
+	font-family: Arial;
+	font-size: 6px;
+	position:relative; top:-20px
+}

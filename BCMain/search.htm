@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]><html class="lt-ie9 lt-ie8 lt-ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 7]><html class="lt-ie9 lt-ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml"><!--<![endif]-->
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>BizSense</title>
+	<link rel="stylesheet" href="../styles/normalize.css" />
+	<link rel="stylesheet" href="../styles/foundation.min.css" />
+	<link rel="stylesheet" href="../styles/ie8-grid-foundation-4.css" />
+	<link rel="stylesheet" href="../styles/jquery-ui-1.8.18.css" media="all" />
+	<link rel="stylesheet" href="../styles/jquery.jgrowl-1.2.12.min.css" />
+	<link rel="stylesheet" href="../styles/slick.grid.css" />
+	<link rel="stylesheet" href="../styles/slick-default-theme.css" />
+	<link rel="stylesheet" href="../styles/main_new.css">
+	<script src="../Scripts/vendor/custom.modernizr.js"></script>
+</head>
+<body>
+	<div class="row fullwidth">
+		<div class="large-4 columns">
+			<h2 id="title" class="pagetitle"></h2>
+		</div>
+		<div id="topbtns" class="large-8 columns">
+			<br />
+			<button class="right" onclick="HideContent($(this)); return false;">Hide Search</button>
+		</div>
+	</div>
+	
+  <div id="content" class="row automarginoff">
+    <div class="large-12 columns">
+      <form></form>
+    </div>
+  </div>
+
+	<div id="footer">
+		<div class="row automarginoff">
+			<div class="large-12 columns">
+				<button id="search">Search</button>
+			</div>
+		</div>
+	</div>
+	<div id="results" class="row fullwidth"></div>
+	<script src="../Scripts/jquery-1.9.1.min.js"></script>
+	<script src="../Scripts/foundation.min.js"></script>
+	<script src="../Scripts/jquery-ui-1.9.2.min.js"></script>
+	<script src="../Scripts/jquery.jgrowl-1.2.12.min.js"></script>
+	<script src="../Scripts/moment-2.0.0.min.js"></script>
+	<script src="../Scripts/jquery.event.drag-2.0.min.js"></script>
+	<script src="../Scripts/slick.bcdefault.js"></script>
+	<script src="../Scripts/slick.grid.helper.js"></script>
+	<script src="../Scripts/Master.js"></script>
+	<script src="../Scripts/Contacts.js"></script>
+  <script>
+    window.searchJSON = ''; window.GridImgFolder = '../styles/images'; var SGH;
+  	function GetWidgets(callback) {
+			// only content accepts multiple widgets
+  		var title = $.parseQS().title || '', topbtns = ($.parseQS().topbtns) || '', content = [], footer = ($.parseQS().footer) || '', results = ($.parseQS().results) || '', filter = [], $form = $('form'), $topbtns = $('#topbtns'), $results = $('#results'), $footer = $('#footer');
+  		window.searchJSON = ($.parseQS().searchURL) || '';
+  		if ($.parseQS().content) { content = $.parseQS().content.split(','); }
+			// filter only provides textboxes
+  		if ($.parseQS().filter) { filter = $.parseQS().filter.split(','); }
+  		if (title !== '') { $('#title').html(title); }
+  		if (topbtns !== '') { $topbtns.html('').load('../' + topbtns); }
+  		// either only content or filter, content will take precedent over filter
+  		if ((content.length > 0 && filter.length > 0) || (content.length > 0 && filter.length === 0)) {
+  			for (var i = 0; i < content.length; i++) {
+  				var $panel = $('<div>');
+  				$form.append($panel);
+  				$panel.load('../' + content[i]);
+  			}
+  		} else if (content.length === 0 && filter.length > 0) {
+  			for (var i = 0; i < filter.length; i++) {
+  				var filterTxt = '';
+  				filterTxt = (filter[i])[0].toUpperCase() + filter[i].substring(1);
+  				if (i === 0 || i % 4 === 0) {
+  					$form.append($('<div>', { class: 'row' }));
+  				}
+  				$row = $form.children('div.row').last();
+  				
+  				$row.append($('<div>', { class: 'large-3 columns' }).html('<label for="' + filterTxt + '">' + filterTxt + '</label><input type="text" id="' + filterTxt + '" class="GetField" />'));
+  			}
+  			var colLen = $form.children('div.row').last().children('div.columns').length;
+  			if (colLen < 4) {
+  				$form.find('div.row:last').children('div').last().addClass('end');
+  			}
+  		}
+  		if (footer === '0') { $footer.html(''); } else if (footer !== '') { $footer.load('../' + footer); }
+  		if (results !== '') { $results.load('../' + results); }
+  		$results.addClass('hide');
+  	}
+  	function ArrayToStr(arr, seperator) {
+  		var retVal = '';
+  		if (arr !== null && arr !== undefined) {
+  			for (var i = 0; i < arr.length; i++) {
+  				retVal += arr[i] + seperator;
+  			}
+  			retVal = retVal.substr(0, retVal.length - 1);
+  		}
+  		return retVal;
+  	}
+  	function HideContent($this) {
+  		$('#content, #footer').toggle('fast');
+  		if ($this.html().toLowerCase().indexOf('hide') >= 0) {
+  			$this.html($this.html().replace('Hide', 'Show'));
+  		} else {
+  			$this.html($this.html().replace('Show', 'Hide'));
+  		}
+  	}
+  	function ResizeMe() { SGH.resize(); };
+  	$(document).ready(function () {
+  		GetWidgets();
+  		$('#search').click(function () {
+  			var searchObj = new Object();
+  			$('form').find('.GetField').each(function () {
+  				if ($(this).val() !== '') {
+  					var id = $(this).attr('id');
+  					searchObj[id] = $(this).val();
+  				}
+  			});
+  			console.log(searchObj);
+  			$.JSONPost('iCtc1.SearchEntity.json')
+					.done(function (data) {
+						var $content1 = $('#content'), $content3 = $('#results');
+						$content3.removeClass('hide', function () {
+							SGH = new SlickGridHelper('#contactresult', 'Ctc.SearchEntityResult',
+								{ enableCellNavigation: true, enableColumnReorder: true, autoHeight: false, rowHeight: 45, autoEdit: false, editable: true,
+									enableAddRow: false, asyncEditorLoading: false, multiColumnSort: true
+								},
+								{ AddSelColumn: false, GetDataURL: 'iCtc1.DispSearchEntityResult.json', AddRowURL: '', DelRowURL: '',
+									UpdRowURL: '', UpdRowFldURL: '', CustomURL: '', ExportURL: ''
+								});
+							SGH.GridLoadData({ 'SearchID': data.d.RetData });
+						});
+					});
+  		});
+  	});
+  </script>
+</body>
+</html>

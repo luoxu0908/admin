@@ -1,0 +1,143 @@
+		
+			.tablist {
+				margin : 0;
+				padding-left : 5px;
+				left : 5px;
+				list-style-type : none;
+				clear:none;
+				width:100%;
+			}
+		
+			.tabs_Tab2 {	
+				border-right:1px solid #999999;
+				padding-top:0px;
+				padding-left:0px;
+				padding-right:0px;
+				padding-bottom:0px;
+				
+				background-image:url(../../images/iFM/tabbing/lasttabback.gif);
+				background-repeat:repeat-x;
+				background-position:bottom;
+			}
+		
+			.tabs_Tab3 {
+				padding-top:0px;
+				padding-left:0px;
+				padding-right:0px;
+				padding-bottom:0px;
+				
+				background-image:url(../../images/iFM/tabbing/lasttabback.gif);
+				background-repeat:repeat-x;
+				background-position:bottom;
+			}
+			
+			.tabs_TabActive,
+			.tabs_Tab,
+			.tabs_TabHover {
+				FONT-SIZE: 8.5pt; 
+				COLOR: #333333; 
+				FONT-FAMILY: Arial, Verdana;
+				cursor:default;
+				/*cursor:pointer;
+				cursor:hand;*/
+				white-space:nowrap;
+				margin-left:3px;
+				/*margin-bottom:5px;*/
+			}
+			
+			.tabs_TabActive IMG,
+			.tabs_Tab IMG,
+			.tabs_TabHover IMG {
+				vertical-align:middle;
+			}
+			
+			.tabs_TabActive A,
+			.tabs_Tab A,
+			.tabs_TabHover A {
+				color:#666666;
+				text-decoration:none;
+			}
+			
+			.tabs_TabActive A:Hover,
+			.tabs_Tab A:Hover,
+			.tabs_TabHover A:Hover {
+				color:#000000;
+				text-decoration:none;
+			}
+
+			.tabs_TabActive {
+				background-color: #F7F7F7;
+				/*border-left:1px solid #999999;*/
+				border-top:1px solid #999999;
+				border-right:1px solid #999999;
+				
+				padding-top:5px;
+				padding-left:15px;
+				padding-right:15px;
+				padding-bottom:5px;
+			
+				/*margin-top:-4px;*/
+				/*margin-left:-1px;*/
+				height: 26px;
+				
+				background-image:url(../../images/iFM/tabbing/activetabback.gif);
+				background-repeat:repeat-x;
+				font-weight:bold;
+				/*
+				float:right;
+				clear: none;
+				z-index:200;*/
+			}
+			
+			.tabs_Tab,
+			.tabs_TabHover {
+				background-color: #E5E5E5;
+				/*border-left:1px solid #999999;*/
+				border-top:1px solid #999999;
+				border-right:1px solid #999999;
+				border-bottom:1px solid #999999;
+				
+				padding-top:5px;
+				padding-left:15px;
+				padding-right:15px;
+				padding-bottom:5px;
+				
+				/*margin-top:-1px;*/
+				/*margin-left:-1px;*/
+				/*margin-left:-1px;*/
+				height: 26px;
+				
+				background-repeat:repeat-x;
+				background-position:top;
+				
+				/*
+				float:right;
+				clear: none;
+				*/
+			}
+			
+			.tabs_Tab {
+				background-image:url(../../images/iFM/tabbing/tabback.gif);
+			}
+			
+			.tabs_TabHover {
+				background-image:url(../../images/iFM/tabbing/hovertabback.gif);
+			}
+			
+			.tabs_Box {
+				/*background-color: #EEEEEE*/
+				
+				background-color: #F7F7F7;
+				border-left:1px solid #999999;
+				border-right:1px solid #999999;
+				border-bottom:1px solid #999999;
+				height: 200px;
+				width: 100%;
+				padding:5px;
+			}
+			
+			.tabs_InnerBox {
+				width: 100%;
+				padding:5px;
+				overflow: auto;	
+			}

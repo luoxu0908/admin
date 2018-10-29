@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]><html class="lt-ie9 lt-ie8 lt-ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 7]><html class="lt-ie9 lt-ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml"><!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title></title>
+  <link rel="stylesheet" href="styles/ie8-grid-foundation-4.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="./assets/css/dashboard.css" rel="stylesheet" />
+	<noscript>Javascript is disabled<meta HTTP-EQUIV="REFRESH" content="0; url=EnableJavascript.htm"> </noscript>
+  <script src="scripts/vendor/custom.modernizr.js"></script>
+</head>
+<body>
+  <div class="page">
+    <div class="page-single">
+      <div class="container">
+        <div class="row">
+          <div class="col col-login mx-auto">
+            <div class="text-center mb-6">
+              <img src="./assets/brand/tabler.svg" class="h-6" alt="">
+            </div>
+            <form class="card" action="" method="post">
+              <div class="card-body p-6">
+                <div class="card-title">Login to your account</div>
+                <div class="form-group">
+                  <label class="form-label">User Name</label>
+                  <input type="text" class="form-control" id="username" aria-describedby="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">
+                    Password
+                    <a href="./forgot-password.html" class="float-right small">I forgot password</a>
+                  </label>
+                  <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" id="rememberme" class="custom-control-input" />
+                    <span class="custom-control-label">Remember me</span>
+                  </label>
+                </div>
+                <div class="form-footer">
+                  <button type="button" class="btn btn-primary btn-block" id="login">Sign in</button>
+                </div>
+              </div>
+            </form>
+            <div class="text-center text-muted">
+              Don't have account yet? <a href="./register.html">Sign up</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+	<script src="scripts/jquery-1.9.1.min.js"></script>
+  <!-- <script src="scripts/foundation.min.js"></script>
+	<script src="scripts/jquery-ui-1.9.2.min.js"></script>
+	<script src="scripts/moment-2.0.0.min.js"></script> -->
+	<script src="scripts/Master.js"></script>
+	<script src="scripts/Security.js"></script>
+  <script>
+  	function GetConfig(callback) {
+  		$.JSONPost('Main1.GetLookup.json', { 'TblName': 'tblMainLookup', 'LookupCat': 'MenuConfig', 'LookupKey': 'Title' })
+				.done(function (data) {
+					var R = data.d.RetData.Tbl.Rows, RowCnt = R.length, title = '', color = '';
+					if (RowCnt > 0) {
+						for (var i = 0; i < RowCnt; i++) {
+							title = R[i].Description;
+						}
+					}
+					if (title == '') { $('title').html('BizSense'); } else { $('title').html(title); }
+					if (callback && typeof (callback) == 'function') { callback(); }
+				});
+  	}
+  	$(window).load(function () {
+  		// if is remember me, then redirect to page
+  		$.JSONPost('Sec1.LoginViaRememberMe.json', '', { ShowErrMsg: false })
+			.done(function (data) {
+				if ($.parseQS().redirect) {
+					$.cookie('CurrPage', $.parseQS().redirect);
+				} else if (data.d.RetData) {
+					$.cookie('CurrPage', data.d.RetData);
+				}
+				if ($.parseQS().menu) { $.cookie('Menu', $.parseQS().menu); } else { $.cookie('Menu', 1); }
+				if ($.parseQS().noindex) {
+					window.top.location = $.cookie('CurrPage');
+				} else {
+					setTimeout(function () { window.top.location = 'index.htm' }, 200);
+				}
+			})
+  	});
+  	$(document).ready(function () {
+  		CookieIsActive();
+  		GetConfig(function () {
+  			var vpHeight = $(window).height();
+  			var loginHeight = $('#loginDiv').height();
+  			if ((vpHeight - loginHeight) / 2 <= 0) {
+  				$('#loginDiv').css('margin-top', '10px');
+  			} else {
+  				$('#loginDiv').css('margin-top', ((vpHeight - loginHeight) / 2) + 'px');
+  			}
+  			$('#username').focus();
+			});
+  		$('#login').click(function (e) {
+  			e.preventDefault();
+  			if (PageIsValid()) {
+  				Login($('#username').val(), $('#password').val(), $('#rememberme').is(':checked'))
+					.done(function (data) {
+						if ($.parseQS().redirect) {
+							$.cookie('CurrPage', $.parseQS().redirect);
+						} else if (data.d.RetData) {
+							$.cookie('CurrPage', data.d.RetData);
+						}
+						if ($.parseQS().menu) { $.cookie('Menu', $.parseQS().menu); } else { $.cookie('Menu', 1); }
+						if ($.parseQS().noindex) {
+							window.top.location = $.cookie('CurrPage');
+						} else {
+							setTimeout(function () { window.top.location = 'index.html' }, 200);
+						}
+					});
+  			}
+  		});
+  		$(window).resize(function () {
+  			var vpHeight = $(window).height();
+  			var loginHeight = $('#loginDiv').height();
+  			if ((vpHeight - loginHeight) / 2 <= 0) {
+  				$('#loginDiv').css('margin-top', '5px');
+  			} else {
+  				$('#loginDiv').css('margin-top', ((vpHeight - loginHeight) / 2) + 'px');
+  			}
+  		});
+  	});
+  	function PageIsValid() {
+  		var isValid = true;
+  		$userDiv = $('#username').parent('div'), $passDiv = $('#password').parent('div');
+  		$userDiv.children('small').remove(); $passDiv.children('small').remove();
+  		if ($('#username').val() === '') {
+  			$userDiv.append($('<small class="error">').html('Username required'));
+  			isValid = false;
+  		}
+  		if ($('#password').val() === '') {
+  			$passDiv.append($('<small class="error">').html('Password required'));
+  			isValid = false;
+  		}
+  		return isValid;
+  	}
+  </script>
+	<script>
+		window.Utils.CheckBrowserWarn();
+	</script>
+</body>
+</html>
