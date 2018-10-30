@@ -16,11 +16,11 @@
     <link rel="stylesheet" href="assets/css/amazeui.min.css" />
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/amazeui.min.js"></script>
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>  
     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+    <script src="assets/js/Master.js"></script>
+    <script src="assets/js/Security.js"></script>
 </head>
 
 <body data-type="login">
@@ -48,7 +48,7 @@
                 </span>
                 <form class="am-form tpl-form-line-form" data-am-validator id="formSignup">
                     <div class="am-form-group">
-                        <input type="text" class="tpl-form-input" id="userName" minlength="1" placeholder="用户名"
+                        <input type="text" class="tpl-form-input" id="userName" minlength="1" placeholder="昵称"
                             required>
                     </div>
                     <div class="am-form-group">
@@ -78,8 +78,8 @@
         <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
             <div class="am-modal-dialog">
                 <div class="am-modal-hd">注册成功</div>
-                <div class="am-modal-bd">
-                    杨凌之家欢迎你！
+                <div class="am-modal-bd" id="txtMessage">
+                   
                 </div>
                 <div class="am-modal-footer">
                     <span class="am-modal-btn">确定</span>
@@ -98,6 +98,8 @@
             </div>
         </div>
     </div>
+    <script src="assets/js/amazeui.min.js"></script>
+    <script src="assets/js/app.js"></script>
     <script type="text/javascript">
         $(function () {
             // 提交时验证表单
@@ -117,45 +119,17 @@
                 var Pwd = $("#userPwd").val() || '';
                 var data = { 'UserName': UserName, 'Mobile': Mobile, 'Pwd': Pwd }
 
-                // return $.ajax('YL1.RegFormSignup.json', data).then(function (data) {
-                //             if ((data) && (data.d.RetVal == -1)) {
-                //                 if (data.d.RetData.Tbl.Rows[0].Success == true) {
-                //                     $("#my-alert").modal('open')
-                //                 }
-                //                 else {
-                //                     $("#my-alertError").modal('open')
-                //                 }
-                //             }
-                //         });
-
-                $.ajax({
-                    url: "http://web.tool8.cc/JXFC/YL1.RegFormSignup.json",
-                    method: "POST",
-                    dataType: "json",
-                    xhrFields: { withCredentials: true },
-                    data: {
-                        'data': JSON.stringify(data),
-                        'WebPartKey': '3346AC64-D3F4-4452-9B2F-782885588459',
-                        'ReqGUID':'A295EA1A-09BA-4FD8-9293-0CE4A136A424'
-                    },
-                    success: function (data) {
-                        alert(1111);
-                        if ((data) && (data.d.RetVal === -1)) {
-                            if (data.d.RetData.Tbl.Rows.length > 0) {
+                return $.JSONPost('YL1.RegFormSignup.json', data).then(function (data) {
+                            if ((data) && (data.d.RetVal == -1)) {
                                 if (data.d.RetData.Tbl.Rows[0].Success == true) {
-
-                                } else { alert(data.d.RetData.Tbl.Rows[0].ReturnMsg); }
+                                    $("#txtMessage").html(" 杨凌之家欢迎你 - "+$("#userName").val()+'<br>'+'用户名 : '+$("#userTel").val());   
+                                    $("#my-alert").modal('open')
+                                }
+                                else {
+                                    $("#my-alertError").modal('open')
+                                }
                             }
-                        }
-                        else {
-                            alert(data.d.RetMsg);
-                        }
-                    },
-                    error: function (data) {
-                        alert("Error: " + data.responseJSON.d.RetMsg);
-                    }
-                });
-
+                        });
             }
         }
 

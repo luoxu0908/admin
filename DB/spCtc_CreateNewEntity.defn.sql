@@ -14,7 +14,7 @@ BEGIN
 	DECLARE @Delimiter nvarchar(1),@CurrentPosition smallint,@TagName nvarchar(50);
 	SELECT @PersonID=0, @RoleID=0, @Success=0, @ReturnMsg='';
 	IF LEN(@DisplayName)=0
-	BEGIN SET @ReturnMsg='用户名必须填写!'; RETURN; END
+	BEGIN SET @ReturnMsg=N'用户名必须填写!'; RETURN; END
 	IF NOT @EntityType IN ('I','O')
 	BEGIN SET @ReturnMsg='EntityType must be I (Individual) or O (Organisation)'; RETURN; END
 
@@ -23,13 +23,13 @@ BEGIN
 	IF LEN(ISNULL(@EntityKey,''))>5
 	BEGIN --Do not create if already exists
 		IF EXISTS (SELECT TOP 1 1 FROM tblCtcPersons WHERE EntityKey=@EntityKey)
-		BEGIN SET @ReturnMsg='用户名已经存在!'; RETURN; END
+		BEGIN SET @ReturnMsg=N'用户名已经存在!'; RETURN; END
 	END
 	-- Check duplicate using displayname if entitytype='O', don't need to check duplicate for person
 	IF @EntityType='O'
 	BEGIN
 		IF EXISTS (SELECT TOP 1 1 FROM tblCtcPersons WHERE LTRIM(RTRIM(DisplayName))=LTRIM(RTRIM(@DisplayName)) AND EntityType='O')
-		BEGIN SET @ReturnMsg='用户名已经存在!'; RETURN; END
+		BEGIN SET @ReturnMsg=N'用户名已经存在!'; RETURN; END
 	END
 
 	INSERT INTO tblCtcPersons (Status,EntityType,EntityKey,DisplayName,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate)

@@ -13,7 +13,7 @@ BEGIN
 	SET DATEFORMAT dmy;
 	
 	DECLARE @RoleID INT, @PersonID INT, @EntityCreated BIT, @LoginCreated BIT, @NewLoginID INT, @PasswordIfLoginCreated NVARCHAR(50),@SuccessSub BIT;
-	SELECT @EntityCreated=0, @LoginCreated=0, @PersonID=0, @RoleID=0, @LoginID=0, @Username='', @PasswordIfLoginCreated='';
+	SELECT @EntityCreated=0, @LoginCreated=0, @PersonID=0, @RoleID=0, @LoginID=0,@PasswordIfLoginCreated='';
 	SELECT @Success=0, @RetMsg='';
 
 
@@ -25,10 +25,11 @@ BEGIN
 		BEGIN IF LEN(@RetMsg)=0 SET @RetMsg = N'创建失败请联系管理员!'; RETURN; END
 
 		EXEC [dbo].[spSec_CreateNewLogin] @Mobile, @UserName, N'A', @Pwd, '', @LoginID OUTPUT, @PasswordIfLoginCreated OUTPUT, @RetMsg OUTPUT;
+		UPDATE dbo.tblCtcPersons SET LoginID=@LoginID WHERE PersonID=@PersonID;
 	END
 	ELSE
     BEGIN
-		 SELECT @RetMsg='该用户名已经存在!';
+		 SELECT @RetMsg=N'该用户名已经存在!';
 	END
 	
 	IF LEN(@RetMsg)=0 BEGIN SET @Success=1;END

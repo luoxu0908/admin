@@ -1,36 +1,49 @@
 ﻿/* ---------------------------------------------------
-spYL_SaveRegFormSignup (SQL_STORED_PROCEDURE)
-Description: 
-Usage remarks / example: 
+spSec_CreateNewLogin (SQL_STORED_PROCEDURE)
+Description: Create a new user
+Usage remarks / example:
+DECLARE @LoginID int, @PasswordSet nvarchar(200), @RetMsg nvarchar(max);
+EXEC [dbo].[spSec_CreateNewLogin] 'Username', 'Display Name', 'A', 'p@ssw0rd', '', @LoginID OUTPUT, @PasswordSet OUTPUT, @RetMsg OUTPUT;
+SELECT @LoginID AS LoginID, @PasswordSet AS PasswordSet, @RetMsg AS RetMsg;
 ---------------------------------------------------*/
-BEGIN TRY DROP PROCEDURE [dbo].[spYL_SaveRegFormSignup] END TRY BEGIN CATCH END CATCH
+BEGIN TRY DROP PROCEDURE [dbo].[spSec_CreateNewLogin] END TRY BEGIN CATCH END CATCH
 GO
-CREATE PROCEDURE [dbo].[spYL_SaveRegFormSignup]
-(@UserName NVARCHAR(150), @Mobile NVARCHAR(150),@Pwd NVARCHAR(150),@LoginID INT,@Success BIT OUTPUT, @RetMsg nvarchar(500) OUTPUT )
+CREATE PROCEDURE [dbo].[spSec_CreateNewLogin] ( @Username nvarchar(150), @DispName nvarchar(150), @Status varchar(1), @Password nvarchar(200), @EnhSecMobile nvarchar(30), @LoginID int OUTPUT, @PasswordSet nvarchar(200) OUTPUT, @RetMsg nvarchar(max) OUTPUT)
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SET DATEFORMAT dmy;
-	
-	DECLARE @RoleID INT, @PersonID INT, @EntityCreated BIT, @LoginCreated BIT, @NewLoginID INT, @PasswordIfLoginCreated NVARCHAR(50),@SuccessSub BIT;
-	SELECT @EntityCreated=0, @LoginCreated=0, @PersonID=0, @RoleID=0, @LoginID=0, @Username='', @PasswordIfLoginCreated='';
-	SELECT @Success=0, @RetMsg='';
+	--, ByVal Status As String, ByVal Password As String, ByVal EnhSecMobile As String
+	SELECT @LoginID=0, @PasswordSet='', @RetMsg='', @Username=ISNULL(@Username,N''), @DispName=ISNULL(@DispName,N''), @Status=ISNULL(@Status,N''), @Password=ISNULL(@Password,N''), @EnhSecMobile=ISNULL(@EnhSecMobile,N'');
 
+	IF NOT (SELECT dbo.fnSec_ChkIsValidUsername (@Username, NULL)) <> 0 --Valid username
+	BEGIN SET @RetMsg='Invalid username - Username already in use or reserved'; RETURN; END;
 
-	IF NOT EXISTS(SELECT TOP 1 1 FROM dbo.tblSecLogins WHERE UserName=@Mobile)
+	IF LEN(@DispName)=0 SET @DispName=@Username;
+	IF LEN(@Status)=0 SET @Status='A';
+
+	IF LEN(@Password)=0 
 	BEGIN
-	
-		EXEC [dbo].[spCtc_CreateNewEntity] 'I', @UserName, @Mobile, '', 0, @LoginID, @PersonID OUTPUT, @RoleID OUTPUT, @SuccessSub OUTPUT, @RetMsg OUTPUT;
-		IF NOT @SuccessSub<>0
-		BEGIN IF LEN(@RetMsg)=0 SET @RetMsg = N'创建失败请联系管理员!'; RETURN; END
+		SET @Password=dbo.fnSec_GenRandomPassword(NULL,NULL); --Provide a random password
+	END ELSE BEGIN --We only check user provided passwords
+		DECLARE @Success bit; 
+		EXEC dbo.spSec_CheckPwdComplexity NULL, @Username, @Password, NULL, @Success OUTPUT, @RetMsg OUTPUT; 
+		IF NOT ISNULL(@Success,0)<>0 RETURN;
+	END
 
-		EXEC [dbo].[spSec_CreateNewLogin] @Mobile, @UserName, N'A', @Pwd, '', @LoginID OUTPUT, @PasswordIfLoginCreated OUTPUT, @RetMsg OUTPUT;
-	END
-	ELSE
-    BEGIN
-		 SELECT @RetMsg='该用户名已经存在!';
-	END
-	
-	IF LEN(@RetMsg)=0 BEGIN SET @Success=1;END
+	INSERT INTO tblSecLogins (UserName, DispName, Status, EnhSecMobile) 
+	VALUES (@Username, @DispName, @Status, @EnhSecMobile); 
+	SET @LoginID=ISNULL(SCOPE_IDENTITY(),0); 
+	IF NOT ISNULL(@LoginID,0)>0 --Big problem
+	BEGIN SET @RetMsg='Could not insert tblSecLogins - please check with support!'; RETURN; END
+
+	SET @Success=0;
+	EXEC dbo.spSec_SetUserPwd @LoginID, @Username, @Password, NULL, NULL, @Success OUTPUT, @RetMsg OUTPUT;
+	IF NOT ISNULL(@Success,0)<>0 
+	BEGIN SET @RetMsg=N'Could not set password - please check with support! (Reason:' + @RetMsg + N')';  RETURN; END
+	SET @PasswordSet=@Password; --Successfully set password
+
+	--Add to everyone group
+	DECLARE @EveryoneSecGroupID int; SET @EveryoneSecGroupID=[dbo].[fnSec_GetGroup_Everyone]();
+	IF @EveryoneSecGroupID>0 EXEC [dbo].[spSec_UpsertUserToSecGroup] @LoginID, @EveryoneSecGroupID;
 END
 GO
