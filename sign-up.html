@@ -70,7 +70,7 @@
                         </label>
                     </div>
                     <div class="am-form-group">
-                        <button type="button" id="Save" onclick="SaveData()" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn">提交</button>
+                        <button type="button" id="Save" onclick="SaveData();return false;" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn">提交</button>
                     </div>
                 </form>
             </div>
@@ -139,6 +139,7 @@
                         'ReqGUID':'A295EA1A-09BA-4FD8-9293-0CE4A136A424'
                     },
                     success: function (data) {
+                        alert(1111);
                         if ((data) && (data.d.RetVal === -1)) {
                             if (data.d.RetData.Tbl.Rows.length > 0) {
                                 if (data.d.RetData.Tbl.Rows[0].Success == true) {
