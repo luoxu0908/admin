@@ -390,7 +390,8 @@
            return $.JSONPost('Sec1.Logout.json', {})
                 .then(function (data) {
                     $.cookie('CurrPage', null, { 'expires': 1 });
-                    window.top.location = (data.d.RetData || 'index.html');
+                    //window.top.location = (data.d.RetData || 'index.html');
+                    window.top.location = ('login.html');
                 });
         }
     </script>
