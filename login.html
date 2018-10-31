@@ -82,17 +82,17 @@
             // if is remember me, then redirect to page
             $.JSONPost('Sec1.LoginViaRememberMe.json', '', { ShowErrMsg: false })
                 .done(function (data) {
-                    alert($.parseQS().redirect);
                     if ($.parseQS().redirect) {
                         $.cookie('CurrPage', $.parseQS().redirect);
                     } else if (data.d.RetData) {
-                        $.cookie('CurrPage', data.d.RetData);
+                        //$.cookie('CurrPage', data.d.RetData);
+                        $.cookie('CurrPage', 'Page/PersonalProfile/PersonDetails.html');
                     }
                     if ($.parseQS().menu) { $.cookie('Menu', $.parseQS().menu); } else { $.cookie('Menu', 1); }
                     if ($.parseQS().noindex) {
                         window.top.location = $.cookie('CurrPage');
                     } else {
-                        setTimeout(function () { window.top.location = 'index.html' }, 200);
+                        setTimeout(function () { window.top.location = 'Page/PersonalProfile/PersonDetails.html' }, 200);
                     }
                 })
         });
@@ -124,7 +124,7 @@
                             if ($.parseQS().noindex) {
                                 window.top.location = $.cookie('CurrPage');
                             } else {
-                                setTimeout(function () { window.top.location = 'index.htm' }, 200);
+                                setTimeout(function () { window.top.location = 'Page/PersonalProfile/PersonDetails.html' }, 200);
                             }
                         });
                 }
