@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,6 +21,7 @@
     <script src="scripts/Master.js"></script>
     <script src="scripts/Security.js"></script>
 </head>
+
 <body data-type="index">
     <script src="assets/js/theme.js"></script>
     <div class="am-g tpl-g">
@@ -52,7 +54,8 @@
                         </li>
                         <!-- 新邮件 -->
                         <li class="am-dropdown tpl-dropdown" data-am-dropdown>
-                            <a href="javascript:;" class="am-dropdown-toggle tpl-dropdown-toggle" data-am-dropdown-toggle>
+                            <a href="javascript:;" class="am-dropdown-toggle tpl-dropdown-toggle"
+                                data-am-dropdown-toggle>
                                 <i class="am-icon-envelope"></i>
                                 <span class="am-badge am-badge-success am-round item-feed-badge">4</span>
                             </a>
@@ -71,7 +74,8 @@
                                                 <i class="am-icon-circle-o am-text-success"></i>
                                                 <span>夕风色</span>
                                             </div>
-                                            <div class="am-text-truncate"> Amaze UI 的诞生，依托于 GitHub 及其他技术社区上一些优秀的资源；Amaze UI 的成长，则离不开用户的支持。 </div>
+                                            <div class="am-text-truncate"> Amaze UI 的诞生，依托于 GitHub
+                                                及其他技术社区上一些优秀的资源；Amaze UI 的成长，则离不开用户的支持。 </div>
                                             <div class="menu-messages-content-time">2016-09-21 下午 16:40</div>
                                         </div>
                                     </a>
@@ -185,7 +189,8 @@
                         <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
                         禁言小张
                     </span>
-                    <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
+                    <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span>
+                        账号设置</a>
                 </div>
             </div>
             <!-- 菜单 -->
@@ -234,7 +239,8 @@
             <div class="container-fluid am-cf">
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 部件首页 <small>Amaze UI</small></div>
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>
+                            部件首页 <small>Amaze UI</small></div>
                         <p class="page-header-description">Amaze UI 含近 20 个 CSS 组件、20 余 JS 组件，更有多个包含不同主题的 Web 组件。</p>
                     </div>
                     <div class="am-u-lg-3 tpl-index-settings-button">
@@ -245,9 +251,9 @@
             <div class="widget-body  am-fr">
                 <iframe id="contentframe" src="about:blank" frameborder="0"></iframe>
                 <div id="ifrCDiv" style="display:none; overflow:auto; overflow-x:auto; overflow-y:auto; -webkit-overflow-scrolling:touch;">
+                </div>
             </div>
-          </div>
-    </div>
+        </div>
     </div>
     <script src="assets/js/amazeui.min.js"></script>
     <script src="assets/js/amazeui.datatables.min.js"></script>
@@ -255,17 +261,17 @@
     <script src="assets/js/app.js"></script>
     <script>
         window.ifrC = $('#contentframe');
-		window.ifrCDiv = $('#ifrCDiv'); //iOS compatability hack
-        $(function () {
-            GetMenu();
-        })
+        window.ifrCDiv = $('#ifrCDiv'); //iOS compatability hack
+
+        GetMenu();
+
         function GetMenu(callback) {
             $.JSONPost('iCtc1.GetOwnPersonID.json')
-  				.done(function (data) {
-  				    var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
-  				    if (RowCnt > 0) { window.PID = R[0].PersonID; }
-  				    loadMenu();
-  				});
+                .done(function (data) {
+                    var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+                    if (RowCnt > 0) { window.PID = R[0].PersonID; }
+                    loadMenu();
+                });
         }
         function BindEvent() {
             $('.sidebar-nav-sub-title').on('click', function () {
@@ -276,92 +282,93 @@
         }
         function loadMenu() {
             $.JSONPost('Sec1.Menu.json', { '': '' })
-              .done(function (data) {
-                  var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
-                  if (RowCnt > 0) {
-                      if ((data) && (data.d.RetData.Tbl.Rows.length > 0)) {
-                          var menus = data.d.RetData.Tbl.Rows;
-                          var menuList = new Array();
+                .done(function (data) {
+                    var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+                    if (RowCnt > 0) {
+                        if ((data) && (data.d.RetData.Tbl.Rows.length > 0)) {
+                            var menus = data.d.RetData.Tbl.Rows;
+                            var menuList = new Array();
 
-                          for (var i = 0; i < menus.length; i++) {
-                              var menuItem = {};
-                              var manuName = menus[i].MenuName.split('\\')[0];
-                              var subName = menus[i].MenuName.split('\\')[1];
-                              var subItem = {};
-                              var flag = false;
-                              for (var j = 0; j < menuList.length; j++) {
-                                  if (menuList[j].Name.indexOf(manuName) > -1) {
-                                      subItem.Name = subName;
-                                      subItem.Value = menus[i].RelativeURL;
-                                      menuList[j].URLList.push(subItem);
-                                      flag = true;
-                                  }
-                              }
-                              if (!flag) {
-                                  menuItem.Name = manuName;
-                                  menuItem.URLList = new Array();
-                                  subItem.Name = subName;
-                                  subItem.Value = menus[i].RelativeURL;
-                                  menuItem.URLList.push(subItem);
-                                  menuList.push(menuItem);
-                              }
-                          }
-                          var menuHtml = '';
+                            for (var i = 0; i < menus.length; i++) {
+                                var menuItem = {};
+                                var manuName = menus[i].MenuName.split('\\')[0];
+                                var subName = menus[i].MenuName.split('\\')[1];
+                                var subItem = {};
+                                var flag = false;
+                                for (var j = 0; j < menuList.length; j++) {
+                                    if (menuList[j].Name.indexOf(manuName) > -1) {
+                                        subItem.Name = subName;
+                                        subItem.Value = menus[i].RelativeURL;
+                                        menuList[j].URLList.push(subItem);
+                                        flag = true;
+                                    }
+                                }
+                                if (!flag) {
+                                    menuItem.Name = manuName;
+                                    menuItem.URLList = new Array();
+                                    subItem.Name = subName;
+                                    subItem.Value = menus[i].RelativeURL;
+                                    menuItem.URLList.push(subItem);
+                                    menuList.push(menuItem);
+                                }
+                            }
+                            var menuHtml = '';
 
-                          for (var i = 0; i < menuList.length; i++) {
-                              menuHtml += '<li class="sidebar-nav-link">';
-                              menuHtml += '<a href="javascript:;" class="sidebar-nav-sub-title"><i class="am-icon-table sidebar-nav-link-logo"></i> ' + menuList[i].Name + '<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span></a>';
-                              menuHtml += '<ul class="sidebar-nav sidebar-nav-sub">';
-                              for (var j = 0; j < menuList[i].URLList.length; j++) {
-                                  menuHtml += '<li class="sidebar-nav-link"><a target="_top" onclick="ChangeFrameSrc(\''+menuList[i].URLList[j].Value+'\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + menuList[i].URLList[j].Name + '</a></li>';
-                              }
-                              menuHtml += '</ul>';
-                              menuHtml += '</li>';
-                          }
+                            for (var i = 0; i < menuList.length; i++) {
+                                menuHtml += '<li class="sidebar-nav-link">';
+                                menuHtml += '<a href="javascript:;" class="sidebar-nav-sub-title"><i class="am-icon-table sidebar-nav-link-logo"></i> ' + menuList[i].Name + '<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span></a>';
+                                menuHtml += '<ul class="sidebar-nav sidebar-nav-sub">';
+                                for (var j = 0; j < menuList[i].URLList.length; j++) {
+                                    menuHtml += '<li class="sidebar-nav-link"><a target="_top" onclick="ChangeFrameSrc(\'' + menuList[i].URLList[j].Value + '\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + menuList[i].URLList[j].Name + '</a></li>';
+                                }
+                                menuHtml += '</ul>';
+                                menuHtml += '</li>';
+                            }
 
-                          $('#menuContent').html(menuHtml); BindEvent();
-                          ChangeFrameSrc('home.html')
-                      }
-                  }
-              });
+                            $('#menuContent').html(menuHtml); BindEvent();
+                            ChangeFrameSrc('home.html')
+                        }
+                    }
+                });
         }
-        
+
         function ResizeMainC() {
-			var newheight = 0, vpHeight = 0;
-			if ($.cookie('CurrPage') !== null) {
-				vpHeight = $(window).height() - $('nav').height();
-			} else {
-				vpHeight = $(window).height();
-			}
-			var CssVal = { 'height': vpHeight + 'px', 'width': $(window).width() + 'px' };
-			window.ifrC.css(CssVal);
-		}
-      window.ChangeFrameSrc = function (url, isSubMenu) {
-			$('#overlay').removeClass('bchide');
-			isSubMenu = (isSubMenu) ? isSubMenu : false;
-			if ($.cookie('CurrPage') === null) {
-				// this is to check that only when redirect from login page, then get the menu.
-				$('nav').removeClass('bchide');
-			}
-			var $profile = $('#profilediv');
-			if (!($profile.hasClass('bchide'))) {
-				$profile.addClass('bchide'); $('.profilem').removeClass('selected');
-			}
-			if ($('.more.selected').length > 0) { // if more is selected, then hide the submenu
-				var $submenudiv = $('#menudiv'), $more = $('.more');
-				$submenudiv.addClass('bchide').parent().parent().addClass('bchide').removeClass('submenuborder');
-				$more.removeClass('selected');
-				$submenudiv.css({ height: 'auto' });
-			}
-			vpHeight = $(window).height() - $('nav').height();
-			$('#overlay').css({ 'height': vpHeight + 'px' }); $('#overlay_content').css({ 'margin-top': (vpHeight / 2) + 'px' });
-			$.cookie('CurrPage', url);
-			ResizeMainC();
-			$('#contentframe').attr('src', url);
-			$('#contentframe').load(function () {
-				$('#overlay').addClass('bchide');
-			});
-		}
+            var newheight = 0, vpHeight = 0;
+            if ($.cookie('CurrPage') !== null) {
+                vpHeight = $(window).height() - $('nav').height();
+            } else {
+                vpHeight = $(window).height();
+            }
+            var CssVal = { 'height': vpHeight + 'px', 'width': $(window).width() + 'px' };
+            window.ifrC.css(CssVal);
+        }
+        window.ChangeFrameSrc = function (url, isSubMenu) {
+            $('#overlay').removeClass('bchide');
+            isSubMenu = (isSubMenu) ? isSubMenu : false;
+            if ($.cookie('CurrPage') === null) {
+                // this is to check that only when redirect from login page, then get the menu.
+                $('nav').removeClass('bchide');
+            }
+            var $profile = $('#profilediv');
+            if (!($profile.hasClass('bchide'))) {
+                $profile.addClass('bchide'); $('.profilem').removeClass('selected');
+            }
+            if ($('.more.selected').length > 0) { // if more is selected, then hide the submenu
+                var $submenudiv = $('#menudiv'), $more = $('.more');
+                $submenudiv.addClass('bchide').parent().parent().addClass('bchide').removeClass('submenuborder');
+                $more.removeClass('selected');
+                $submenudiv.css({ height: 'auto' });
+            }
+            vpHeight = $(window).height() - $('nav').height();
+            $('#overlay').css({ 'height': vpHeight + 'px' }); $('#overlay_content').css({ 'margin-top': (vpHeight / 2) + 'px' });
+            $.cookie('CurrPage', url);
+            ResizeMainC();
+            $('#contentframe').attr('src', url);
+            $('#contentframe').load(function () {
+                $('#overlay').addClass('bchide');
+            });
+        }
     </script>
 </body>
+
 </html>
