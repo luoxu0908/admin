@@ -117,7 +117,8 @@
                                 $.cookie('CurrPage', $.parseQS().redirect);
                             } else if (data.d.RetData) {
                                 // $.cookie('CurrPage', data.d.RetData);
-                                window.top.location = 'Page/PersonalProfile/PersonDetails.html'
+                                $.cookie('CurrPage', 'Page/PersonalProfile/PersonDetails.html');
+                                //window.top.location = 'Page/PersonalProfile/PersonDetails.html'
                             }
                             if ($.parseQS().menu) { $.cookie('Menu', $.parseQS().menu); } else { $.cookie('Menu', 1); }
                             if ($.parseQS().noindex) {
