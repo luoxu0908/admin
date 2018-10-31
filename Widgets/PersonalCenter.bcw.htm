@@ -5,127 +5,201 @@
             margin-bottom: 0;
         }
     </style>
-    <div id="mainform" class="large-12 columns">
-        <div class="large-8 large-offset-2 columns">
-            <div class="large-12 columns">
-                <fieldset>
-                    <legend>基本信息</legend>
-                    <div class="row">
-                        <div class="large-6 columns">
-                            <label for="Nickname">
-                                昵称
-                            </label>
-                            <input type="text" id="Nickname" />
-                        </div>
-                        <div class="large-6 columns">
-                            <label for="Name">
-                                姓名
-                            </label>
-                            <input type="text" id="Name" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="large-3 columns">
-                            <label for="Age">
-                                年龄
-                            </label>
-                            <input type="text" id="Age" />
-                        </div>
-                        <div class="large-3 columns">
-                            <label for="SelectAge">
-                                性别
-                            </label>
-                            <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;"><input type="radio" value="M" name="Gender" id="GenderYes" />男</label>
-                            <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;"><input type="radio" value="F" name="Gender" id="GenderNo" /> 女</label>
-                        </div>
-                        <div class="large-6 columns">
-                            <label for="Age">
-                                出生日期
-                            </label>
-                            <input id="Birth" class="datepicker" type="text" />
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>联系方式</legend>
-                    <div class="row">
-                        <div class="large-6 columns">
-                            <label for="Phone">
-                                手机
-                            </label>
-                            <input type="text" id="Phone" />
-                        </div>
-                        <div class="large-6 columns">
-                            <label for="TelPhone">
-                                固定电话
-                            </label>
-                            <input type="text" id="TelPhone" />
-                        </div>
-                        <div class="large-6 columns">
-                            <label for="PersonalQQ">
-                                QQ号码
-                            </label>
-                            <input type="text" id="PersonalQQ" />
-                        </div>
-                        <div class="large-6 columns">
-                            <label for="WeChatNum">
-                                微信
-                            </label>
-                            <input type="text" id="WeChatNum" />
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>居住地址</legend>
-                    <div class="row">
-                        <div class="large-6 columns">
-                            <label for="Remarks">
-                                详细地址
-                            </label>
-                            <textarea id="Remarks" cols="2" rows="2"></textarea>
-                        </div>
-                        <div class="large-6 columns">
-                            <label for="Remarks">
-                                备注
-                            </label>
-                            <textarea id="Remarks" cols="2" rows="2"></textarea>
-                        </div>
-                    </div>
-                </fieldset>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <button id="Submit">提交</button>
-                    </div>
+    <div id="mainform" class="large-10 columns end">
+        <fieldset>
+            <legend>基本信息</legend>
+            <div class="row">
+                <div class="large-6 columns">
+                    <label for="Nickname">
+                        昵称
+                    </label>
+                    <input type="text" id="Nickname" />
                 </div>
+                <div class="large-6 columns">
+                    <label for="Name">
+                        姓名
+                    </label>
+                    <input type="text" id="Name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-3 columns">
+                    <label for="Age">
+                        年龄
+                    </label>
+                    <input type="text" id="Age" />
+                </div>
+                <div class="large-3 columns">
+                    <label for="Gender">
+                        性别
+                    </label>
+                    <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;"><input type="radio" value="M" name="Gender" id="GenderYes" />男</label>
+                    <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;"><input type="radio" value="F" name="Gender" id="GenderNo" /> 女</label>
+                </div>
+                <div class="large-6 columns">
+                    <label for="Age">
+                        出生日期
+                    </label>
+                    <input id="Birth" class="datepicker" type="text" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>联系方式</legend>
+            <div class="row">
+                <div class="large-6 columns">
+                    <label for="Phone">
+                        手机
+                    </label>
+                    <input type="text" id="Phone" />
+                </div>
+                <div class="large-6 columns">
+                    <label for="TelPhone">
+                        固定电话
+                    </label>
+                    <input type="text" id="TelPhone" />
+                </div>
+                <div class="large-6 columns">
+                    <label for="PersonalQQ">
+                        QQ号码
+                    </label>
+                    <input type="text" id="PersonalQQ" />
+                </div>
+                <div class="large-6 columns">
+                    <label for="WeChatNum">
+                        微信
+                    </label>
+                    <input type="text" id="WeChatNum" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>居住地址</legend>
+            <div class="row">
+                <div class="large-6 columns">
+                    <label for="Address">
+                        详细地址
+                    </label>
+                    <textarea id="Address" cols="2" rows="2"></textarea>
+                </div>
+                <div class="large-6 columns">
+                    <label for="Remarks">
+                        备注
+                    </label>
+                    <textarea id="Remarks" cols="2" rows="2"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        <div class="row">
+            <div class="large-12 columns">
+                <button id="Submit">提&nbsp;交</button>
             </div>
         </div>
     </div>
-    
-    
+    <div class="large-2 columns end">
+        <a id="Photo" href="#" onclick="return false;">
+            <img src="../styles/default/images/iContact/NoPhoto.gif" style="border: 1px solid black;
+                        height: 200px; width: 150px;" id="ImgPhoto" />
+        </a>
+    </div>
     <script type="text/javascript">
     
         $(document).ready(function () {
+            window.QS = $.parseQS();
+            $(".datepicker").datepicker({ dateFormat: 'dd M yy', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+            disabledprofile();
+            RetrievePersonalInfo();
+            RefreshPhoto('Photo', 'ImgPhoto', window.QS.PID, function () { });
             $('#Submit').click(function () {
                 Submit();
             });
         });
-    
-    
+        function RetrievePersonalInfo() {
+            var data = { 'PersonID': window.QS.PID }
+            $.JSONPost('FL1.GetPersonalInfo.json', data)
+            .done(function (data) {
+                if ((data) && (data.d.RetVal == -1)) {
+                    var Tbl = data.d.RetData.Tbl;
+                    var RowCnt = Tbl.Rows.length;
+                    if (RowCnt > 0) {
+                        $('#NRIC').val(Tbl.Rows[0].EntityKey);
+                        $('#FamilyName').val(Tbl.Rows[0].LastName); $('#FirstName').val(Tbl.Rows[0].FirstName);
+                        $('#MiddleName').val(Tbl.Rows[0].MiddleName); $('#OtherName').val(Tbl.Rows[0].OtherName); $('#DisplayName').val(Tbl.Rows[0].DisplayName);
+                        $('#ddlBirthDay').val(Tbl.Rows[0].BirthDayDD); $('#ddlBirthMonth').val(Tbl.Rows[0].BirthDayMM); $('#ddlBirthYear').val(Tbl.Rows[0].BirthDayYY);
+                        $('#Remarks').val(Tbl.Rows[0].Remarks);
+                        if (Tbl.Rows[0].Sex == 'M') {
+                            $('#Male').prop('checked', true); $('#Female').prop('checked', false);
+                        } else if (Tbl.Rows[0].Sex == 'F') {
+                            $('#Male').prop('checked', false); $('#Female').prop('checked', true);
+                        }
+                    }
+                }
+            });
+        }
         function Submit() {
+            var Gender = '';
+            $('input[name="Gender"]').each(function () { if ($(this).is(':checked')) { Gender = $(this).val(); } });
             var data = {
-    
+                'PID': window.QS.PID,
+                'Nickname': $('#Nickname').val() || '',
+                'Name': $('#Name').val() || '',
+                'Age': $('#Age').val() || '',
+                'Gender': Gender,
+                'Birth': $('#Birth').val() || '',
+                'Phone': $('#Phone').val() || '',
+                'TelPhone': $('#TelPhone').val() || '',
+                'PersonalQQ': $('#PersonalQQ').val() || '',
+                'WeChatNum': $('#WeChatNum').val() || '',
+                'Address': $('#Address').val() || '',
+                'Remarks': $('#Remarks').val() || ''
             }
             $.JSONPost('YL1.SavePersonalCenter.json', data)
                 .then(function (data) {
                     if ((data) && (data.d.RetVal === -1)) {
                         if (data.d.RetData.Tbl.Rows[0].Success == true) {
-    
+                            alert('修改成功');
                         } else {
                             $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
                         }
                     }
                     else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
                 });
+        }
+        function disabledprofile(callback) {
+            $('#Photo').removeAttr('onclick');
+            if (callback) { callback(); }
+        }
+        function RefreshPhoto(HID, IID, PID, callback) {
+            $.JSONPost('iCtc1.GetEntityPhotoInfo.json', { 'EntityID': PID })
+            .done(function (data) {
+                SetPhotoSrc(data.d.RetMsg, data.d.RetData);
+                if (callback) { callback(); }
+            });
+        }
+        function RefreshPhoto2(RetData) {
+            window.SetPhotoSrc(RetData.IID, RetData.FileID);
+        }
+    
+        function SetPhotoSrc(InfoID, FileID) {
+            var HID = 'Photo', IID = 'ImgPhoto';
+            var PID = window.QS.PID;
+            $("#" + HID).data("EntityID", PID).data("InfoID", InfoID).data("FileID", FileID).data("HID", HID).data("IID", IID); ////save the info to the a href element
+            $("#" + HID).attr("onclick", "DoUpdPhoto('" + HID + "'); return false;");
+            //update img source
+            if ((FileID || 0) > 0) {
+                $("#" + IID).attr("src", ("../iKB/InfoNugget/ExtFunc/ThumbnailAccess.aspx?fileid=" + FileID + "&" + new Date().getTime())).attr("alt", "Click to replace the photo");
+            } else {
+                $("#" + IID).attr("src", "../styles/default/images/iContact/NoPhoto.gif").attr("alt", "Click to upload a photo");
+            }
+        }
+    
+        function DoUpdPhoto(HID) {
+            var $H = $("#" + HID);
+            var PID = $H.data("EntityID"), InfoID = $H.data("InfoID"), FileID = $H.data("FileID"), HID = $H.data("HID"), IID = $H.data("IID");
+            var w = window.open('../iKB/InfoNugget/ExtFunc/QuickAttach.aspx?tid=ContactAdd&RefreshJS=RefreshPhoto2&iid=' + InfoID + '&fsfn=Photo&UpdCtcEntityID=' + PID + ((FileID || 0) > 0 ? ('&rplc=' + FileID) : ''), 'fileattach', 'width=500,height=230,left=' + ((screen.width - 500) / 2) + ',top=' + ((screen.height - 310) / 2) + ',resizable=yes,scrollbars=yes,status=yes');
+            w.focus();
+            //setTimeout(function () { w.onunload = function () { window.parent.RefreshPhoto(HID, IID, PID, function () { }) }; }, 300); //when popup unloads, we refresh to update
+            setTimeout(function () { w.onunload = function () { RefreshPhoto(HID, IID, PID, function () { }) }; }, 300); //when popup unloads, we refresh to update
         }
     
     </script>
