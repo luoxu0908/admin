@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Amaze UI Admin index Examples</title>
-    <meta name="description" content="这是一个 index 页面">
+    <title>杨凌之家</title>
+    <meta name="description" content="杨凌之家|杨凌|房产">
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
@@ -28,8 +28,8 @@
         <!-- 头部 -->
         <header>
             <!-- logo -->
-            <div class="am-fl tpl-header-logo">
-                <a href="javascript:;"><img src="assets/img/logo.png" alt=""></a>
+            <div class="am-fl tpl-header-logo" >
+                <a href="index.html"><img src="assets/img/logo.png" alt=""></a>
             </div>
             <!-- 右侧内容 -->
             <div class="tpl-header-fluid">
@@ -50,7 +50,7 @@
                     <ul>
                         <!-- 欢迎语 -->
                         <li class="am-text-sm tpl-header-navbar-welcome">
-                            <a href="javascript:;">欢迎你,11111 <span>Amaze UI</span> </a>
+                            <a href="javascript:;">欢迎您, <span id="dispname"></span> </a>
                         </li>
                         <!-- 新邮件 -->
                         <li class="am-dropdown tpl-dropdown" data-am-dropdown>
@@ -91,7 +91,7 @@
                                         <div class="menu-messages-content">
                                             <div class="menu-messages-content-title">
                                                 <i class="am-icon-circle-o am-text-warning"></i>
-                                                <span>禁言小张</span>
+                                                <!-- <span id="UserName"></span> -->
                                             </div>
                                             <div class="am-text-truncate"> 为了能最准确的传达所描述的问题， 建议你在反馈时附上演示，方便我们理解。 </div>
                                             <div class="menu-messages-content-time">2016-09-16 上午 09:23</div>
@@ -154,9 +154,9 @@
                             </ul>
                         </li>
                         <!-- 退出 -->
-                        <li class="am-text-sm">
-                            <a href="javascript:;">
-                                <span class="am-icon-sign-out" onclick=" Logout();return false;"></span> 退出
+                        <li class="am-text-sm" class=“logout”>
+                            <a href="javascript:;" onclick="Logout();return false;">
+                                <span class="am-icon-sign-out"></span> 退出
                             </a>
                         </li>
                     </ul>
@@ -187,7 +187,7 @@
                     </div>
                     <span class="user-panel-logged-in-text">
                         <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
-                        禁言小张
+                        <span id="UserName">xxxxx</span>
                     </span>
                     <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span>
                         账号设置</a>
@@ -195,7 +195,7 @@
             </div>
             <!-- 菜单 -->
             <ul class="sidebar-nav">
-                <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
+                <li class="sidebar-nav-heading">菜单 <span class="sidebar-nav-heading-info"> </span></li>
                 <div id="menuContent"></div>
                 <li class="sidebar-nav-heading">Page<span class="sidebar-nav-heading-info"> 常用页面</span></li>
                 <li class="sidebar-nav-link">
@@ -236,7 +236,7 @@
         </div>
         <!-- 内容区域 -->
         <div class="tpl-content-wrapper">
-            <div class="container-fluid am-cf">
+            <div class="container-fluid am-cf" style="display:none;">
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
                         <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>
@@ -249,8 +249,8 @@
                 </div>
             </div>
             <div class="widget-body  am-fr">
-                <iframe id="contentframe" src="about:blank" frameborder="0"></iframe>
-                <div id="ifrCDiv" style="display:none; overflow:auto; overflow-x:auto; overflow-y:auto; -webkit-overflow-scrolling:touch;">
+                <iframe id="contentframe" src="about:blank" frameborder="0" style="border-radius:10px;"></iframe>
+                <div id="ifrCDiv" style="display:none; overflow:auto; overflow-x:auto; overflow-y:auto; -webkit-overflow-scrolling:touch;border-radius:10px;">
                 </div>
             </div>
         </div>
@@ -262,9 +262,25 @@
     <script>
         window.ifrC = $('#contentframe');
         window.ifrCDiv = $('#ifrCDiv'); //iOS compatability hack
-
         GetMenu();
-
+        $(function () {
+            CookieIsActive();
+            LoginInfo().done(function (data) {
+                if (data.d.RetData.LoginID <= 0) {
+					window.top.location = 'login.htm';
+				} else {
+                    $('#dispname').html(data.d.RetData.DispName);
+                    $('#UserName').html(data.d.RetData.Username);
+					if ($.cookie('Menu') !== null && parseInt($.cookie('Menu')) === 0) { } else { $('nav').removeClass('bchide'); GetMenu(); }
+					if ($.cookie('CurrPage') !== null) {
+						ChangeFrameSrc($.cookie('CurrPage'));
+					} else {
+						ChangeFrameSrc('landing.htm');
+					}
+				}
+            });
+      
+        });
         function GetMenu(callback) {
             $.JSONPost('iCtc1.GetOwnPersonID.json')
                 .done(function (data) {
@@ -313,20 +329,20 @@
                                 }
                             }
                             var menuHtml = '';
-
+                            var arry=new Array('home','search','wpforms','user','phone','ship','simplybuilt','server','search','table','phone','search','table','phone','search','table','phone','search')
                             for (var i = 0; i < menuList.length; i++) {
                                 menuHtml += '<li class="sidebar-nav-link">';
-                                menuHtml += '<a href="javascript:;" class="sidebar-nav-sub-title"><i class="am-icon-table sidebar-nav-link-logo"></i> ' + menuList[i].Name + '<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span></a>';
+                                //am-icon-table 
+                                menuHtml += '<a href="javascript:;" class="sidebar-nav-sub-title"><i class="am-icon-'+arry[i]+' sidebar-nav-link-logo"></i> ' + menuList[i].Name + '<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span></a>';
                                 menuHtml += '<ul class="sidebar-nav sidebar-nav-sub">';
                                 for (var j = 0; j < menuList[i].URLList.length; j++) {
-                                    menuHtml += '<li class="sidebar-nav-link"><a target="_top" onclick="ChangeFrameSrc(\'' + menuList[i].URLList[j].Value + '\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + menuList[i].URLList[j].Name + '</a></li>';
+                                    menuHtml += '<li class="sidebar-nav-link"><i class="fa fa-phone"></i><a target="_top" onclick="ChangeFrameSrc(\'' + menuList[i].URLList[j].Value + '\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + (menuList[i].URLList[j].Name||menuList[i].Name) + '</a></li>';
                                 }
                                 menuHtml += '</ul>';
                                 menuHtml += '</li>';
                             }
 
                             $('#menuContent').html(menuHtml); BindEvent();
-                            ChangeFrameSrc('home.html')
                         }
                     }
                 });
@@ -339,7 +355,8 @@
             } else {
                 vpHeight = $(window).height();
             }
-            var CssVal = { 'height': vpHeight + 'px', 'width': $(window).width() + 'px' };
+            // var CssVal = { 'height': vpHeight + 'px', 'width': $(window).width() + 'px' };
+            var CssVal = { 'height': vpHeight - $('header').height() - 20 + 'px', 'width': 100 + '%' };
             window.ifrC.css(CssVal);
         }
         window.ChangeFrameSrc = function (url, isSubMenu) {
@@ -367,6 +384,14 @@
             $('#contentframe').load(function () {
                 $('#overlay').addClass('bchide');
             });
+        }
+
+        function Logout() {
+           return $.JSONPost('Sec1.Logout.json', {})
+                .then(function (data) {
+                    $.cookie('CurrPage', null, { 'expires': 1 });
+                    window.top.location = (data.d.RetData || 'index.html');
+                });
         }
     </script>
 </body>
