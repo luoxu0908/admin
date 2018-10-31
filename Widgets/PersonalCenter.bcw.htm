@@ -23,11 +23,17 @@
                 </div>
             </div>
             <div class="row">
+                <div class="large-6 columns">
+                    <label for="Birth">
+                        出生日期
+                    </label>
+                    <input id="Birth" class="datepicker" type="text" />
+                </div>
                 <div class="large-3 columns">
                     <label for="Age">
                         年龄
                     </label>
-                    <input type="text" id="Age" />
+                    <input type="text" id="Age"  disabled="disabled"/>
                 </div>
                 <div class="large-3 columns">
                     <label for="Gender">
@@ -35,12 +41,6 @@
                     </label>
                     <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;"><input type="radio" value="M" name="Gender" id="GenderYes" />男</label>
                     <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;"><input type="radio" value="F" name="Gender" id="GenderNo" /> 女</label>
-                </div>
-                <div class="large-6 columns">
-                    <label for="Age">
-                        出生日期
-                    </label>
-                    <input id="Birth" class="datepicker" type="text" />
                 </div>
             </div>
         </fieldset>
@@ -92,7 +92,7 @@
         </fieldset>
         <div class="row">
             <div class="large-12 columns">
-                <button id="Submit">提&nbsp;交</button>
+                <button id="Submit">保&nbsp;&nbsp;存</button>
             </div>
         </div>
     </div>
@@ -106,37 +106,57 @@
     
         $(document).ready(function () {
             window.QS = $.parseQS();
-            $(".datepicker").datepicker({ dateFormat: 'dd M yy', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+            $(".datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                dayNamesMin: ['日', "一", "二", "三", "四", "五", "六"],
+                prevText: "上一月",
+                nextText: "下一月",
+            });
+            $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
             disabledprofile();
             RetrievePersonalInfo();
             RefreshPhoto('Photo', 'ImgPhoto', window.QS.PID, function () { });
             $('#Submit').click(function () {
                 Submit();
             });
+            $('#Birth').change(function () {
+                if ($('#Birth').length > 0) {
+                    $('#Age').val( moment().diff(moment($('#Birth').val()), 'years'))
+                }
+            })
         });
         function RetrievePersonalInfo() {
-            var data = { 'PersonID': window.QS.PID }
-            $.JSONPost('FL1.GetPersonalInfo.json', data)
+            var data = { 'PID': window.QS.PID }
+            $.JSONPost('FL1.GetPersonalCenter.json', data)
             .done(function (data) {
                 if ((data) && (data.d.RetVal == -1)) {
                     var Tbl = data.d.RetData.Tbl;
                     var RowCnt = Tbl.Rows.length;
                     if (RowCnt > 0) {
-                        $('#NRIC').val(Tbl.Rows[0].EntityKey);
-                        $('#FamilyName').val(Tbl.Rows[0].LastName); $('#FirstName').val(Tbl.Rows[0].FirstName);
-                        $('#MiddleName').val(Tbl.Rows[0].MiddleName); $('#OtherName').val(Tbl.Rows[0].OtherName); $('#DisplayName').val(Tbl.Rows[0].DisplayName);
-                        $('#ddlBirthDay').val(Tbl.Rows[0].BirthDayDD); $('#ddlBirthMonth').val(Tbl.Rows[0].BirthDayMM); $('#ddlBirthYear').val(Tbl.Rows[0].BirthDayYY);
-                        $('#Remarks').val(Tbl.Rows[0].Remarks);
+                        $('#Nickname').val(Tbl.Rows[0].FirstName||'');
+                        $('#Name').val(Tbl.Rows[0].DisplayName || '');
+                        $('#Age').val(Tbl.Rows[0].Age);
                         if (Tbl.Rows[0].Sex == 'M') {
-                            $('#Male').prop('checked', true); $('#Female').prop('checked', false);
+                            $('#GenderYes').prop('checked', true); $('#GenderNo').prop('checked', false);
                         } else if (Tbl.Rows[0].Sex == 'F') {
-                            $('#Male').prop('checked', false); $('#Female').prop('checked', true);
+                            $('#GenderYes').prop('checked', false); $('#GenderNo').prop('checked', true);
                         }
+                        if (Tbl.Rows[0].BirthDate.length > 0) {
+                            $("#Birth").val(moment(Tbl.Rows[0].BirthDate).format("YYYY-MM-DD"));
+                        }
+                        $('#Phone').val(Tbl.Rows[0].Tel2||'');
+                        $('#TelPhone').val(Tbl.Rows[0].Tel1 || '');
+                        //$('#PersonalQQ').val(Tbl.Rows[0].FirstName);
+                        //$('#WeChatNum').val(Tbl.Rows[0].MiddleName); 
+                        $('#Address').val(Tbl.Rows[0].FullAddress||'');
+                        $('#Remarks').val(Tbl.Rows[0].Remarks);
                     }
                 }
             });
         }
         function Submit() {
+            alert($('#Birth').val() || '');
             var Gender = '';
             $('input[name="Gender"]').each(function () { if ($(this).is(':checked')) { Gender = $(this).val(); } });
             var data = {
