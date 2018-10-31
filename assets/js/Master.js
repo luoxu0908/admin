@@ -43,7 +43,7 @@ jQuery.fn.extend({
 	}
 });
 (function ($) {
-	window.BCBaseURL = "localhost/jxfc/";
+	window.BCBaseURL = "http://web.tool8.cc/JXFC/";
 	//uses jGrowl if loaded, else fallback to default
 	$.alert = function (Msg, options) {
 		if ($.jGrowl) {
