@@ -137,6 +137,8 @@
                         $('#Nickname').val(Tbl.Rows[0].FirstName||'');
                         $('#Name').val(Tbl.Rows[0].DisplayName || '');
                         $('#Age').val(Tbl.Rows[0].Age);
+                        $('#PersonalQQ').val(Tbl.Rows[0].QQ);
+                        $('#WeChatNum').val(Tbl.Rows[0].WeChatNum); 
                         if (Tbl.Rows[0].Sex == 'M') {
                             $('#GenderYes').prop('checked', true); $('#GenderNo').prop('checked', false);
                         } else if (Tbl.Rows[0].Sex == 'F') {
@@ -147,8 +149,7 @@
                         }
                         $('#Phone').val(Tbl.Rows[0].Tel2||'');
                         $('#TelPhone').val(Tbl.Rows[0].Tel1 || '');
-                        //$('#PersonalQQ').val(Tbl.Rows[0].FirstName);
-                        //$('#WeChatNum').val(Tbl.Rows[0].MiddleName); 
+                      
                         $('#Address').val(Tbl.Rows[0].FullAddress||'');
                         $('#Remarks').val(Tbl.Rows[0].Remarks);
                     }
@@ -156,7 +157,6 @@
             });
         }
         function Submit() {
-            alert($('#Birth').val() || '');
             var Gender = '';
             $('input[name="Gender"]').each(function () { if ($(this).is(':checked')) { Gender = $(this).val(); } });
             var data = {
@@ -177,7 +177,7 @@
                 .then(function (data) {
                     if ((data) && (data.d.RetVal === -1)) {
                         if (data.d.RetData.Tbl.Rows[0].Success == true) {
-                            alert('修改成功');
+                            alert('保存成功');
                         } else {
                             $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
                         }
