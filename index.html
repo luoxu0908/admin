@@ -1,6 +1,5 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,14 +12,14 @@
     <link rel="icon" type="image/png" href="assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-    <script src="assets/js/echarts.min.js"></script>
+    <!-- <script src="assets/js/echarts.min.js"></script> -->
     <link rel="stylesheet" href="assets/css/amazeui.min.css" />
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
-
+    <script src="scripts/Master.js"></script>
+    <script src="scripts/Security.js"></script>
 </head>
-
 <body data-type="index">
     <script src="assets/js/theme.js"></script>
     <div class="am-g tpl-g">
@@ -35,8 +34,7 @@
                 <!-- 侧边切换 -->
                 <div class="am-fl tpl-header-switch-button am-icon-list">
                     <span>
-
-                </span>
+                    </span>
                 </div>
                 <!-- 搜索 -->
                 <div class="am-fl tpl-header-search">
@@ -52,7 +50,6 @@
                         <li class="am-text-sm tpl-header-navbar-welcome">
                             <a href="javascript:;">欢迎你,11111 <span>Amaze UI</span> </a>
                         </li>
-
                         <!-- 新邮件 -->
                         <li class="am-dropdown tpl-dropdown" data-am-dropdown>
                             <a href="javascript:;" class="am-dropdown-toggle tpl-dropdown-toggle" data-am-dropdown-toggle>
@@ -79,7 +76,6 @@
                                         </div>
                                     </a>
                                 </li>
-
                                 <li class="tpl-dropdown-menu-messages">
                                     <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
                                         <div class="menu-messages-ico">
@@ -105,14 +101,12 @@
                                 </li>
                             </ul>
                         </li>
-
                         <!-- 新提示 -->
                         <li class="am-dropdown" data-am-dropdown>
                             <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>
                                 <i class="am-icon-bell"></i>
                                 <span class="am-badge am-badge-warning am-round item-feed-badge">5</span>
                             </a>
-
                             <!-- 弹出列表 -->
                             <ul class="am-dropdown-content tpl-dropdown-content">
                                 <li class="tpl-dropdown-menu-notifications">
@@ -148,8 +142,6 @@
                                         </div>
                                     </a>
                                 </li>
-
-
                                 <li class="tpl-dropdown-menu-notifications">
                                     <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
                                         <i class="am-icon-bell"></i> 进入列表…
@@ -157,7 +149,6 @@
                                 </li>
                             </ul>
                         </li>
-
                         <!-- 退出 -->
                         <li class="am-text-sm">
                             <a href="javascript:;">
@@ -167,7 +158,6 @@
                     </ul>
                 </div>
             </div>
-
         </header>
         <!-- 风格切换 -->
         <div class="tpl-skiner">
@@ -192,44 +182,16 @@
                         <img src="assets/img/user04.png" alt="">
                     </div>
                     <span class="user-panel-logged-in-text">
-              <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
-              禁言小张
-          </span>
+                        <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
+                        禁言小张
+                    </span>
                     <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
                 </div>
             </div>
-
             <!-- 菜单 -->
             <ul class="sidebar-nav">
                 <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
-                <li class="sidebar-nav-link">
-                    <a href="index.html" class="active">
-                        <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="tables.html">
-                        <i class="am-icon-table sidebar-nav-link-logo"></i> 表格
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="calendar.html">
-                        <i class="am-icon-calendar sidebar-nav-link-logo"></i> 日历
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="form.html">
-                        <i class="am-icon-wpforms sidebar-nav-link-logo"></i> 表单
-
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="chart.html">
-                        <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
-
-                    </a>
-                </li>
-
+                <div id="menuContent"></div>
                 <li class="sidebar-nav-heading">Page<span class="sidebar-nav-heading-info"> 常用页面</span></li>
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
@@ -242,7 +204,6 @@
                                 <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 文字列表
                             </a>
                         </li>
-
                         <li class="sidebar-nav-link">
                             <a href="table-list-img.html">
                                 <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 图文列表
@@ -266,14 +227,10 @@
                         <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
                     </a>
                 </li>
-
             </ul>
         </div>
-
-
         <!-- 内容区域 -->
         <div class="tpl-content-wrapper">
-
             <div class="container-fluid am-cf">
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
@@ -284,248 +241,127 @@
                         <button type="button" class="page-header-button"><span class="am-icon-paint-brush"></span> 设置</button>
                     </div>
                 </div>
-
             </div>
-
-            <div class="row-content am-cf">
-                <div class="row  am-cf">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
-                        <div class="widget am-cf">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">月度财务收支计划</div>
-                                <div class="widget-function am-fr">
-                                    <a href="javascript:;" class="am-icon-cog"></a>
-                                </div>
-                            </div>
-                            <div class="widget-body am-fr">
-                                <div class="am-fl">
-                                    <div class="widget-fluctuation-period-text">
-                                        ￥61746.45
-                                        <button class="widget-fluctuation-tpl-btn">
-                        <i class="am-icon-calendar"></i>
-                        更多月份
-                      </button>
-                                    </div>
-                                </div>
-                                <div class="am-fr am-cf">
-                                    <div class="widget-fluctuation-description-amount text-success" am-cf>
-                                        +￥30420.56
-
-                                    </div>
-                                    <div class="widget-fluctuation-description-text am-text-right">
-                                        8月份收入
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
-                        <div class="widget widget-primary am-cf">
-                            <div class="widget-statistic-header">
-                                本季度利润
-                            </div>
-                            <div class="widget-statistic-body">
-                                <div class="widget-statistic-value">
-                                    ￥27,294
-                                </div>
-                                <div class="widget-statistic-description">
-                                    本季度比去年多收入 <strong>2593元</strong> 人民币
-                                </div>
-                                <span class="widget-statistic-icon am-icon-credit-card-alt"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
-                        <div class="widget widget-purple am-cf">
-                            <div class="widget-statistic-header">
-                                本季度利润
-                            </div>
-                            <div class="widget-statistic-body">
-                                <div class="widget-statistic-value">
-                                    ￥27,294
-                                </div>
-                                <div class="widget-statistic-description">
-                                    本季度比去年多收入 <strong>2593元</strong> 人民币
-                                </div>
-                                <span class="widget-statistic-icon am-icon-support"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row am-cf">
-                    <div class="am-u-sm-12 am-u-md-8">
-                        <div class="widget am-cf">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">月度财务收支计划</div>
-                                <div class="widget-function am-fr">
-                                    <a href="javascript:;" class="am-icon-cog"></a>
-                                </div>
-                            </div>
-                            <div class="widget-body-md widget-body tpl-amendment-echarts am-fr" id="tpl-echarts">
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="am-u-sm-12 am-u-md-4">
-                        <div class="widget am-cf">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">专用服务器负载</div>
-                                <div class="widget-function am-fr">
-                                    <a href="javascript:;" class="am-icon-cog"></a>
-                                </div>
-                            </div>
-                            <div class="widget-body widget-body-md am-fr">
-
-                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
-                                <div class="am-progress">
-                                    <div class="am-progress-bar" style="width: 15%"></div>
-                                </div>
-                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
-                                <div class="am-progress">
-                                    <div class="am-progress-bar  am-progress-bar-warning" style="width: 75%"></div>
-                                </div>
-                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
-                                <div class="am-progress">
-                                    <div class="am-progress-bar am-progress-bar-danger" style="width: 35%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row am-cf">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg ">
-                        <div class="tpl-user-card am-text-center widget-body-lg">
-                            <div class="tpl-user-card-title">
-                                禁言小张
-                            </div>
-                            <div class="achievement-subheading">
-                                月度最佳员工
-                            </div>
-                            <img class="achievement-image" src="assets/img/user07.png" alt="">
-                            <div class="achievement-description">
-                                禁言小张在
-                                <strong>30天内</strong> 禁言了
-                                <strong>200多</strong>人。
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-8 widget-margin-bottom-lg">
-
-                        <div class="widget am-cf widget-body-lg">
-
-                            <div class="widget-body  am-fr">
-                                <div class="am-scrollable-horizontal ">
-                                    <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black " id="example-r">
-                                        <thead>
-                                            <tr>
-                                                <th>文章标题</th>
-                                                <th>作者</th>
-                                                <th>时间</th>
-                                                <th>操作</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="gradeX">
-                                                <td>新加坡大数据初创公司 Latize 获 150 万美元风险融资</td>
-                                                <td>张鹏飞</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>自拍的“政治角色”：观众背对希拉里自拍合影表示“支持”</td>
-                                                <td>天纵之人</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="gradeX">
-                                                <td>关于创新管理，我想和你当面聊聊。</td>
-                                                <td>王宽师</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>究竟是趋势带动投资，还是投资引领趋势？</td>
-                                                <td>着迷</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>Docker领域再添一员，网易云发布“蜂巢”，加入云计算之争</td>
-                                                <td>醉里挑灯看键</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <!-- more data -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div class="widget-body  am-fr">
+                <iframe id="contentframe" src="about:blank" frameborder="0"></iframe>
+                <div id="ifrCDiv" style="display:none; overflow:auto; overflow-x:auto; overflow-y:auto; -webkit-overflow-scrolling:touch;">
             </div>
-        </div>
+          </div>
     </div>
     </div>
     <script src="assets/js/amazeui.min.js"></script>
     <script src="assets/js/amazeui.datatables.min.js"></script>
     <script src="assets/js/dataTables.responsive.min.js"></script>
     <script src="assets/js/app.js"></script>
+    <script>
+        window.ifrC = $('#contentframe');
+		window.ifrCDiv = $('#ifrCDiv'); //iOS compatability hack
+        $(function () {
+            GetMenu();
+        })
+        function GetMenu(callback) {
+            $.JSONPost('iCtc1.GetOwnPersonID.json')
+  				.done(function (data) {
+  				    var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+  				    if (RowCnt > 0) { window.PID = R[0].PersonID; }
+  				    loadMenu();
+  				});
+        }
+        function BindEvent() {
+            $('.sidebar-nav-sub-title').on('click', function () {
+                $(this).siblings('.sidebar-nav-sub').slideToggle(80)
+                    .end()
+                    .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate');
+            });
+        }
+        function loadMenu() {
+            $.JSONPost('Sec1.Menu.json', { '': '' })
+              .done(function (data) {
+                  var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+                  if (RowCnt > 0) {
+                      if ((data) && (data.d.RetData.Tbl.Rows.length > 0)) {
+                          var menus = data.d.RetData.Tbl.Rows;
+                          var menuList = new Array();
 
+                          for (var i = 0; i < menus.length; i++) {
+                              var menuItem = {};
+                              var manuName = menus[i].MenuName.split('\\')[0];
+                              var subName = menus[i].MenuName.split('\\')[1];
+                              var subItem = {};
+                              var flag = false;
+                              for (var j = 0; j < menuList.length; j++) {
+                                  if (menuList[j].Name.indexOf(manuName) > -1) {
+                                      subItem.Name = subName;
+                                      subItem.Value = menus[i].RelativeURL;
+                                      menuList[j].URLList.push(subItem);
+                                      flag = true;
+                                  }
+                              }
+                              if (!flag) {
+                                  menuItem.Name = manuName;
+                                  menuItem.URLList = new Array();
+                                  subItem.Name = subName;
+                                  subItem.Value = menus[i].RelativeURL;
+                                  menuItem.URLList.push(subItem);
+                                  menuList.push(menuItem);
+                              }
+                          }
+                          var menuHtml = '';
+
+                          for (var i = 0; i < menuList.length; i++) {
+                              menuHtml += '<li class="sidebar-nav-link">';
+                              menuHtml += '<a href="javascript:;" class="sidebar-nav-sub-title"><i class="am-icon-table sidebar-nav-link-logo"></i> ' + menuList[i].Name + '<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span></a>';
+                              menuHtml += '<ul class="sidebar-nav sidebar-nav-sub">';
+                              for (var j = 0; j < menuList[i].URLList.length; j++) {
+                                  menuHtml += '<li class="sidebar-nav-link"><a target="_top" onclick="ChangeFrameSrc(\''+menuList[i].URLList[j].Value+'\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + menuList[i].URLList[j].Name + '</a></li>';
+                              }
+                              menuHtml += '</ul>';
+                              menuHtml += '</li>';
+                          }
+
+                          $('#menuContent').html(menuHtml); BindEvent();
+                          ChangeFrameSrc('home.html')
+                      }
+                  }
+              });
+        }
+        
+        function ResizeMainC() {
+			var newheight = 0, vpHeight = 0;
+			if ($.cookie('CurrPage') !== null) {
+				vpHeight = $(window).height() - $('nav').height();
+			} else {
+				vpHeight = $(window).height();
+			}
+			var CssVal = { 'height': vpHeight + 'px', 'width': $(window).width() + 'px' };
+			window.ifrC.css(CssVal);
+		}
+      window.ChangeFrameSrc = function (url, isSubMenu) {
+			$('#overlay').removeClass('bchide');
+			isSubMenu = (isSubMenu) ? isSubMenu : false;
+			if ($.cookie('CurrPage') === null) {
+				// this is to check that only when redirect from login page, then get the menu.
+				$('nav').removeClass('bchide');
+			}
+			var $profile = $('#profilediv');
+			if (!($profile.hasClass('bchide'))) {
+				$profile.addClass('bchide'); $('.profilem').removeClass('selected');
+			}
+			if ($('.more.selected').length > 0) { // if more is selected, then hide the submenu
+				var $submenudiv = $('#menudiv'), $more = $('.more');
+				$submenudiv.addClass('bchide').parent().parent().addClass('bchide').removeClass('submenuborder');
+				$more.removeClass('selected');
+				$submenudiv.css({ height: 'auto' });
+			}
+			vpHeight = $(window).height() - $('nav').height();
+			$('#overlay').css({ 'height': vpHeight + 'px' }); $('#overlay_content').css({ 'margin-top': (vpHeight / 2) + 'px' });
+			$.cookie('CurrPage', url);
+			ResizeMainC();
+			$('#contentframe').attr('src', url);
+			$('#contentframe').load(function () {
+				$('#overlay').addClass('bchide');
+			});
+		}
+    </script>
 </body>
-
 </html>
