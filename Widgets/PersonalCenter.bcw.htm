@@ -128,7 +128,7 @@
         });
         function RetrievePersonalInfo() {
             var data = { 'PID': window.QS.PID }
-            $.JSONPost('FL1.GetPersonalCenter.json', data)
+            $.JSONPost('YL1.GetPersonalCenter.json', data)
             .done(function (data) {
                 if ((data) && (data.d.RetVal == -1)) {
                     var Tbl = data.d.RetData.Tbl;

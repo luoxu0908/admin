@@ -29,7 +29,7 @@ IF EXISTS(SELECT TOP  1 1 FROM dbo.tblCtcPersons WHERE PersonID={{PID}})
 BEGIN
 	UPDATE dbo.tblCtcPersons SET FirstName={{Nickname}},DisplayName={{Name}},Sex={{Gender}},
 	BirthdayYY=DATEPART(YEAR ,{{Birth}}),BirthdayMM=DATEPART(MONTH,{{Birth}}),
-	BirthdayDD=DATEPART(DAY,{{Birth}}),Remarks={{Remarks}} WHERE PersonID={{PID}}
+	BirthdayDD=DATEPART(DAY,{{Birth}}),QQ={{PersonalQQ}},WeChatNum={{WeChatNum}},Remarks={{Remarks}} WHERE PersonID={{PID}}
 	UPDATE dbo.tblCtcRoles SET Tel1={{TelPhone}},Tel2={{Phone}},FullAddress={{Address}} WHERE PersonID={{PID}}
 	SELECT @Success=1;
 END
