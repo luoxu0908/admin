@@ -43,7 +43,7 @@ jQuery.fn.extend({
 	}
 });
 (function ($) {
-	window.BCBaseURL = "localhost/vms/";
+	window.BCBaseURL = "localhost/jxfc/";
 	//uses jGrowl if loaded, else fallback to default
 	$.alert = function (Msg, options) {
 		if ($.jGrowl) {
