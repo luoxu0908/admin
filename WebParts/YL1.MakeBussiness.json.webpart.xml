@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Attributes
+  WPType Values: Handler URL/Exec SQL/Export SQL/SlickGrid
+  AllowedExternalDomains: | separated for multiple domains
+  ReqSecret: 1 if secret key is required
+  LogType: 1 if request is to be logged
+  CacheDurationS: Number of seconds to cache request
+  CacheOnParams: Key to use for caching {{Params}} may be used
+  ExportFilename: Filename for export (.xslx)
+  ExportSheetnames: Exporting to .xslx, | separated sheet names
+  ExportReportCategory: tblMainReports.DisplayCategory
+  ExportReportName: tblMainReports.ReportName
+  ExportReportDescription: tblMainReports.Description
+  ExportReportDispOrder: tblMainReports.DispOrder
+  SecGroupNames: | separated list of sec groups to allow access
+Elements
+  HandlerURL: URL to handle incoming request (used by WPType="Handler URL")
+  SGAction Values: GetData/AddRow/UpdRow/UpdRowFld/DelRow/Custom/Export (used by WPType="SlickGrid")
+  SQL: SQL Query to run (used by WPType="Exec SQL" OR WPType="SlickGrid")
+  SQLAsyncKey: For running long queries w Event Service
+  UsageRemarks: API instructions for use
+-->
+<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin">
+	<HandlerURL><![CDATA[]]></HandlerURL>
+	<SGAction></SGAction>
+	<SQL><![CDATA[	DECLARE @Success BIT, @RetMsg nvarchar(max); 
+	EXEC [dbo].[spYL_MakeBussiness] {{RowIDs}}, {{@@LoginID}}, @Success OUTPUT, @RetMsg OUTPUT;
+	SELECT @Success AS Success, @RetMsg AS RetMsg;]]></SQL>
+	<SQLAsyncKey></SQLAsyncKey>
+	<UsageRemarks><![CDATA[]]></UsageRemarks>
+</WebPart>
