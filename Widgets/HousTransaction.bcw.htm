@@ -1,0 +1,92 @@
+<style>
+    .nopaddingrow label.inlineblock {
+        margin-top: 0;
+        padding: 0;
+        margin-bottom: 0;
+
+    }
+
+    table {
+           /*border: 2px solid black;*/
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        border: 0px;
+    }
+        table td {
+            border: 2px solid black;
+            background-color: white;
+            color:white;
+        }
+</style>
+<div id="mainform" class="large-12 columns end">
+    <fieldset>
+        <legend>房产交易</legend>
+        <div class="row">
+            <div class="large-1 columns">
+            </div>
+            <div class="large-9 columns">
+                <table>
+                    <tr>
+                        <td >交易类型</td>
+                        <td ><input id="HousTransCategory" tabindex="-1" title="" style="width: 100%" /></td>
+                        <td style="width: 25%">房产类型</td>
+                        <td ><input id="HousCategory" tabindex="-1" title="" style="width: 100%" /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:15%">总　　价</td>
+                        <td style="width:20%"><input id="TotalPrice" />&nbsp;&nbsp;万元</td>
+                        <td style="width:15%"><div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;不能贷款</div></td>
+                        <td ></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%; ">户　　型</td>
+                        <td><input id="TotalPrice" />&nbsp;&nbsp;室</td>
+                        <td style="width:25%"><input id="TotalPrice" />&nbsp;&nbsp;厅</td>
+                        <td><input id="TotalPrice" />&nbsp;&nbsp;卫</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%; ">面　　积</td>
+                        <td style="width: 25%" colspan="3"><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%; ">面　　积</td>
+                        <td style="width: 25%" colspan="3"><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
+                    </tr>
+                    <!--<tr>
+                        <td>所在楼层</td>
+                        <td><input id="TotalPrice" /></td>
+                        <td>共有楼层</td>
+                        <td><input id="TotalPrice" /></td>
+                    </tr>-->
+
+                </table>
+            </div>
+            <div class="large-2 columns">
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.QS = $.parseQS();
+        GetDropdownList('HousTransCategory', 'HousTransCategory');
+        GetDropdownList('HousCategory', 'HousCategory');
+    });
+    function GetDropdownList(id, category) {
+        return $.JSONPost('iCtc1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            return_data.results.push({ id: "", text: "" });
+            for (var i = 0; i < RowCnt; i++) {
+                return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
+            }
+            $("#" + id).select2({
+                data: return_data
+            });
+        });
+    }
+
+</script>
