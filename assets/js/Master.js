@@ -54,7 +54,7 @@ jQuery.fn.extend({
 
 	$.JSONPost = function (URL, Data, options) {
 		var Opt = $.extend({
-			Cache: false, WaitDiv: 'plswait', WaitMsg: 'please wait...', Timeout: 30000, LoginDiv: 'logindiv', LoginURL: '', ShowErrMsg: true, ReqGUID: $.getGUID(), FailFN: false, DisableBtn: '', DisableBtnMsg: 'Please wait...', DisableOth: '.DisableOnJSONPost', LoginHideSuccessMsg: false, LoginSuccessCallbackFn: false
+			Cache: false, WaitDiv: 'plswait', WaitMsg: '请稍等...', Timeout: 30000, LoginDiv: 'logindiv', LoginURL: '', ShowErrMsg: true, ReqGUID: $.getGUID(), FailFN: false, DisableBtn: '', DisableBtnMsg: '请稍等...', DisableOth: '.DisableOnJSONPost', LoginHideSuccessMsg: false, LoginSuccessCallbackFn: false
 		}, window.JSONOpt, options);
 		if (Opt.WaitDiv.length > 0) {
 			var wait = $("#" + Opt.WaitDiv);
@@ -118,9 +118,11 @@ jQuery.fn.extend({
 					} catch (e) {
 						RetVal = 404;
 						if (jqXHR.responseText) {
-							RetMsg = 'Request error (404A) - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
+							ReMsg="请求数据发生错误！请联系管理员！";
+							//RetMsg = 'Request error (404A) - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
 						} else { //empty response - blocked or does not exist or false
-							RetMsg = 'Request error (404B) - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
+							ReMsg="请求数据发生错误！请联系管理员！";
+							//RetMsg = 'Request error (404B) - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
 						}
 					}
 					if (jqXHR.responseText) {
@@ -132,7 +134,9 @@ jQuery.fn.extend({
 						} catch (e) { } //Ignore
 					} 
 				} else {
-					RetVal = 404; RetMsg = 'Request error (404C) - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
+					RetVal = 404; 
+					ReMsg="请求数据发生错误！请联系管理员！";
+					//RetMsg = 'Request error (404C) - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
 				}
 			}
 			if (RetVal == -1) { return; }
@@ -147,14 +151,18 @@ jQuery.fn.extend({
 					return;
 				}
 				else if (Opt.ShowErrMsg) {
-					if (RetMsg.length > 0) { $.alert(RetMsg); return; }
-					else { $.alert('Request error - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')'); return; }
+					if (RetMsg.length > 0) { $.alert('请求数据发生错误！请联系管理员！'); return; }
+					else {
+						$.alert('请求数据发生错误！请联系管理员！'); 
+						 //$.alert('Request error - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')'); 
+						 return; }
 				}
 			}
 		} else { //timeout or network errors
-			RetVal = 408; RetMsg = 'Request timeout or network error - please try again and check with support if it recurs (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
+			RetVal = 408; RetMsg="请求超时！";
+			//RetMsg = 'Request timeout or network error - please try again and check with support if it recurs (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
 			if (typeof (Opt.FailFN) === "function") { Opt.FailFN(RetVal, RetMsg, data, Opt); }
-			if (Opt.ShowErrMsg) { $.alert(RetMsg); return; }
+			if (Opt.ShowErrMsg) { $.alert('请求数据发生错误！请联系管理员！'); return; }
 		}
 	}
 
@@ -173,7 +181,7 @@ jQuery.fn.extend({
 		if (!(hasLoginDiv)) {
 			logindiv = $('<div id=' + LoginDivID + ' style="display:none;">').appendTo(document.body)
 			$('body').append(logindiv);
-			logindiv.html('<p>You are not logged in or your login session may have expired. </br>Please login and retry</p><div><label for="username">Username</label><input id="username" type="text"></div><div><label for="password">Password</label><input id="password" type="password"></div>');
+			logindiv.html('<p>您还没有登录或者登陆数据过期. </br>请重新登录</p><div><label for="username">用户名</label><input id="username" type="text"></div><div><label for="password">密码</label><input id="password" type="password"></div>');
 		}
 		if (!logindiv.is(":visible")) {
 			logindiv.dialog({ title: 'Login Required', modal: true, buttons: { "Login": function () {
@@ -181,7 +189,9 @@ jQuery.fn.extend({
 					.done(function (data) {
 						if (data.d.RetVal == -1) {
 							logindiv.dialog("close");
-							if (!HideSuccessMsg) alert("You have logged in successfully - please refresh or retry your previous operation.");
+							if (!HideSuccessMsg) 
+							alert("登录成功 - 请刷新重新操作！");
+							//alert("You have logged in successfully - please refresh or retry your previous operation.");
 							if (SuccessCallbackFn && typeof (SuccessCallbackFn) == 'function') { SuccessCallbackFn(); }
 						}
 						else { alert(data.d.RetMsg); }
@@ -198,7 +208,9 @@ jQuery.fn.extend({
 					.done(function (data) {
 						if (data.d.RetVal == -1) {
 							logindiv.dialog("close");
-							if (!HideSuccessMsg) alert("You have logged in successfully - please refresh or retry your previous operation.");
+							if (!HideSuccessMsg) 
+							//alert("You have logged in successfully - please refresh or retry your previous operation.");
+							alert("登录成功 - 请刷新重新操作！");
 							if (SuccessCallbackFn && typeof (SuccessCallbackFn) == 'function') { SuccessCallbackFn(); }
 						}
 						else { alert(data.d.RetMsg); }

@@ -6,11 +6,11 @@
         </div>
         <div class="large-2 columns">
             <label for="BusinessName">商家名称</label>
-            <input type="hidden" id="BusinessName" />
+            <input type="text" id="BusinessName" />
         </div>
         <div class="large-2 columns end">
             <label for="ApplyDate">申请时间</label>
-            <input type="text" id="ApplyDate" />
+            <input type="text" id="ApplyDate" class="datepicker"/>
         </div>
     </div>
 
@@ -19,15 +19,19 @@
     <div class="row">
         <div class="large-12 columns">
             <br />
-            <button onclick="refreshData(); return false;">Refresh</button>
-            <button onclick="exportData(); return false;">Export</button>
+            <button onclick="refreshData(); return false;">刷新</button>
+            <button onclick="exportData(); return false;">导出Excel</button>
         </div>
     </div>
 </div>
+<style> *{
+font-family: '微软雅黑' !important;
+}</style>
 <script type="text/javascript">
     var $filters = $('#Filters'), $MTool = $('#MTool');
     $(document).ready(function () {
-        refreshData();
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
     });
     function GetFilterData() {
         var FilterData = { 'ApplyStatus':$('#ApplyStatus').val(),'BusinessName': $('#BusinessName').val() || '', 'ApplyDate': $('#ApplyDate').val() };

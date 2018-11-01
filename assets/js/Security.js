@@ -5,7 +5,7 @@ function LoginInfo() {
 //Performs a login call
 function Login(Username, Password, RememberMe) {
 	var LoginData = { "Username": Username, "Password": Password, "RememberMe": RememberMe };
-	return $.JSONPost("Sec1.Login.json", LoginData, { WaitDiv: "wait", ShowWait: true, MsgDiv: "ReturnMsg" });
+	return $.JSONPost("Sec1.Login.json", LoginData, { WaitDiv: "请稍后...", ShowWait: true, MsgDiv: "ReturnMsg" });
 }
 //Submits 2 factor if required
 function Login2FA(OTP) {
