@@ -29,9 +29,9 @@
                     <table>
                         <tr>
                             <td>交易类型</td>
-                            <td><input id="HousTransCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /></td>
                             <td style="width:30%;text-align:right">房产类型</td>
-                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td><input id="FCLX" tabindex="-1" title="" style="width: 50%" /></td>
                         </tr>
                         <tr>
                             <td>总　　价</td>
@@ -164,8 +164,9 @@
 
     $(document).ready(function () {
         window.QS = $.parseQS();
-        GetDropdownList('HousTransCategory', 'HousTransCategory');
-        GetDropdownList('HousCategory', 'HousCategory');
+        GetDropdownList('JYLX', '发布类型');
+        GetDropdownList('FCLX', '房产类型');
+
         var jqXHR = null;
         $('#Attachment').fileupload({
             dataType: 'json',
@@ -215,7 +216,7 @@
     });
     window.TempFolder = ''; window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
     function GetDropdownList(id, category) {
-        return $.JSONPost('iCtc1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+        return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
             var return_data = { results: [] };
             return_data.results.push({ id: "", text: "" });
