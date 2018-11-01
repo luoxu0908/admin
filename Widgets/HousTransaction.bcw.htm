@@ -19,62 +19,201 @@
         }
 </style>
 <div id="mainform" class="large-12 columns end">
-    <fieldset>
-        <legend>房产交易</legend>
-        <div class="row">
-            <div class="large-1 columns">
-            </div>
-            <div class="large-9 columns">
-                <table>
-                    <tr>
-                        <td >交易类型</td>
-                        <td ><input id="HousTransCategory" tabindex="-1" title="" style="width: 50%" /></td>
-                        <td style="width:30%;text-align:right">房产类型</td>
-                        <td ><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
-                    </tr>
-                    <tr>
-                        <td>总　　价</td>
-                        <td><input id="TotalPrice" />&nbsp;&nbsp;万元</td>
-                        <td style="width: 30%"><div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;不能贷款</div></td>
-                        <td ></td>
-                    </tr>
-                    <tr>
-                        <td>户　　型</td>
-                        <td><input id="TotalPrice" />&nbsp;&nbsp;室</td>
-                        <td style="width: 30%"><input id="TotalPrice" />&nbsp;&nbsp;厅</td>
-                        <td><input id="TotalPrice" />&nbsp;&nbsp;卫</td>
-                    </tr>
-                    <tr>
-                        <td >面　　积</td>
-                        <td  colspan="3"><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
-                    </tr>
-                    <tr>
-                        <td>面　　积</td>
-                        <td><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
-                        <td>所在楼层<input id="TotalPrice" /></td>
-                        <td>共有楼层<input id="TotalPrice" /></td>
-                    </tr>
-                    <tr>
-                        <td>建筑年份</td>
-                        <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
-                        <td style="width: 30%"><div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;不能贷款</div></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="large-2 columns">
-            </div>
-        </div>
-    </fieldset>
-</div>
+    <div class="row">
+        <fieldset>
+            <legend>房产信息</legend>
+            <div class="row">
+                <div class="large-1 columns">
+                </div>
+                <div class="large-9 columns">
+                    <table>
+                        <tr>
+                            <td>交易类型</td>
+                            <td><input id="HousTransCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td style="width:30%;text-align:right">房产类型</td>
+                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                        </tr>
+                        <tr>
+                            <td>总　　价</td>
+                            <td><input id="TotalPrice" />&nbsp;&nbsp;万元</td>
+                            <td style="width: 30%">
+                                <div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl"
+                                        value="AttendingAnother">&nbsp;不能贷款</div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>户　　型</td>
+                            <td><input id="TotalPrice" />&nbsp;&nbsp;室</td>
+                            <td style="width: 30%"><input id="TotalPrice" />&nbsp;&nbsp;厅</td>
+                            <td><input id="TotalPrice" />&nbsp;&nbsp;卫</td>
+                        </tr>
+                        <tr>
+                            <td>面　　积</td>
+                            <td colspan="3"><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
+                        </tr>
+                        <tr>
+                            <td>面　　积</td>
+                            <td><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
+                            <td>所在楼层<input id="TotalPrice" /></td>
+                            <td>共有楼层<input id="TotalPrice" /></td>
+                        </tr>
+                        <tr>
+                            <td>建筑年份</td>
+                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td style="width: 30%">
+                                <div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl"
+                                        value="AttendingAnother">&nbsp;免税房</div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>房屋情况</td>
+                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>小区选择</td>
+                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td><span style="width:30%;text-align:right">小区地址</span><input id="HousCategory" tabindex="-1"
+                                    title="" style="width: 50%" /></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
 
+                <div class="large-2 columns">
+                </div>
+            </div>
+
+        </fieldset>
+    </div>
+    <div class="row">
+        <fieldset>
+            <legend>房产特色</legend>
+            <div class="row">
+                <div class="large-offset-1 large-9 columns">
+                    <div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl"
+                            value="AttendingAnother">&nbsp;业主急售
+                        <input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;随时看房
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <br>
+                <div class="large-offset-1 large-9 columns end">
+                    <span>标题</span>
+                    <input id="TotalPrice" style="width:100%" /> <br> <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-offset-1 large-9 columns end">
+                    <span>详细描述</span>
+                    <textarea id="TotalPrice" />
+                    </div>
+                  </div>
+                  <div class="row">
+                        <div class="large-offset-1 large-9 columns end">
+                                        <div class="row">
+                                            <div class="large-8 columns end">
+                                                <label for="Attachment">上传图片</label>
+                                                <input type="file" id="Attachment" name="files[]">
+                                                <div id="filelist"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="large-8 columns end">
+                                                <div id="preview"></div>
+                                            </div>
+                                        </div>
+                        </div>
+                  </div>
+            </fieldset>
+    </div>
+    <div class="row">
+    <fieldset>
+        <legend>置顶推荐</legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+                  <span style="color:red">  信息黄金位置展示，效果提高 6~8 倍！</span>
+            </div>
+                <div class="large-offset-1 large-9 columns end">
+                   <br>
+                    <div class="paddingcolumns">
+                        <input id="ReasonWithDrawl1" type="radio" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;无
+                        <input id="ReasonWithDrawl1" type="radio" name="ReasonWithDrawl"value="AttendingAnother">&nbsp;3天
+                        <input id="ReasonWithDrawl1" type="radio" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;7天
+                    </div>
+                </div>
+            </div>
+    </fieldset>
+    </div>
+</div>
+<div class="row">
+        <div class="row">
+                <div class="large-offset-1 large-9 columns">
+                        <button id="Submit">信息发布</button>
+                </div>
+            </div>
+</div>
+<script src="../blueimp/js/jquery.fileupload.js"></script>
+<link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui.css">
+<noscript><link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
 <script type="text/javascript">
 
     $(document).ready(function () {
         window.QS = $.parseQS();
         GetDropdownList('HousTransCategory', 'HousTransCategory');
         GetDropdownList('HousCategory', 'HousCategory');
+        var jqXHR = null;
+        $('#Attachment').fileupload({
+            dataType: 'json',
+            url: '../HR/FileHandler.ashx?Action=FileUpload',
+            sequentialUploads: true,
+            maxFileSize: 500000000,
+            add: function (e, data) {
+                var $preview = $('#preview');
+                $.each(data.files, function (index, file) {
+                    data.context = $('<div class="upFile row">').html('<div class="large-12 columns"><span class="filename">' + data.files[0].name + '</span><br /><br /><div class="progress progress-success progress-striped active" aria-valuenow="0" aria-valuemax="100" aria-valuemin="0" role="progressbar"><div class="bar" style="width: 0; height: 100%; background-image: url(\'../blueimp/img/progressbar.gif\');"></div></div></div>').appendTo($preview);
+                    data.formData = { 'LookupCat': 'LeaveSettings' }
+                    jqXHR = data.submit();
+                });
+            },
+            progress: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                data.context.children('div:first').children('.progress').children('.bar').css({ 'width': progress + '%' });
+            },
+            done: function (e, data) {
+                data.context.parent('p').children('.cancelupload').addClass('bchide');
+                if (data.result.d.RetVal === -1) {
+                    if (window.TempFolder == '') {
+                        window.TempFolder += data.result.d.RetData;
+                    } else {
+                        window.TempFolder += window._Delim + data.result.d.RetData;
+                    }
+                    var filename = data.context.children('div:first').children('.filename').html();
+                    data.context.children('div:first').children('.filename').data('filename', filename).html('<a href="../HR/FileHandler.ashx?Action=DownloadFileQS&FN=' + filename + '&cat=LeaveSettings&fld=' + data.result.d.RetData + '" style="display:inline; float:left;" class="currentupfile">' + filename + '</a>');
+                    data.context = $('<img src="../styles/images/ui/cross-20.png" alt="Delete Attachment" style="display:inline; float:right;" data-fld="' + data.result.d.RetData + '" />').appendTo(data.context.children('div:first').children('.filename')).click(function (e) {
+                        e.preventDefault();
+                        $delete = $(this);
+                        $.JSONPost('HR2.DeleteFile.json', { 'LookupCat': 'LeaveSettings', 'FileName': $delete.parent('.filename').data('filename'), 'Folder': $delete.data('fld') })
+                            .done(function (data) {
+                                $.jGrowl(filename + ' 图片删除成功!', { 'theme': 'growlsuccess', 'life': 10000 });
+                                window.TempFolder = window.TempFolder.replace($delete.data('fld'), '');
+                                console.log(window.TempFolder);
+                                $delete.parent().parent().remove();
+                            });
+                    });
+                    $.jGrowl('图片上传成功!.', { 'theme': 'growlsuccess', 'life': 10000 });
+                }
+            },
+            fail: function (e, data) {
+                $.jGrowl('上传失败. 请联系管理员!', { theme: 'growlalert', life: 10000 });
+            }
+        });
     });
+    window.TempFolder = ''; window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
     function GetDropdownList(id, category) {
         return $.JSONPost('iCtc1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
