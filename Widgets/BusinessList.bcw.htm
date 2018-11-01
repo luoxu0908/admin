@@ -1,0 +1,40 @@
+<div id="Filters" class="large-12 columns">
+    <div class="row">
+        <div class="large-2 columns end">
+            <label for="ApplyStatus">申请状态</label>
+            <input type="text" id="ApplyStatus" />
+        </div>
+        <div class="large-2 columns">
+            <label for="BusinessName">商家名称</label>
+            <input type="hidden" id="BusinessName" />
+        </div>
+        <div class="large-2 columns end">
+            <label for="ApplyDate">申请时间</label>
+            <input type="text" id="ApplyDate" />
+        </div>
+    </div>
+
+</div>
+<div class="large-12 columns " id="MTool">
+    <div class="row">
+        <div class="large-12 columns">
+            <br />
+            <button onclick="refreshData(); return false;">Refresh</button>
+            <button onclick="exportData(); return false;">Export</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $filters = $('#Filters'), $MTool = $('#MTool');
+    $(document).ready(function () {
+        refreshData();
+    });
+    function GetFilterData() {
+        var FilterData = { 'ApplyStatus':$('#ApplyStatus').val(),'BusinessName': $('#BusinessName').val() || '', 'ApplyDate': $('#ApplyDate').val() };
+        return FilterData;
+    }
+    function refreshData() { jQuery.event.trigger({ type: "refreshSG" }); }
+    function exportData() { jQuery.event.trigger({ type: "exportSG" }); }
+    window.DoGridInit = true;
+    //window.DefaultGridOptions = { RefreshOnLoad: 0 };
+</script>
