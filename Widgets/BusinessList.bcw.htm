@@ -9,9 +9,15 @@
             <input type="text" id="BusinessName" />
         </div>
         <div class="large-2 columns end">
-            <label for="ApplyDate">申请时间</label>
-            <input type="text" id="ApplyDate" class="datepicker"/>
+            <label for="ApplyStartDate">申请开始时间</label>
+            <input type="text" id="ApplyStartDate" class="datepicker"/>
+            
         </div>
+        <div class="large-2 columns end">
+                <label for="ApplyEndDate">结束时间</label>
+                <input type="text" id="ApplyEndDate" class="datepicker"/>
+                
+            </div>
     </div>
 
 </div>
@@ -35,7 +41,7 @@
     function MakeBussiness(){
     }
     function GetFilterData() {
-        var FilterData = { 'ApplyStatus':$('#ApplyStatus').val(),'BusinessName': $('#BusinessName').val() || '', 'ApplyDate': $('#ApplyDate').val() };
+        var FilterData = { 'ApplyStatus':$('#ApplyStatus').val(),'BusinessName': $('#BusinessName').val() || '', 'ApplyStartDate': $('#ApplyStartDate').val(),'ApplyStartDate': $('#ApplyStartDate').val() };
         return FilterData;
     }
     function refreshData() { jQuery.event.trigger({ type: "refreshSG" }); }
