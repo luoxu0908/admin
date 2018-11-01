@@ -21,18 +21,19 @@
             <br />
             <button onclick="refreshData(); return false;">刷新</button>
             <button onclick="exportData(); return false;">导出Excel</button>
+            <button onclick="MakeBussiness(); return false;">成为商家</button>
         </div>
     </div>
 </div>
-<style> *{
-font-family: '微软雅黑' !important;
-}</style>
+</style>
 <script type="text/javascript">
     var $filters = $('#Filters'), $MTool = $('#MTool');
     $(document).ready(function () {
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
     });
+    function MakeBussiness(){
+    }
     function GetFilterData() {
         var FilterData = { 'ApplyStatus':$('#ApplyStatus').val(),'BusinessName': $('#BusinessName').val() || '', 'ApplyDate': $('#ApplyDate').val() };
         return FilterData;
