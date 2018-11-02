@@ -6,16 +6,17 @@
     }
 
     table {
-           /*border: 2px solid black;*/
+        /*border: 2px solid black;*/
         width: 100%;
         height: 100%;
         background-color: white;
         border: 0px;
     }
+
         table td {
             border: 2px solid black;
             background-color: white;
-            color:white;
+            color: white;
         }
 </style>
 <div id="mainform" class="large-12 columns end">
@@ -37,8 +38,10 @@
                             <td>总　　价</td>
                             <td><input id="TotalPrice" />&nbsp;&nbsp;万元</td>
                             <td style="width: 30%">
-                                <div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl"
-                                        value="AttendingAnother">&nbsp;不能贷款</div>
+                                <div class="paddingcolumns">
+                                    <input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl"
+                                           value="AttendingAnother">&nbsp;不能贷款
+                                </div>
                             </td>
                             <td></td>
                         </tr>
@@ -50,34 +53,34 @@
                         </tr>
                         <tr>
                             <td>面　　积</td>
-                            <td colspan="3"><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
-                        </tr>
-                        <tr>
-                            <td>面　　积</td>
-                            <td><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
+                            <td ><input id="TotalPrice" />&nbsp;&nbsp;平米</td>
                             <td>所在楼层<input id="TotalPrice" /></td>
                             <td>共有楼层<input id="TotalPrice" /></td>
                         </tr>
                         <tr>
                             <td>建筑年份</td>
-                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td><input id="YearBuilt" tabindex="-1" title="" style="width: 50%" /></td>
                             <td style="width: 30%">
-                                <div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl"
-                                        value="AttendingAnother">&nbsp;免税房</div>
+                                <div class="paddingcolumns">
+                                    <input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl"
+                                           value="AttendingAnother">&nbsp;免税房
+                                </div>
                             </td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>房屋情况</td>
-                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
-                            <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
-                            <td></td>
+                            <td>装修要求</td>
+                            <td><input id="HousFitUp" tabindex="-1" title="" style="width: 50%" /></td>
+                            <td style="text-align:right">房屋朝向</td>
+                            <td><input id="HousOrientation" tabindex="-1" title="" style="width: 50%" /></td>
                         </tr>
                         <tr>
                             <td>小区选择</td>
                             <td><input id="HousCategory" tabindex="-1" title="" style="width: 50%" /></td>
-                            <td><span style="width:30%;text-align:right">小区地址</span><input id="HousCategory" tabindex="-1"
-                                    title="" style="width: 50%" /></td>
+                            <td>
+                                <span style="width:30%;text-align:right">小区地址</span><input id="HousCategory" tabindex="-1"
+                                                                                           title="" style="width: 50%" />
+                            </td>
                             <td></td>
                         </tr>
                     </table>
@@ -93,11 +96,21 @@
         <fieldset>
             <legend>房产特色</legend>
             <div class="row">
+
                 <div class="large-offset-1 large-9 columns">
-                    <div class="paddingcolumns"><input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl"
-                            value="AttendingAnother">&nbsp;业主急售
-                        <input id="ReasonWithDrawl1" type="checkbox" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;随时看房
-                    </div>
+                    <div class="paddingcolumns">
+                        <label for="FamilyViolence" class="inlineblock"><input type="checkbox" value="FamilyViolence" name="PresentProblem" id="FamilyViolence" /> 业主急售</label>
+                        <label for="MaritalIssues" class="inlineblock"><input type="checkbox" value="MaritalIssues" name="PresentProblem" id="MaritalIssues" /> 随时看房</label>
+                        <label for="FamilyIssues" class="inlineblock"><input type="checkbox" value="FamilyIssues" name="PresentProblem" id="FamilyIssues" /> 繁华地段</label>
+                        <label for="ParentingIssues" class="inlineblock"><input type="checkbox" value="ParentingIssues" name="PresentProblem" id="ParentingIssues" /> 户型好</label>
+                        <label for="FinancialIssues" class="inlineblock"><input type="checkbox" value="FinancialIssues" name="PresentProblem" id="FinancialIssues" /> 交通便利</label>
+                        <label for="JuvenileDelinquency" class="inlineblock"><input type="checkbox" value="JuvenileDelinquency" name="PresentProblem" id="JuvenileDelinquency" /> 南北通透</label>
+                        <label for="JuvenileDelinquency" class="inlineblock"><input type="checkbox" value="JuvenileDelinquency" name="PresentProblem" id="JuvenileDelinquency" /> 豪华装修</label>
+                        <label for="JuvenileDelinquency" class="inlineblock"><input type="checkbox" value="JuvenileDelinquency" name="PresentProblem" id="JuvenileDelinquency" /> 带车库</label>
+                        <label for="JuvenileDelinquency" class="inlineblock"><input type="checkbox" value="JuvenileDelinquency" name="PresentProblem" id="JuvenileDelinquency" /> 满五唯一</label>
+                        <label for="JuvenileDelinquency" class="inlineblock"><input type="checkbox" value="JuvenileDelinquency" name="PresentProblem" id="JuvenileDelinquency" /> 已满两年</label>
+                        <label for="JuvenileDelinquency" class="inlineblock"><input type="checkbox" value="JuvenileDelinquency" name="PresentProblem" id="JuvenileDelinquency" /> 朝中庭</label>
+                     </div>
                 </div>
             </div>
             <div class="row">
@@ -111,52 +124,53 @@
                 <div class="large-offset-1 large-9 columns end">
                     <span>详细描述</span>
                     <textarea id="TotalPrice" />
-                    </div>
-                  </div>
-                  <div class="row">
-                        <div class="large-offset-1 large-9 columns end">
-                                        <div class="row">
-                                            <div class="large-8 columns end">
-                                                <label for="Attachment">上传图片</label>
-                                                <input type="file" id="Attachment" name="files[]">
-                                                <div id="filelist"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="large-8 columns end">
-                                                <div id="preview"></div>
-                                            </div>
-                                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-offset-1 large-9 columns end">
+                    <div class="row">
+                        <div class="large-8 columns end">
+                            <label for="Attachment">上传图片</label>
+                            <input type="file" id="Attachment" name="files[]">
+                            <div id="filelist"></div>
                         </div>
-                  </div>
-            </fieldset>
+                    </div>
+                    <div class="row">
+                        <div class="large-8 columns end">
+                            <div id="preview"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
     </div>
     <div class="row">
-    <fieldset>
-        <legend>置顶推荐</legend>
-        <div class="row">
-            <div class="large-offset-1 large-9 columns end">
-                  <span style="color:red">  信息黄金位置展示，效果提高 6~8 倍！</span>
-            </div>
+        <fieldset>
+            <legend>置顶推荐</legend>
+            <div class="row">
                 <div class="large-offset-1 large-9 columns end">
-                   <br>
+                    <span style="color:red">  信息黄金位置展示，效果提高 6~8 倍！</span>
+                </div>
+                <div class="large-offset-1 large-9 columns end">
+                    <br>
                     <div class="paddingcolumns">
                         <input id="ReasonWithDrawl1" type="radio" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;无
-                        <input id="ReasonWithDrawl1" type="radio" name="ReasonWithDrawl"value="AttendingAnother">&nbsp;3天
+                        <input id="ReasonWithDrawl1" type="radio" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;3天
                         <input id="ReasonWithDrawl1" type="radio" name="ReasonWithDrawl" value="AttendingAnother">&nbsp;7天
                     </div>
                 </div>
             </div>
-    </fieldset>
+        </fieldset>
+    </div>
+    <div class="row">
+        <div class="row">
+            <div class="large-offset-1 large-9 columns">
+                <button id="Submit">信息发布</button>
+            </div>
+        </div>
     </div>
 </div>
-<div class="row">
-        <div class="row">
-                <div class="large-offset-1 large-9 columns">
-                        <button id="Submit">信息发布</button>
-                </div>
-            </div>
-</div>
+
 <script src="../blueimp/js/jquery.fileupload.js"></script>
 <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui.css">
 <noscript><link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
@@ -166,7 +180,12 @@
         window.QS = $.parseQS();
         GetDropdownList('JYLX', '发布类型');
         GetDropdownList('FCLX', '房产类型');
+        GetDropdownList('HousFitUp', '装修要求');
+        GetDropdownList('HousOrientation', '房屋朝向');
 
+        //GetDropdownList('FCLX', '所在区域');
+        //GetDropdownList('FCLX', '房屋朝向');
+        GetYear('YearBuilt')
         var jqXHR = null;
         $('#Attachment').fileupload({
             dataType: 'json',
@@ -219,13 +238,26 @@
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
             var return_data = { results: [] };
-            return_data.results.push({ id: "", text: "" });
+            return_data.results.push({ id: "", text: "请选择" });
             for (var i = 0; i < RowCnt; i++) {
                 return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
             }
             $("#" + id).select2({
                 data: return_data
             });
+        });
+    }
+
+    function GetYear(id) {
+        var YearNow = new Date().getFullYear();
+        var startYear = YearNow - 50;
+        var return_data = { results: [] };
+        return_data.results.push({ id: "", text: "不限" });
+        for (var Y = startYear; Y <= YearNow; Y++) {
+            return_data.results.push({ id: Y.toString(), text: Y.toString() });
+        }
+        $("#" + id).select2({
+            data: return_data
         });
     }
 
