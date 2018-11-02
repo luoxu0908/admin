@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Attributes
+  WPType Values: Handler URL/Exec SQL/Export SQL/SlickGrid
+  AllowedExternalDomains: | separated for multiple domains
+  ReqSecret: 1 if secret key is required
+  LogType: 1 if request is to be logged
+  CacheDurationS: Number of seconds to cache request
+  CacheOnParams: Key to use for caching {{Params}} may be used
+  ExportFilename: Filename for export (.xslx)
+  ExportSheetnames: Exporting to .xslx, | separated sheet names
+  ExportReportCategory: tblMainReports.DisplayCategory
+  ExportReportName: tblMainReports.ReportName
+  ExportReportDescription: tblMainReports.Description
+  ExportReportDispOrder: tblMainReports.DispOrder
+  SecGroupNames: | separated list of sec groups to allow access
+Elements
+  HandlerURL: URL to handle incoming request (used by WPType="Handler URL")
+  SGAction Values: GetData/AddRow/UpdRow/UpdRowFld/DelRow/Custom/Export (used by WPType="SlickGrid")
+  SQL: SQL Query to run (used by WPType="Exec SQL" OR WPType="SlickGrid")
+  SQLAsyncKey: For running long queries w Event Service
+  UsageRemarks: API instructions for use
+-->
+<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone|Security Admin">
+	<HandlerURL><![CDATA[]]></HandlerURL>
+	<SGAction></SGAction>
+	<SQL><![CDATA[DECLARE @InputStr nvarchar(max); SELECT @InputStr={{SearchTerm}};
+DECLARE @SearchTokens TABLE (Token nvarchar(100));
+INSERT INTO @SearchTokens (Token) SELECT SUBSTRING(LTRIM(RTRIM(Val)), 1, 100) FROM dbo.tfMain_StrToTblStr(@InputStr, N' ');
+DECLARE @Res TABLE (ID NVARCHAR(MAX), MatchCnt int);
+DECLARE @Token nvarchar(100);
+DECLARE Cur_CtcSearch_R CURSOR FOR SELECT DISTINCT Token FROM @SearchTokens WHERE LEN(Token)>1;
+OPEN Cur_CtcSearch_R;
+FETCH NEXT FROM Cur_CtcSearch_R INTO @Token;
+WHILE @@FETCH_STATUS<>-1
+BEGIN
+	INSERT INTO @Res (ID, MatchCnt)
+	SELECT DISTINCT TOP 1000 LookupKey,CASE WHEN Description LIKE @Token+N'%' THEN 2 ELSE 1 END FROM tblTicketLookup
+	 WHERE ISNULL(Description,'') LIKE N'%'+@Token+N'%';
+	FETCH NEXT FROM Cur_CtcSearch_R INTO @Token;
+END
+CLOSE Cur_CtcSearch_R; DEALLOCATE Cur_CtcSearch_R;
+
+
+SELECT TOP 2000 G.LookupKey, G.Description AS  SearchText 
+FROM tblTicketLookup G 
+INNER JOIN (SELECT TOP 10000 ID, SUM(MatchCnt) AS MatchCntSum FROM @Res GROUP BY ID ORDER BY SUM(MatchCnt) DESC) R
+ ON G.LookupKey=R.ID ORDER BY R.MatchCntSum DESC, SearchText]]></SQL>
+	<SQLAsyncKey></SQLAsyncKey>
+	<UsageRemarks><![CDATA[]]></UsageRemarks>
+</WebPart>

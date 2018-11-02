@@ -1,0 +1,63 @@
+<div id="Filters" class="large-12 columns">
+    <div class="row">
+        <div class="large-2 columns end">
+            <label for="FCLX">房产类型</label>
+            <input type="text" id="FCLX" tabindex="-1"  style="width: 100%"/>
+        </div>
+        <div class="large-2 columns">
+            <label for="FBLX">发布类型</label>
+            <input type="text" id="FBLX" tabindex="-1"  style="width: 100%"/>
+        </div>
+        <div class="large-2 columns end">
+            <label for="FBSJ">发布时间</label>
+            <input type="text" id="FBSJ" class="datepicker" />
+        </div>
+        <div class="large-2 columns end">
+            <label for="FCZD" class="inlineblock">
+                <input id="FCZD" type="checkbox" value="1" />
+                置顶
+            </label>
+        </div>
+    </div>
+</div>
+<div class="large-12 columns " id="MTool">
+    <div class="row">
+        <div class="large-12 columns">
+            <br />
+            <button onclick="refreshData(); return false;">查询</button>
+            <button onclick="exportData(); return false;">导出Excel</button>
+            <button onclick="XXLH(); return false;">信息拉黑</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $filters = $('#Filters'), $MTool = $('#MTool');
+    $(document).ready(function () {
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+        window.QS = $.parseQS();
+        GetDropdownList('FBLX', '发布类型');
+        GetDropdownList('FCLX', '房产类型');
+    });
+    function GetDropdownList(id, category) {
+        return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            return_data.results.push({ id: "", text: "请选择" });
+            for (var i = 0; i < RowCnt; i++) {
+                return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
+            }
+            $("#" + id).select2({
+                data: return_data
+            });
+        });
+    }
+    function GetFilterData() {
+        var FilterData = { 'ApplyStatus': $('#ApplyStatus').val(), 'BusinessName': $('#BusinessName').val() || '', 'ApplyStartDate': $('#ApplyStartDate').val(), 'ApplyEndDate': $('#ApplyEndDate').val() };
+        return FilterData;
+    }
+    function refreshData() { jQuery.event.trigger({ type: "refreshSG" }); }
+    function exportData() { jQuery.event.trigger({ type: "exportSG" }); }
+    window.DoGridInit = true;
+    //window.DefaultGridOptions = { RefreshOnLoad: 0 };
+</script>
