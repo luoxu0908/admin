@@ -1,8 +1,8 @@
 <div id="Filters" class="large-12 columns">
     <div class="row">
         <div class="large-2 columns end">
-            <label for="ApplyStatus">员工姓名</label>
-            <input type="text" id="ApplyStatus" />
+            <label for="StaffName">员工姓名</label>
+            <input type="text" id="StaffName" />
         </div>
     </div>
 </div>
@@ -12,33 +12,122 @@
             <br />
             <button onclick="refreshData(); return false;">查询</button>
             <button onclick="exportData(); return false;">导出Excel</button>
-            <button onclick="AddNewStaff(); return false;">添加成员</button>
+            <button onclick="AddNewStaff(); return false;">添加员工</button>
             <button onclick="RemoveStaff(); return false;">移除员工</button>
         </div>
     </div>
 </div>
+<div id="AddNewStaff" title="添加员工" style="display: none;">
+    <div class="row">
+        <div class="large-12 columns end">
+            <label for="SelectPerson">
+                姓名<span style="color: Red">*</span>
+            </label><input type="text" id="SelectPerson" style="width:100%;" />
+        </div>
+
+    </div>
+</div>
+<div id="AddNewDialog" title="Add New Individual" style="display: none;">
+</div>
 </style>
 <script type="text/javascript">
-    var $filters = $('#Filters'), $MTool = $('#MTool');
+    var $AddNewDialogInd = $('#AddNewDialog');
+    var $AddNewStaff = $('#AddNewStaff');
     $(document).ready(function () {
-        $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
+        $AddNewDialogInd.load('../iContact/Widgets/AddNewIndividual.bcw.htm', function (response, status, xhr) {
+            if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
+        });
+
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+        $("#SelectPerson").select2({ minimumInputLength: 2, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
+            if (e.val == 'AddInd') {
+                var Ind = {}; Ind.IndName = window.SearchTerm;
+                $("#SelectPersonOrg").select2("val", "");
+                AddNewIndividualDiv_Show(Ind);
+            }
+            else { $("#SelectPersonOrg").select2("val", ""); }
+        });
+        setTimeout(GetBussinessID, 500);
     });
+
+    function GetBussinessID() {
+        return $.JSONPost('YL1.GetBussinessID.json', { "": "" }).done(function (data) {
+            window.GroupID = data.d.RetData.Tbl.Rows[0].GroupID; refreshData();
+        });
+    }
+    function RemoveStaff() {
+        return $.JSONPost('YL1.RemoveStaff.json', { "GroupID": window.GroupID || '',"RowIDs":SGH.getSelectedRowIDsStr() }).done(function (data) {
+            if ((data) && (data.d.RetVal === -1)) {
+                $.alert("操作成功！", { theme: 'growlsuccess', sticky: true });
+                refreshData();
+            }
+            else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
+        });
+    }
+    function InitItemSelection(element, callback) {
+        var RoleID = $(element).val();
+        if (RoleID != "") {
+            $.JSONPost('Ctc1.SearchTextEntity.json', { "RoleID": RoleID })
+                .done(function (data) {
+                    var R = data.d.RetData.Tbl.Rows;
+                    if (R.length > 0) {
+                        callback({ id: R[0].RoleID, text: R[0].SearchText });
+                    } else {
+                        callback({ id: -1, text: "非法ID" });
+                    }
+                });
+        }
+    }
+    function GetSearchMatches(query) {
+        window.SearchTerm = query.term;
+        $.JSONPost('Ctc1.SearchEntity.json', { "SearchTerm": query.term, "ReturnID": "RoleID" }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            for (var i = 0; i < RowCnt; i++) {
+                return_data.results.push({ id: R[i]["RoleID"], text: R[i]["SearchText"] });
+            }
+            return_data.results.push({ id: "AddInd", text: "新增用户" });
+            query.callback(return_data);
+        });
+    }
+    $AddNewStaff.dialog({
+        autoOpen: false, height: 'auto', width: '300px', modal: true,
+        buttons: {
+            "保存": {
+                click: function () {
+                    $('.DlgButtons').button('disable');
+                    var RoleID = ($('#SelectPerson').val() || '');
+                    return $.JSONPost('YL1.AddNewStaff.json', { "RoleID": RoleID, "GroupID": window.GroupID || '' }).done(function (data) {
+                        if ((data) && (data.d.RetVal === -1)) {
+                            $.alert("操作成功！", { theme: 'growlsuccess', sticky: true });
+                            refreshData();
+                        }
+                        else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
+                    });
+                }, 'class': 'DlgSaveButton DlgButtons', 'text': 'Save'
+            },
+            "取消": {
+                click: function () { $(this).dialog("close"); jQuery.event.trigger({ "type": "CancelAddNewIndividual" }); },
+                'class': 'DlgCancelButton DlgButtons', 'text': 'Cancel'
+            }
+        },
+        open: function () { },
+        close: function () { }
+    });
+
     function AddNewStaff() {
-        return $.JSONPost('YL1.MakeBussiness.json', { 'RowIDs': SGH.getSelectedRowIDsStr() })
-            .done(function (data) {
-                if ((data) && (data.d.RetVal === -1)) {
-                    $.alert("操作成功！", { theme: 'growlsuccess', sticky: true });refreshData();
-                }
-                else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
-            });
+        $AddNewStaff.dialog('open');
     }
     function GetFilterData() {
-        var FilterData = { 'ApplyStatus':$('#ApplyStatus').val(),'BusinessName': $('#BusinessName').val() || '', 'ApplyStartDate': $('#ApplyStartDate').val(),'ApplyEndDate': $('#ApplyEndDate').val() };
+        var FilterData = { 'GroupID': window.GroupID || '', 'StaffName': $('#StaffName').val() || '' };
         return FilterData;
     }
-    function refreshData() { jQuery.event.trigger({ type: "refreshSG" }); }
+    function refreshData() {
+        jQuery.event.trigger({ type: "refreshSG" });
+    }
     function exportData() { jQuery.event.trigger({ type: "exportSG" }); }
     window.DoGridInit = true;
-    //window.DefaultGridOptions = { RefreshOnLoad: 0 };
+    window.DefaultGridOptions = { RefreshOnLoad: 0 };
+
 </script>

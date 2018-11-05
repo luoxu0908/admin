@@ -27,7 +27,6 @@
             <br />
             <button onclick="refreshData(); return false;">查询</button>
             <button onclick="exportData(); return false;">导出Excel</button>
-            <button onclick="MakeBussiness(); return false;">成为商家</button>
             <button onclick="RubishBussiness(); return false;">拉黑商家</button>
         </div>
     </div>
@@ -39,8 +38,8 @@
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
     });
-    function MakeBussiness() {
-        return $.JSONPost('YL1.MakeBussiness.json', { 'RowIDs': SGH.getSelectedRowIDsStr() })
+    function MakeBussiness(PersonID) {
+        return $.JSONPost('YL1.MakeBussiness.json', { 'RowIDs': PersonID })
             .done(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
                     $.alert("操作成功！", { theme: 'growlsuccess', sticky: true });refreshData();
