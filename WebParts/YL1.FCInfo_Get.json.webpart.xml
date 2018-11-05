@@ -24,7 +24,17 @@ Elements
 <WebPart WPType="SlickGrid" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction>GetData</SGAction>
-	<SQL><![CDATA[SELECT TOP 2000 {{@@DbColNames}} FROM tblYLHouses;]]></SQL>
+	<SQL><![CDATA[SELECT YL.ID,TL.Description AS HousesType,TL1.Description AS JYLX,(YL.FCZJ+N'  万元') AS FCZJ,YL.FCDK,
+(SELECT dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3)) AS FCHU1 ,(YL.FCMJ +N' 平方米') AS FCMJ,(YL.SZLC +N' 层') AS SZLC,
+(YL.GYLC +N' 层') AS GYLC,YL.JZNF,YL.MSF,TL2.Description AS ZXYQ,TL3.Description AS FWCX,TL4.Description AS XQXZ,YL.XQDZ,
+(SELECT dbo.fnYL_GetFCTS(YL.FCTS)) AS FCTS,YL.FXBT,YL.FXMS,CP.DisplayName AS ModifiedBy,
+(SELECT CONVERT(nvarchar(10), YL.ModifiedDate, 121)) AS ModifiedDate FROM tblYLHouses YL
+LEFT JOIN dbo.tblTicketLookup TL ON YL.HousesType=TL.LookupKey AND TL.LookupCat=N'房产类型'
+LEFT JOIN dbo.tblTicketLookup TL1 ON YL.JYLX=TL1.LookupKey AND TL1.LookupCat=N'发布类型'
+LEFT JOIN dbo.tblTicketLookup TL2 ON YL.ZXYQ=TL2.LookupKey AND TL2.LookupCat=N'装修要求'
+LEFT JOIN dbo.tblTicketLookup TL3 ON YL.FWCX=TL3.LookupKey AND TL3.LookupCat=N'房屋朝向'
+LEFT JOIN dbo.tblTicketLookup TL4 ON YL.XQXZ=TL4.LookupKey AND TL4.LookupCat=N'小区名称'
+LEFT JOIN dbo.tblCtcPersons CP ON CP.LoginID=YL.ModifiedBy]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

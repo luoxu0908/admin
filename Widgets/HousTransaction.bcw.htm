@@ -204,7 +204,12 @@
             }
         });
         $.when(GetDropdownList('JYLX', '发布类型'), GetDropdownList('FCLX', '房产类型'), GetDropdownList('ZXYQ', '装修要求'), GetDropdownList('FWCX', '房屋朝向'), GetDropdownListCheckBox('HouseCharacteristic', '房屋特色'), GetYear('JZNF')).then(function () {
-            GetHouseTransaction();
+          
+            var CurrID = window.QS.ID || '';
+            if (CurrID.length > 0 && CurrID != 'undefined') {
+                GetHouseTransaction(CurrID);
+            }
+
         });
         $('#Save').click(function () {
             Save();
@@ -254,9 +259,9 @@
             data: return_data
         });
     }
-    function GetHouseTransaction() {
-        var data = { 'ID': window.QS.ID }
-        $.JSONPost('YL1.GetHouseTransaction.json', data)
+    function GetHouseTransaction(CurrentID) {
+        var data = { 'ID': CurrentID }
+      return  $.JSONPost('YL1.GetHouseTransaction.json', data)
 		.done(function (data) {
 		    if ((data) && (data.d.RetVal == -1)) {
 		        var Tbl = data.d.RetData.Tbl;
