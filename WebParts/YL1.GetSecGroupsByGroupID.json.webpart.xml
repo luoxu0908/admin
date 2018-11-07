@@ -21,13 +21,13 @@ Elements
   SQLAsyncKey: For running long queries w Event Service
   UsageRemarks: API instructions for use
 -->
-<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin|Administrator">
+<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin|Staff IC|Staff Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[CDATA[DECLARE @Success BIT,@RetMsg NVARCHAR(MAX);
-EXEC [dbo].[spYL_SaveHouseTransaction] {{ID}},{{JYLX}},{{HousesType}},{{FCZJ}},{{FCDK}},{{FCHU1}},{{FCHU2}},{{FCHU3}},{{FCMJ}},{{SZLC}},{{GYLC}},{{JZNF}},{{MSF}},
-{{ZXYQ}},{{FWCX}},{{XQXZ}},{{XQDZ}},{{FCTS}},{{FXBT}},{{FXMS}},{{ZDTJ}},{{@@LoginID}},@Success OUTPUT,@RetMsg OUTPUT; 
-SELECT @Success AS Success,@RetMsg AS ReturnMsg;]]></SQL>
+	<SQL><![CDATA[SELECT TagName,(CASE RoleName when 'Staff' then N'员工' when 'Staff IC' then N'管理员' else '' end ) as RoleName FROM dbo.tblCtcGroupRoles 
+
+WHERE RoleName NOT IN (N'Staff Admin') AND 
+groupid={{GroupID}}]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
