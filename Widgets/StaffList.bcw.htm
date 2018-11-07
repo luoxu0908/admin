@@ -13,7 +13,7 @@
             <button onclick="refreshData(); return false;">查询</button>
             <button onclick="exportData(); return false;">导出Excel</button>
             <button onclick="AddNewStaff(); return false;">添加员工</button>
-            <button onclick="RemoveStaff(); return false;">移除员工</button>
+            <!-- <button onclick="RemoveStaff(); return false;">移除员工</button> -->
         </div>
     </div>
 </div>
@@ -27,7 +27,7 @@
 
     </div>
 </div>
-<div id="AddNewDialog" title="Add New Individual" style="display: none;">
+<div id="AddNewDialog" title="新增用户" style="display: none;">
 </div>
 </style>
 <script type="text/javascript">
@@ -56,8 +56,8 @@
             window.GroupID = data.d.RetData.Tbl.Rows[0].GroupID; refreshData();
         });
     }
-    function RemoveStaff() {
-        return $.JSONPost('YL1.RemoveStaff.json', { "GroupID": window.GroupID || '',"RowIDs":SGH.getSelectedRowIDsStr() }).done(function (data) {
+    function RemoveStaff(RoleID) {
+        return $.JSONPost('YL1.RemoveStaff.json', { "GroupID": window.GroupID || '',"RoleID":RoleID }).done(function (data) {
             if ((data) && (data.d.RetVal === -1)) {
                 $.alert("操作成功！", { theme: 'growlsuccess', sticky: true });
                 refreshData();
