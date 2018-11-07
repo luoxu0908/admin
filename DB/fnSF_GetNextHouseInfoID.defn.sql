@@ -14,7 +14,7 @@ BEGIN
 	SELECT @NextNo='', @NextCompiledNo='', @FinalCompiledNo='';
 
 	--Get next number
-	SELECT TOP 1 @NextNo = CONVERT(nvarchar(30),CONVERT(int,SUBSTRING(ID,7,99))+1) FROM tblYLHouses WHERE HousesType = @Type ORDER BY ID DESC;
+	SELECT TOP 1 @NextNo = CONVERT(nvarchar(30),CONVERT(int,SUBSTRING(ID,7,99))+1) FROM tblYLHouses WHERE HousesType = @Type ORDER BY CONVERT(int,SUBSTRING(ID,7,99)) DESC;
 
 	IF LEN(ISNULL(@NextNo,''))=0
 	BEGIN
