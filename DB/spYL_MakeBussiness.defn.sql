@@ -32,17 +32,22 @@ BEGIN
 	INSERT INTO dbo.tblCtcGroupHierarchy( ParentGroupID ,ChildGroupID , ChildLabel)
 	VALUES  ( 2 , @GroupID , @ChildLabel)
 
-    SELECT @TagName='GroupID.'+@GroupID+'(Staff IC)';
+    SELECT @TagName='GroupID.'+@GroupID+'(Staff Admin)';
 	INSERT INTO dbo.tblCtcGroupRoles (TagName ,GroupID ,RoleName ,GroupRoleBitMask ,GroupDepthAccess , CreatedBy ,CreatedDate )
-	VALUES  ( @TagName, @GroupID,N'Staff IC' ,0 , 0 , @LoginID , GETDATE())
+	VALUES  ( 'GroupID.'+@GroupID+'(Staff IC)', @GroupID,N'Staff IC' ,0 , 0 , @LoginID , GETDATE())
 
 	INSERT INTO dbo.tblCtcGroupRoles (TagName ,GroupID ,RoleName ,GroupRoleBitMask ,GroupDepthAccess , CreatedBy ,CreatedDate )
-	VALUES  ( 'GroupID.'+@GroupID+'(Staff)', @GroupID,N'Staff IC' ,0 , 0 , @LoginID , GETDATE())
+	VALUES  ( 'GroupID.'+@GroupID+'(Staff)', @GroupID,N'Staff' ,0 , 0 , @LoginID , GETDATE())
+
+	INSERT INTO dbo.tblCtcGroupRoles (TagName ,GroupID ,RoleName ,GroupRoleBitMask ,GroupDepthAccess , CreatedBy ,CreatedDate )
+	VALUES  ( @TagName, @GroupID,N'Staff Admin' ,0 , 0 , @LoginID , GETDATE())
+
 
 	INSERT INTO dbo.tblCtcTagNamesSecurityMod  ( TagName, SecGroupID )VALUES	(@TagName,10)
 
 	INSERT INTO dbo.tblCtcTagNamesSecurityMod ( TagName, SecGroupID ) VALUES	(@TagName,13)
 
+	INSERT INTO dbo.tblCtcTagNamesSecurityMod ( TagName, SecGroupID ) VALUES	(@TagName,28)
 	
 	EXEC [dbo].[spCtc_RoleTag_Upsert] @RoleID,@TagName,@LoginID, 0, 1, 1, N'';
 

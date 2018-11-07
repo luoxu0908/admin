@@ -21,10 +21,11 @@ Elements
   SQLAsyncKey: For running long queries w Event Service
   UsageRemarks: API instructions for use
 -->
-<WebPart WPType="SlickGrid" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin">
+<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
-	<SGAction>GetData</SGAction>
-	<SQL><![CDATA[select * from  [dbo].[tfYL_GetStaffsListing]({{GroupID}}) WHERE DisplayName LIKE '%'+{{StaffName}}+'%' OR LEN ({{StaffName}})=0;]]></SQL>
+	<SGAction></SGAction>
+	<SQL><![CDATA[UPDATE dbo.tblCtcPersons SET Status=N'已禁用' WHERE PersonID IN (SELECT Val FROM tfMain_StrToTblStr ({{RowIDs}},'•'))
+SELECT 1 AS Success,'' as RetMsg;]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

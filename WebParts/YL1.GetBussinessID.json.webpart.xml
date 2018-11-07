@@ -25,7 +25,7 @@ Elements
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
 	<SQL><![CDATA[DECLARE @GroupID INT,@TagName NVARCHAR(200);
-	SELECT @TagName=TagName FROM dbo.tblCtcRoleTags WHERE RoleID IN (SELECT  DefaultRoleID FROM dbo.tblCtcPersons WHERE LoginID={{@@LoginID}}) and TagName like '%Staff IC%' order by CreatedDate 
+	SELECT @TagName=TagName FROM dbo.tblCtcRoleTags WHERE RoleID IN (SELECT  DefaultRoleID FROM dbo.tblCtcPersons WHERE LoginID={{@@LoginID}}) and TagName like '%Staff Admin%' order by CreatedDate 
 	SELECT GroupID from tblCtcGroupRoles WHERE TagName=@TagName  ]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
