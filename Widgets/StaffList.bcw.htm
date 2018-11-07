@@ -96,7 +96,6 @@
         buttons: {
             "保存": {
                 click: function () {
-                    $('.DlgButtons').button('disable');
                     var RoleID = ($('#SelectPerson').val() || '');
                     return $.JSONPost('YL1.AddNewStaff.json', { "RoleID": RoleID, "GroupID": window.GroupID || '' }).done(function (data) {
                         if ((data) && (data.d.RetVal === -1)) {
@@ -108,7 +107,7 @@
                 }, 'class': 'DlgSaveButton DlgButtons', 'text': 'Save'
             },
             "取消": {
-                click: function () { $(this).dialog("close"); jQuery.event.trigger({ "type": "CancelAddNewIndividual" }); },
+                click: function () { $(this).dialog("close"); },
                 'class': 'DlgCancelButton DlgButtons', 'text': 'Cancel'
             }
         },

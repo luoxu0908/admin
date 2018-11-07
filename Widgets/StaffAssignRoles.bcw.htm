@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="../styles/jquery.multiselect.css" type="text/css" />
+<link rel="stylesheet" href="../styles/jquery.multiselect.filter.css" type="text/css" />
+<div id="Filters" class="large-12 columns">
+    <fieldset>
+        <legend>角色管理</legend>
+        <div class="row">
+            <div class="large-4 columns end">
+                <label for="SelectPerson">选择员工</label>
+                <input type="text" id="SelectPerson" style="width:100%;"/>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="large-4 columns end">
+                <label for="SGAccess">分配角色</label>
+                <select id="SGAccess" multiple="multiple"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-4 columns end">
+                <br>
+                <button onclick="Submit();return false;">提交</button>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<script src="../scripts/jquery.multiselect.min.js"></script>
+<script src="../scripts/jquery.multiselect.filter.min.js"></script>
+<script src="../scripts/jquery.multiselect.zh-cn.js"></script>
+<script src="../scripts/jquery.multiselect.filter.zh-cn.js"></script>
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+        $.when(GetBussinessID()).then(function () {
+            LoadSecGroups();LoadSecPersons();
+        });
+        $('#SelectPerson').change(function(){
+            LoadSecPersonsRoles();
+        });
+    });
+    function GetBussinessID() {
+        return $.JSONPost('YL1.GetBussinessID.json', { "": "" }).done(function (data) {
+            window.GroupID = data.d.RetData.Tbl.Rows[0].GroupID; 
+        });
+    }
+    function LoadSecGroups(callback) {
+        $.JSONPost("YL1.GetSecGroupsByGroupID.json",{"GroupID":window.GroupID||''} )
+            .done(function (data) {
+                var R = data.d.RetData.Tbl.Rows;
+                var RowCnt = R.length, $sel = $("#SGAccess"); $sel.html('');
+                for (var i = 0; i < RowCnt; i++) {
+                    $sel.append($('<option>', { value: R[i].TagName }).text(R[i].RoleName));
+                }
+                $sel.multiselect({ selectedList: 20 }).multiselectfilter();
+                if (callback && typeof (callback) === 'function') { callback(); }
+            });
+    }
+    function LoadSecPersons() {
+        return $.JSONPost('YL1.GetSecPersonsByGroupID.json', { "GroupID":window.GroupID||''}).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            return_data.results.push({ id: "", text: "请选择" });
+            for (var i = 0; i < RowCnt; i++) {
+                return_data.results.push({ id: R[i]["RoleID"], text: R[i]["DisplayName"] });
+            }
+            $("#SelectPerson").select2({
+                data: return_data
+            });
+        });
+    }
+    function LoadSecPersonsRoles() {
+        return $.JSONPost('YL1.GetSecPersonsRoles.json', { "GroupID":window.GroupID||'',RoleID:$('#SelectPerson').val()||''}).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            $('#SGAccess').val(R[0].TagName.split(",")).multiselect("refresh");
+        });
+    }
+    function Submit() {
+        var RoleID = $('#SelectPerson').val(), SGIDs = ($("#SGAccess").val() || [""]).join(",");
+        if  (SGIDs.length<=0){$.alert('请选择至少一个角色！');return false;}
+        return $.JSONPost('YL1.AssignStaffRoles.json', { "GroupID":window.GroupID||'','RoleID': RoleID, "SGIDs": SGIDs })
+            .done(function (data) {
+                if ((data) && (data.d.RetVal === -1)) {
+                    $.alert("操作成功！", { theme: 'growlsuccess', sticky: true }); LoadSecPersons() ;
+                }
+                else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
+            });
+    }
+</script>

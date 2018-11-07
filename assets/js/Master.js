@@ -184,7 +184,7 @@ jQuery.fn.extend({
 			logindiv.html('<p>您还没有登录或者登陆数据过期. </br>请重新登录</p><div><label for="username">用户名</label><input id="username" type="text"></div><div><label for="password">密码</label><input id="password" type="password"></div>');
 		}
 		if (!logindiv.is(":visible")) {
-			logindiv.dialog({ title: '请登录', modal: true, buttons: { "Login": function () {
+			logindiv.dialog({ title: '请登录', modal: true, buttons: { "登录": function () {
 				$.JSONPost("Sec1.Login.json", { "Username": $("#username").val(), "Password": $("#password").val(), "RememberMe": false }, "")
 					.done(function (data) {
 						if (data.d.RetVal == -1) {
