@@ -24,7 +24,7 @@ Elements
 <WebPart WPType="SlickGrid" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction>GetData</SGAction>
-	<SQL><![CDATA[select * from  [dbo].[tfYL_GetStaffsListing]({{GroupID}})]]></SQL>
+	<SQL><![CDATA[select * from  [dbo].[tfYL_GetStaffsListing]({{GroupID}}) WHERE DisplayName LIKE '%'+{{StaffName}}+'%' OR LEN ({{StaffName}})=0;]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
