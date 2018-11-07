@@ -34,7 +34,13 @@ LEFT JOIN dbo.tblTicketLookup TL1 ON YL.JYLX=TL1.LookupKey AND TL1.LookupCat=N'�
 LEFT JOIN dbo.tblTicketLookup TL2 ON YL.ZXYQ=TL2.LookupKey AND TL2.LookupCat=N'装修要求'
 LEFT JOIN dbo.tblTicketLookup TL3 ON YL.FWCX=TL3.LookupKey AND TL3.LookupCat=N'房屋朝向'
 LEFT JOIN dbo.tblTicketLookup TL4 ON YL.XQXZ=TL4.LookupKey AND TL4.LookupCat=N'小区名称'
-LEFT JOIN dbo.tblCtcPersons CP ON CP.LoginID=YL.ModifiedBy]]></SQL>
+LEFT JOIN dbo.tblCtcPersons CP ON CP.LoginID=YL.ModifiedBy
+WHERE (YL.HousesType={{FCLX}} OR LEN(ISNULL({{FCLX}},''))=0)
+AND (YL.JYLX={{FBLX}} OR LEN(ISNULL({{FBLX}},''))=0)
+AND (YL.ModifiedDate>= dateadd(ms,0,DATEADD(dd, DATEDIFF(dd,0,{{FBSJ}}), 0))  OR LEN(ISNULL({{FBSJ}},''))=0)
+AND (YL.ModifiedDate<= dateadd(ms,-3,DATEADD(dd, DATEDIFF(dd,-1,{{FBSJ}}), 0)) OR LEN(ISNULL({{FBSJ}},''))=0)
+AND (YL.FXMS={{FCZD}} OR LEN(ISNULL({{FCZD}},''))=0)
+ORDER BY YL.ModifiedDate DESC]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
