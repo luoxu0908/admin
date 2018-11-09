@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <td>总　　价</td>
-                        <td><input id="FCZJ"  />&nbsp;&nbsp;万元</td>
+                        <td><input id="FCZJ" />&nbsp;&nbsp;万元</td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
                                 <input id="FCDK" type="checkbox" name="FCDK"
@@ -52,9 +52,9 @@
                     </tr>
                     <tr>
                         <td>面　　积</td>
-                        <td><input id="FCMJ"  />&nbsp;&nbsp;平米</td>
-                        <td>所在楼层<input id="SZLC"  /></td>
-                        <td>共有楼层<input id="GYLC"  /></td>
+                        <td><input id="FCMJ" />&nbsp;&nbsp;平米</td>
+                        <td>所在楼层<input id="SZLC" /></td>
+                        <td>共有楼层<input id="GYLC" /></td>
                     </tr>
                     <tr>
                         <td>建筑年份</td>
@@ -101,7 +101,7 @@
             <br>
             <div class="large-offset-1 large-9 columns end">
                 <span>标题</span>
-                <input id="FXBT"  /> <br> <br>
+                <input id="FXBT" /> <br> <br>
             </div>
         </div>
         <div class="row">
@@ -136,9 +136,11 @@
             <div class="large-offset-1 large-9 columns end">
                 <br>
                 <div class="paddingcolumns" id="ZDTJ">
-                    <input id="" type="radio" name="ReasonWithDrawl" value="">&nbsp;无
+                    <!--<input id="" type="radio" name="ReasonWithDrawl" value="">&nbsp;无
                     <input id="" type="radio" name="ReasonWithDrawl" value="">&nbsp;3天
-                    <input id="" type="radio" name="ReasonWithDrawl" value="">&nbsp;7天
+                    <input id="" type="radio" name="ReasonWithDrawl" value="">&nbsp;7天-->
+
+                  
                 </div>
             </div>
         </div>
@@ -184,6 +186,15 @@
                         window.TempFolder += window._Delim + data.result.d.RetData;
                     }
                     var filename = data.context.children('div:first').children('.filename').html();
+                    var PicArr=''
+                    if (window.TempFolder.length>0) {
+                        PicArr = window.TempFolder.split('•');
+                        if (PicArr.length == 1) {
+                            window.Pic = PicArr[0] + '|' + filename;
+                        } else {
+                            window.Pic += '•' + PicArr[PicArr.length - 1] + '|' + filename;
+                        }
+                    }
                     data.context.children('div:first').children('.filename').data('filename', filename).html('<a href="../HR/FileHandler.ashx?Action=DownloadFileQS&FN=' + filename + '&cat=LeaveSettings&fld=' + data.result.d.RetData + '" style="display:inline; float:left;" class="currentupfile">' + filename + '</a>');
                     data.context = $('<img src="../styles/images/ui/cross-20.png" alt="Delete Attachment" style="display:inline; float:right;" data-fld="' + data.result.d.RetData + '" />').appendTo(data.context.children('div:first').children('.filename')).click(function (e) {
                         e.preventDefault();
@@ -203,8 +214,8 @@
                 $.jGrowl('上传失败. 请联系管理员!', { theme: 'growlalert', life: 10000 });
             }
         });
-        $.when(GetDropdownList('JYLX', '发布类型'), GetDropdownList('FCLX', '房产类型'), GetDropdownList('ZXYQ', '装修要求'), GetDropdownList('FWCX', '房屋朝向'), GetDropdownListCheckBox('HouseCharacteristic', '房屋特色'), GetYear('JZNF')).then(function () {
-          
+        $.when(GetDropdownList('JYLX', '发布类型'), GetDropdownList('FCLX', '房产类型'), GetDropdownList('ZXYQ', '装修要求'), GetDropdownList('FWCX', '房屋朝向'), GetDropdownListCheckBox('HouseCharacteristic', '房屋特色'), GetYear('JZNF'), GetDropdownListRedio('ZDTJ', '置顶推荐')).then(function () {
+
             var CurrID = window.QS.ID || '';
             if (CurrID.length > 0 && CurrID != 'undefined') {
                 GetHouseTransaction(CurrID);
@@ -220,7 +231,7 @@
             } else { $("#XQXZ").select2("val", ""); }
         });
     });
-    window.TempFolder = ''; window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
+    window.TempFolder = ''; window.Pic='', window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
     function GetDropdownList(id, category) {
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
@@ -242,11 +253,25 @@
             var Name = 'HouseCharacter'
             for (var i = 0; i < RowCnt; i++) {
                 html += '<label for="' + Name + R[i]["LookupKey"] + '" class="inlineblock"><input type="checkbox" value="' + R[i]["LookupKey"] + '" name="' + Name + '" id="' + Name + R[i]["LookupKey"] + '" /> ' + R[i]["Description"] + '</label>';
+
+            }
+            $("#" + id).html(html);
+        });
+    }
+    function GetDropdownListRedio(id, category) {
+        return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            var html = '';
+            var Name = 'ZDTJ';
+            for (var i = 0; i < RowCnt; i++) {
+                html += '<label for="' + Name + R[i]["LookupKey"] + '" class="inlineblock"><input id="' + Name + R[i]["LookupKey"] + '" type="radio" name="ZDTJ" value="' + R[i]["LookupKey"] + '">&nbsp;&nbsp;' + R[i]["Description"] + '&nbsp;&nbsp;&nbsp;</label>';
                 
             }
             $("#" + id).html(html);
         });
     }
+    
     function GetYear(id) {
         var YearNow = new Date().getFullYear();
         var startYear = YearNow - 50;
@@ -261,76 +286,88 @@
     }
     function GetHouseTransaction(CurrentID) {
         var data = { 'ID': CurrentID }
-      return  $.JSONPost('YL1.GetHouseTransaction.json', data)
-		.done(function (data) {
-		    if ((data) && (data.d.RetVal == -1)) {
-		        var Tbl = data.d.RetData.Tbl;
-		        var RowCnt = Tbl.Rows.length;
-		        if (RowCnt > 0) {
-		            $('#JYLX').select2('val', Tbl.Rows[0].JYLX || '');
-		            $('#FCLX').select2('val', Tbl.Rows[0].HousesType || '');
-		            $('#FCZJ').val(Tbl.Rows[0].FCZJ || '');
-		            if (Tbl.Rows[0].FCDK == '1') {
-		                $('#FCDK').prop('checked', true);
-		            } else {
-		                $('#FCDK').prop('checked', false);
-		            }
-		            $('#FCHU1').val(Tbl.Rows[0].FCHU1 || '');
-		            $('#FCHU2').val(Tbl.Rows[0].FCHU2 || '');
-		            $('#FCHU3').val(Tbl.Rows[0].FCHU3 || '');
-		            $('#FCMJ').val(Tbl.Rows[0].FCMJ || '');
-		            $('#SZLC').val(Tbl.Rows[0].SZLC || '');
-		            $('#GYLC').val(Tbl.Rows[0].GYLC || '');
-		            $('#JZNF').select2('val', Tbl.Rows[0].JZNF || '');
-		            if (Tbl.Rows[0].MSF == '1') {
-		                $('#MSF').prop('checked', true);
-		            } else {
-		                $('#MSF').prop('checked', false);
-		            }
-		            $('#ZXYQ').select2('val', Tbl.Rows[0].ZXYQ || '');
-		            $('#FWCX').select2('val', Tbl.Rows[0].FWCX || '');
-		            if (Tbl.Rows[0].XQXZ.length>0) {
-		                $('#XQXZ').select2('val', Tbl.Rows[0].XQXZ);
-		            }
-		            $('#XQDZ').val(Tbl.Rows[0].XQDZ || '');
-		            var FCTS = Tbl.Rows[0].FCTS || '';
-		            if (FCTS.length > 0) {
-		                var FCTSArr = FCTS.split('•');
-		                for (var i = 0; i < FCTSArr.length; i++) {
-		                    $('#HouseCharacter' + FCTSArr[i] + '').attr('checked', true);
-		                }
-		            }
-		            
-		            $('#FXBT').val(Tbl.Rows[0].FXBT || '');
-		            $('#FXMS').val(Tbl.Rows[0].FXMS || '');
-		        }
-		    }
-		});
+        return $.JSONPost('YL1.GetHouseTransaction.json', data)
+          .done(function (data) {
+              if ((data) && (data.d.RetVal == -1)) {
+                  var Tbl = data.d.RetData.Tbl;
+                  var RowCnt = Tbl.Rows.length;
+                  if (RowCnt > 0) {
+                      $('#JYLX').select2('val', Tbl.Rows[0].JYLX || '');
+                      $('#FCLX').select2('val', Tbl.Rows[0].HousesType || '');
+                      $('#FCZJ').val(Tbl.Rows[0].FCZJ || '');
+                      if (Tbl.Rows[0].FCDK == '1') {
+                          $('#FCDK').prop('checked', true);
+                      } else {
+                          $('#FCDK').prop('checked', false);
+                      }
+                      $('#FCHU1').val(Tbl.Rows[0].FCHU1 || '');
+                      $('#FCHU2').val(Tbl.Rows[0].FCHU2 || '');
+                      $('#FCHU3').val(Tbl.Rows[0].FCHU3 || '');
+                      $('#FCMJ').val(Tbl.Rows[0].FCMJ || '');
+                      $('#SZLC').val(Tbl.Rows[0].SZLC || '');
+                      $('#GYLC').val(Tbl.Rows[0].GYLC || '');
+                      $('#JZNF').select2('val', Tbl.Rows[0].JZNF || '');
+                      if (Tbl.Rows[0].MSF == '1') {
+                          $('#MSF').prop('checked', true);
+                      } else {
+                          $('#MSF').prop('checked', false);
+                      }
+                      $('#ZXYQ').select2('val', Tbl.Rows[0].ZXYQ || '');
+                      $('#FWCX').select2('val', Tbl.Rows[0].FWCX || '');
+                      if (Tbl.Rows[0].XQXZ.length > 0) {
+                          $('#XQXZ').select2('val', Tbl.Rows[0].XQXZ);
+                      }
+                      $('#XQDZ').val(Tbl.Rows[0].XQDZ || '');
+                      var FCTS = Tbl.Rows[0].FCTS || '';
+                      if (FCTS.length > 0) {
+                          var FCTSArr = FCTS.split('•');
+                          for (var i = 0; i < FCTSArr.length; i++) {
+                              $('#HouseCharacter' + FCTSArr[i] + '').attr('checked', true);
+                          }
+                      }
+
+                      $('#FXBT').val(Tbl.Rows[0].FXBT || '');
+                      $('#FXMS').val(Tbl.Rows[0].FXMS || '');
+                  }
+              }
+          });
     }
     function Save() {
-       
-        var HouseCharacter = '', FCDK = '', MSF='';
+
+        var HouseCharacter = '', FCDK = '0', MSF = '0', ZDTJ = '';
         if ($('#FCDK').is(':checked')) {
             FCDK = $('#FCDK').val();
         } else {
-            FCDK = 0;
+            FCDK = '0';
         }
         if ($('#MSF').is(':checked')) {
             MSF = $('#MSF').val();
         } else {
-            MSF = 0;
+            MSF = '0';
         }
         $('input[name="HouseCharacter"]').each(function () {
             if ($(this).is(':checked')) {
                 HouseCharacter += $(this).val() + '•';
             }
         });
+
+        $('input[name="HouseCharacter"]').each(function () {
+            if ($(this).is(':checked')) {
+                HouseCharacter += $(this).val() + '•';
+            }
+        });
+        $('input[name="ZDTJ"]').each(function () {
+            if ($(this).is(':checked')) {
+                ZDTJ = $(this).val();
+            }
+        });
         var data = {
-            'ID': window.QS.ID||'', 'JYLX': $('#JYLX').val() || '', 'HousesType': $('#FCLX').val() || '', 'FCZJ': $('#FCZJ').val() || '',
+            'ID': window.QS.ID || '', 'JYLX': $('#JYLX').val() || '', 'HousesType': $('#FCLX').val() || '', 'FCZJ': $('#FCZJ').val() || '',
             'FCDK': FCDK, 'FCHU1': $('#FCHU1').val() || '', 'FCHU2': $('#FCHU2').val() || '', 'FCHU3': $('#FCHU3').val() || '',
             'FCMJ': $('#FCMJ').val() || '', 'SZLC': $('#SZLC').val() || '', 'GYLC': $('#GYLC').val() || '', 'JZNF': $('#JZNF').val() || '',
             'MSF': MSF, 'ZXYQ': $('#ZXYQ').val() || '', 'FWCX': $('#FWCX').val() || '', 'XQXZ': $('#XQXZ').val() || '',
-            'XQDZ': $('#XQDZ').val() || '', 'FCTS': HouseCharacter, 'FXBT': $('#FXBT').val() || '', 'FXMS': $('#FXMS').val() || ''
+            'XQDZ': $('#XQDZ').val() || '', 'FCTS': HouseCharacter, 'FXBT': $('#FXBT').val() || '', 'FXMS': $('#FXMS').val() || '',
+            'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ,
         }
         return $.JSONPost('YL1.SaveHouseTransaction.json', data)
              .then(function (data) {

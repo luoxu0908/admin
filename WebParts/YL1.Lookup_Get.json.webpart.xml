@@ -24,7 +24,8 @@ Elements
 <WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Guest|Everyone">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[SELECT TOP 2000 [LookupCat],[LookupKey] ,[Description] ,[DispOrder] ,[TagData] FROM tblTicketLookup WHERE [LookupCat]={{LookupCat}} OR LEN({{LookupCat}})=0;]]></SQL>
+	<SQL><![CDATA[SELECT TOP 2000 [LookupCat],[LookupKey] ,[Description] ,[DispOrder] ,[TagData] 
+FROM tblTicketLookup WHERE [LookupCat]={{LookupCat}} OR LEN({{LookupCat}})=0 ORDER BY DispOrder ASC]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
