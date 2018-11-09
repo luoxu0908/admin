@@ -24,10 +24,10 @@ Elements
 <WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin|Administrator">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[CDATA[DECLARE @Success BIT,@RetMsg NVARCHAR(MAX);
+	<SQL><![CDATA[CDATA[DECLARE @Success BIT,@RetMsg NVARCHAR(MAX),@ProductID  NVARCHAR(150);
 EXEC [dbo].[spYL_SaveHouseTransaction] {{ID}},{{JYLX}},{{HousesType}},{{FCZJ}},{{FCDK}},{{FCHU1}},{{FCHU2}},{{FCHU3}},{{FCMJ}},
 {{SZLC}},{{GYLC}},{{JZNF}},{{MSF}},{{ZXYQ}},{{FWCX}},{{XQXZ}},{{XQDZ}},{{FCTS}},{{FXBT}},{{FXMS}},{{Picture}},{{PictureGUID}},{{ZDTJ}},{{@@LoginID}},
-@Success OUTPUT,@RetMsg OUTPUT; SELECT @Success AS Success,@RetMsg AS ReturnMsg;]]></SQL>
+@Success OUTPUT,@RetMsg OUTPUT,@ProductID OUTPUT; SELECT @Success AS Success,@RetMsg AS ReturnMsg,@ProductID AS ProductID ;]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

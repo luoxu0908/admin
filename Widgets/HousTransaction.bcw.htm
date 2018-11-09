@@ -119,10 +119,10 @@
                         <div id="filelist"></div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="large-8 columns end">
+                <div class="row" id="preview">
+                    <!-- <div class="large-8 columns end">
                         <div id="preview"></div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -136,11 +136,6 @@
             <div class="large-offset-1 large-9 columns end">
                 <br>
                 <div class="paddingcolumns" id="ZDTJ">
-                    <!--<input id="" type="radio" name="ReasonWithDrawl" value="">&nbsp;无
-                    <input id="" type="radio" name="ReasonWithDrawl" value="">&nbsp;3天
-                    <input id="" type="radio" name="ReasonWithDrawl" value="">&nbsp;7天-->
-
-                  
                 </div>
             </div>
         </div>
@@ -151,7 +146,8 @@
         </div>
     </div>
 </div>
-
+<div id="PayDialog" title="zhifu" style="display: none;">
+</div>
 <script src="../blueimp/js/jquery.fileupload.js"></script>
 <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui.css">
 <noscript><link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
@@ -159,6 +155,7 @@
 
     $(document).ready(function () {
         window.QS = $.parseQS();
+        var $PayDialog=$('#PayDialog');
         var jqXHR = null;
         $('#Attachment').fileupload({
             dataType: 'json',
@@ -168,7 +165,7 @@
             add: function (e, data) {
                 var $preview = $('#preview');
                 $.each(data.files, function (index, file) {
-                    data.context = $('<div class="upFile row">').html('<div class="large-12 columns"><span class="filename">' + data.files[0].name + '</span><br /><br /><div class="progress progress-success progress-striped active" aria-valuenow="0" aria-valuemax="100" aria-valuemin="0" role="progressbar"><div class="bar" style="width: 0; height: 100%; background-image: url(\'../blueimp/img/progressbar.gif\');"></div></div></div>').appendTo($preview);
+                    data.context = $('<div class="upFile large-2 columns end">').html('<div class="large-12 columns"><span class="filename">' + data.files[0].name + '</span><br /><br /><div class="progress progress-success progress-striped active" style="display:none;" aria-valuenow="0" aria-valuemax="100" aria-valuemin="0" role="progressbar"><div class="bar" style="width: 0; height: 100%; background-image: url(\'../blueimp/img/progressbar.gif\');"></div></div></div>').appendTo($preview);
                     data.formData = { 'LookupCat': 'LeaveSettings' }
                     jqXHR = data.submit();
                 });
@@ -178,6 +175,7 @@
                 data.context.children('div:first').children('.progress').children('.bar').css({ 'width': progress + '%' });
             },
             done: function (e, data) {
+                console.log(data);
                 data.context.parent('p').children('.cancelupload').addClass('bchide');
                 if (data.result.d.RetVal === -1) {
                     if (window.TempFolder == '') {
@@ -195,8 +193,9 @@
                             window.Pic += '•' + PicArr[PicArr.length - 1] + '|' + filename;
                         }
                     }
-                    data.context.children('div:first').children('.filename').data('filename', filename).html('<a href="../HR/FileHandler.ashx?Action=DownloadFileQS&FN=' + filename + '&cat=LeaveSettings&fld=' + data.result.d.RetData + '" style="display:inline; float:left;" class="currentupfile">' + filename + '</a>');
-                    data.context = $('<img src="../styles/images/ui/cross-20.png" alt="Delete Attachment" style="display:inline; float:right;" data-fld="' + data.result.d.RetData + '" />').appendTo(data.context.children('div:first').children('.filename')).click(function (e) {
+                   // data.context.children('div:first').children('.filename').data('filename', filename).html('<a href="../HR/FileHandler.ashx?Action=DownloadFileQS&FN=' + filename + '&cat=LeaveSettings&fld=' + data.result.d.RetData + '" style="display:inline; float:left;" class="currentupfile">' + filename + '</a>');
+                    data.context.children('div:first').children('.filename').data('filename', filename).html('<img src="../../../UploadImages/Temp/'+data.result.d.RetData+'/'+filename+'" style="width:150px;height:150px;border:1px solid #ccc;"/>');
+                    data.context = $('<img src="../styles/images/ui/cross-20.png" alt="Delete Attachment" style="display:inline; right:15px;position:absolute;top:5px;" data-fld="' + data.result.d.RetData + '" />').appendTo(data.context.children('div:first').children('.filename')).click(function (e) {
                         e.preventDefault();
                         $delete = $(this);
                         $.JSONPost('HR2.DeleteFile.json', { 'LookupCat': 'LeaveSettings', 'FileName': $delete.parent('.filename').data('filename'), 'Folder': $delete.data('fld') })
@@ -204,7 +203,7 @@
                                 $.jGrowl(filename + ' 图片删除成功!', { 'theme': 'growlsuccess', 'life': 10000 });
                                 window.TempFolder = window.TempFolder.replace($delete.data('fld'), '');
                                 console.log(window.TempFolder);
-                                $delete.parent().parent().remove();
+                                $delete.parent().parent().parent().remove();
                             });
                     });
                     $.jGrowl('图片上传成功!.', { 'theme': 'growlsuccess', 'life': 10000 });
@@ -225,7 +224,9 @@
         $('#Save').click(function () {
             Save();
         });
-
+        $PayDialog.load('../../../Widgets/OrderPay.bcw.htm', function (response, status, xhr) {
+            if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
+        });
         $('#XQXZ').select2({ minimumInputLength: 2, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
             if (e.val.length > 0) {
             } else { $("#XQXZ").select2("val", ""); }
@@ -374,6 +375,9 @@
                  if ((data) && (data.d.RetVal === -1)) {
                      if (data.d.RetData.Tbl.Rows[0].Success == true) {
                          alert('发布成功！');
+                         if(ZDTJ.length>0&&ZDTJ!="0"){
+                            ShowPayFrame(data.d.RetData.Tbl.Rows[0].ProductID);
+                         }
                      } else {
                          $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
                      }
