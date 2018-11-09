@@ -29,12 +29,20 @@
 </div>
 <div id="AddNewDialog" title="新增用户" style="display: none;">
 </div>
+<div id="PayDialog" title="新增用户" style="display: none;">
+</div>
 </style>
+
+
 <script type="text/javascript">
-    var $AddNewDialogInd = $('#AddNewDialog');
+    var $AddNewDialogInd = $('#AddNewDialog'),$PayDialog=$('#PayDialog');
+    
     var $AddNewStaff = $('#AddNewStaff');
     $(document).ready(function () {
         $AddNewDialogInd.load('../iContact/Widgets/AddNewIndividual.bcw.htm', function (response, status, xhr) {
+            if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
+        });
+        $PayDialog.load('../Widgets/OrderPay.bcw.htm', function (response, status, xhr) {
             if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
         });
 
@@ -49,6 +57,7 @@
             else { $("#SelectPersonOrg").select2("val", ""); }
         });
         setTimeout(GetBussinessID, 500);
+              // $PayFrame.dialog('open');
     });
 
     function GetBussinessID() {
@@ -91,6 +100,7 @@
             query.callback(return_data);
         });
     }
+
     $AddNewStaff.dialog({
         autoOpen: false, height: 'auto', width: '300px', modal: true,
         buttons: {
@@ -115,8 +125,10 @@
         close: function () { }
     });
 
-    function AddNewStaff() {
-        $AddNewStaff.dialog('open');
+    function AddNewStaff() { 
+        var OrderNo=''+moment().format('YYYYMMDDhhmmss');
+        ShowPayFrame(OrderNo);
+ 
     }
     function GetFilterData() {
         var FilterData = { 'GroupID': window.GroupID || '', 'StaffName': $('#StaffName').val() || '' };

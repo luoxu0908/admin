@@ -1,0 +1,48 @@
+<!-- 
+<link rel="stylesheet" href="../styles/foundation.min.css" /> -->
+
+<div id="PayFrame">
+    <div class="row" style="margin: 5px 0">
+        <div class="large-12 columns">
+            <div style="height:50px;background:url(../Scripts/WePayLogo.png);background-size:130px 40px;background-color: white !important;background-repeat: no-repeat;"></div>
+        </div>
+    </div>
+    <iframe src="" frameborder="0" style="height:250px;width:220px" id="OrderPay"></iframe>
+    <div class="row" style="margin: 5px 0">
+        <div class="large-12 columns">
+            <button type="button" onclick="QueryOrder();return false;">订单已支付</button>
+            <button type="button" onclick="QueryOrder();return false;">订单未支付</button>
+        </div>
+    </div>
+
+</div>
+<script>
+    var $PayFrame = $('#PayFrame'), PageOrderNo = '', PagProductId = '';
+    function ShowPayFrame(ProductId) {
+        if (!ProductId) {
+            alert('商品ID不能为空！'); return;
+        }
+        PagProductId = ProductId;
+        $PayFrame.dialog('open');
+        $('#OrderPay').attr('src', '../example/NativePayPage.aspx?ProductId=' + PagProductId);
+    }
+
+    function GetOrderNoByProcudId() {
+        return $.JSONPost('YL1.GetOrderNoByProcudId.json', { "ProductId": PagProductId }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            PageOrderNo = R[0].OrderNo;
+        });
+    }
+
+    $PayFrame.dialog({
+        autoOpen: false, height: '420', width: '270', modal: true, title: "请支付",
+        open: function () { },
+        close: function () { }
+    });
+    function QueryOrder() {
+        $.get("../example/OrderQueryPage.aspx?Action=Query", { 'OrderNo': PageOrderNo }, function (data, status) {
+            var orderStatus = data.split("\n")[9].split("=")[1];
+            alert(orderStatus);
+        });
+    }
+</script>
