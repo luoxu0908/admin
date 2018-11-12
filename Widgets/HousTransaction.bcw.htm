@@ -38,8 +38,7 @@
                         <td><input id="FCZJ" />&nbsp;&nbsp;万元</td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
-                                <input id="FCDK" type="checkbox" name="FCDK"
-                                       value="1">&nbsp;不能贷款
+                                <input id="FCDK" type="checkbox" name="FCDK" value="1">&nbsp;不能贷款
                             </div>
                         </td>
                         <td></td>
@@ -108,7 +107,7 @@
             <div class="large-offset-1 large-9 columns end">
                 <span>详细描述</span>
                 <textarea id="FXMS" cols="2" rows="2" />
-            </div>
+                </div>
         </div>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
@@ -155,7 +154,7 @@
 
     $(document).ready(function () {
         window.QS = $.parseQS();
-        var $PayDialog=$('#PayDialog');
+        var $PayDialog = $('#PayDialog');
         var jqXHR = null;
         $('#Attachment').fileupload({
             dataType: 'json',
@@ -184,8 +183,8 @@
                         window.TempFolder += window._Delim + data.result.d.RetData;
                     }
                     var filename = data.context.children('div:first').children('.filename').html();
-                    var PicArr=''
-                    if (window.TempFolder.length>0) {
+                    var PicArr = ''
+                    if (window.TempFolder.length > 0) {
                         PicArr = window.TempFolder.split('•');
                         if (PicArr.length == 1) {
                             window.Pic = PicArr[0] + '|' + filename;
@@ -193,8 +192,8 @@
                             window.Pic += '•' + PicArr[PicArr.length - 1] + '|' + filename;
                         }
                     }
-                   // data.context.children('div:first').children('.filename').data('filename', filename).html('<a href="../HR/FileHandler.ashx?Action=DownloadFileQS&FN=' + filename + '&cat=LeaveSettings&fld=' + data.result.d.RetData + '" style="display:inline; float:left;" class="currentupfile">' + filename + '</a>');
-                    data.context.children('div:first').children('.filename').data('filename', filename).html('<img src="../../../UploadImages/Temp/'+data.result.d.RetData+'/'+filename+'" style="width:150px;height:150px;border:1px solid #ccc;"/>');
+                    // data.context.children('div:first').children('.filename').data('filename', filename).html('<a href="../HR/FileHandler.ashx?Action=DownloadFileQS&FN=' + filename + '&cat=LeaveSettings&fld=' + data.result.d.RetData + '" style="display:inline; float:left;" class="currentupfile">' + filename + '</a>');
+                    data.context.children('div:first').children('.filename').data('filename', filename).html('<img src="../../../UploadImages/Temp/' + data.result.d.RetData + '/' + filename + '" style="width:150px;height:150px;border:1px solid #ccc;"/>');
                     data.context = $('<img src="../styles/images/ui/cross-20.png" alt="Delete Attachment" style="display:inline; right:15px;position:absolute;top:5px;" data-fld="' + data.result.d.RetData + '" />').appendTo(data.context.children('div:first').children('.filename')).click(function (e) {
                         e.preventDefault();
                         $delete = $(this);
@@ -216,9 +215,19 @@
         $.when(GetDropdownList('JYLX', '发布类型'), GetDropdownList('FCLX', '房产类型'), GetDropdownList('ZXYQ', '装修要求'), GetDropdownList('FWCX', '房屋朝向'), GetDropdownListCheckBox('HouseCharacteristic', '房屋特色'), GetYear('JZNF'), GetDropdownListRedio('ZDTJ', '置顶推荐')).then(function () {
 
             var CurrID = window.QS.ID || '';
+            var CurrType = window.QS.TYPE || '';
             if (CurrID.length > 0 && CurrID != 'undefined') {
+                if (CurrType.length > 0 && CurrType != 'undefined') {
+                    if (CurrType == 'View') {
+                        $("#Save").css('display', 'none');
+                    } else {
+
+                        $("#Save").css('display', '');
+                    }
+                }
                 GetHouseTransaction(CurrID);
             }
+
 
         });
         $('#Save').click(function () {
@@ -232,7 +241,7 @@
             } else { $("#XQXZ").select2("val", ""); }
         });
     });
-    window.TempFolder = ''; window.Pic='', window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
+    window.TempFolder = ''; window.Pic = '', window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
     function GetDropdownList(id, category) {
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
@@ -267,12 +276,12 @@
             var Name = 'ZDTJ';
             for (var i = 0; i < RowCnt; i++) {
                 html += '<label for="' + Name + R[i]["LookupKey"] + '" class="inlineblock"><input id="' + Name + R[i]["LookupKey"] + '" type="radio" name="ZDTJ" value="' + R[i]["LookupKey"] + '">&nbsp;&nbsp;' + R[i]["Description"] + '&nbsp;&nbsp;&nbsp;</label>';
-                
+
             }
             $("#" + id).html(html);
         });
     }
-    
+
     function GetYear(id) {
         var YearNow = new Date().getFullYear();
         var startYear = YearNow - 50;
@@ -288,50 +297,50 @@
     function GetHouseTransaction(CurrentID) {
         var data = { 'ID': CurrentID }
         return $.JSONPost('YL1.GetHouseTransaction.json', data)
-          .done(function (data) {
-              if ((data) && (data.d.RetVal == -1)) {
-                  var Tbl = data.d.RetData.Tbl;
-                  var RowCnt = Tbl.Rows.length;
-                  if (RowCnt > 0) {
-                      $('#JYLX').select2('val', Tbl.Rows[0].JYLX || '');
-                      $('#FCLX').select2('val', Tbl.Rows[0].HousesType || '');
-                      $('#FCZJ').val(Tbl.Rows[0].FCZJ || '');
-                      if (Tbl.Rows[0].FCDK == '1') {
-                          $('#FCDK').prop('checked', true);
-                      } else {
-                          $('#FCDK').prop('checked', false);
-                      }
-                      $('#FCHU1').val(Tbl.Rows[0].FCHU1 || '');
-                      $('#FCHU2').val(Tbl.Rows[0].FCHU2 || '');
-                      $('#FCHU3').val(Tbl.Rows[0].FCHU3 || '');
-                      $('#FCMJ').val(Tbl.Rows[0].FCMJ || '');
-                      $('#SZLC').val(Tbl.Rows[0].SZLC || '');
-                      $('#GYLC').val(Tbl.Rows[0].GYLC || '');
-                      $('#JZNF').select2('val', Tbl.Rows[0].JZNF || '');
-                      if (Tbl.Rows[0].MSF == '1') {
-                          $('#MSF').prop('checked', true);
-                      } else {
-                          $('#MSF').prop('checked', false);
-                      }
-                      $('#ZXYQ').select2('val', Tbl.Rows[0].ZXYQ || '');
-                      $('#FWCX').select2('val', Tbl.Rows[0].FWCX || '');
-                      if (Tbl.Rows[0].XQXZ.length > 0) {
-                          $('#XQXZ').select2('val', Tbl.Rows[0].XQXZ);
-                      }
-                      $('#XQDZ').val(Tbl.Rows[0].XQDZ || '');
-                      var FCTS = Tbl.Rows[0].FCTS || '';
-                      if (FCTS.length > 0) {
-                          var FCTSArr = FCTS.split('•');
-                          for (var i = 0; i < FCTSArr.length; i++) {
-                              $('#HouseCharacter' + FCTSArr[i] + '').attr('checked', true);
-                          }
-                      }
+            .done(function (data) {
+                if ((data) && (data.d.RetVal == -1)) {
+                    var Tbl = data.d.RetData.Tbl;
+                    var RowCnt = Tbl.Rows.length;
+                    if (RowCnt > 0) {
+                        $('#JYLX').select2('val', Tbl.Rows[0].JYLX || '');
+                        $('#FCLX').select2('val', Tbl.Rows[0].HousesType || '');
+                        $('#FCZJ').val(Tbl.Rows[0].FCZJ || '');
+                        if (Tbl.Rows[0].FCDK == '1') {
+                            $('#FCDK').prop('checked', true);
+                        } else {
+                            $('#FCDK').prop('checked', false);
+                        }
+                        $('#FCHU1').val(Tbl.Rows[0].FCHU1 || '');
+                        $('#FCHU2').val(Tbl.Rows[0].FCHU2 || '');
+                        $('#FCHU3').val(Tbl.Rows[0].FCHU3 || '');
+                        $('#FCMJ').val(Tbl.Rows[0].FCMJ || '');
+                        $('#SZLC').val(Tbl.Rows[0].SZLC || '');
+                        $('#GYLC').val(Tbl.Rows[0].GYLC || '');
+                        $('#JZNF').select2('val', Tbl.Rows[0].JZNF || '');
+                        if (Tbl.Rows[0].MSF == '1') {
+                            $('#MSF').prop('checked', true);
+                        } else {
+                            $('#MSF').prop('checked', false);
+                        }
+                        $('#ZXYQ').select2('val', Tbl.Rows[0].ZXYQ || '');
+                        $('#FWCX').select2('val', Tbl.Rows[0].FWCX || '');
+                        if (Tbl.Rows[0].XQXZ.length > 0) {
+                            $('#XQXZ').select2('val', Tbl.Rows[0].XQXZ);
+                        }
+                        $('#XQDZ').val(Tbl.Rows[0].XQDZ || '');
+                        var FCTS = Tbl.Rows[0].FCTS || '';
+                        if (FCTS.length > 0) {
+                            var FCTSArr = FCTS.split('•');
+                            for (var i = 0; i < FCTSArr.length; i++) {
+                                $('#HouseCharacter' + FCTSArr[i] + '').attr('checked', true);
+                            }
+                        }
 
-                      $('#FXBT').val(Tbl.Rows[0].FXBT || '');
-                      $('#FXMS').val(Tbl.Rows[0].FXMS || '');
-                  }
-              }
-          });
+                        $('#FXBT').val(Tbl.Rows[0].FXBT || '');
+                        $('#FXMS').val(Tbl.Rows[0].FXMS || '');
+                    }
+                }
+            });
     }
     function Save() {
 
@@ -371,19 +380,19 @@
             'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ,
         }
         return $.JSONPost('YL1.SaveHouseTransaction.json', data)
-             .then(function (data) {
-                 if ((data) && (data.d.RetVal === -1)) {
-                     if (data.d.RetData.Tbl.Rows[0].Success == true) {
-                         alert('发布成功！');
-                         if(ZDTJ.length>0&&ZDTJ!="0"){
+            .then(function (data) {
+                if ((data) && (data.d.RetVal === -1)) {
+                    if (data.d.RetData.Tbl.Rows[0].Success == true) {
+                        alert('发布成功！');
+                        if (ZDTJ.length > 0 && ZDTJ != "0") {
                             ShowPayFrame(data.d.RetData.Tbl.Rows[0].ProductID);
-                         }
-                     } else {
-                         $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
-                     }
-                 }
-                 else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
-             });
+                        }
+                    } else {
+                        $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
+                    }
+                }
+                else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
+            });
     }
 
 
@@ -403,14 +412,14 @@
         var LookupKey = $(element).val();
         if (LookupKey != "") {
             $.JSONPost('YL1.SearchTextEntityVillage.json', { "LookupKey": LookupKey })
-                    .done(function (data) {
-                        var R = data.d.RetData.Tbl.Rows;
-                        if (R.length > 0) {
-                            callback({ id: R[0].LookupKey, text: R[0].SearchText });
-                        } else {
-                            callback({ id: -1, text: "Invalid ID" });
-                        }
-                    });
+                .done(function (data) {
+                    var R = data.d.RetData.Tbl.Rows;
+                    if (R.length > 0) {
+                        callback({ id: R[0].LookupKey, text: R[0].SearchText });
+                    } else {
+                        callback({ id: -1, text: "Invalid ID" });
+                    }
+                });
         }
     }
 
