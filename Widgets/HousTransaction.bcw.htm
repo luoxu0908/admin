@@ -224,7 +224,7 @@
         $('#Save').click(function () {
             Save();
         });
-        $PayDialog.load('../../../Widgets/OrderPay.bcw.htm', function (response, status, xhr) {
+        $PayDialog.load('../Widgets/OrderPay.bcw.htm', function (response, status, xhr) {
             if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
         });
         $('#XQXZ').select2({ minimumInputLength: 2, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
