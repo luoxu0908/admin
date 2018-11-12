@@ -1,0 +1,46 @@
+<div id="Filters" class="large-12 columns">
+    <div class="row">
+        <div class="large-2 columns end">
+            <label for="StaffName">姓名</label>
+            <input type="text" id="StaffName" />
+        </div>
+    </div>
+</div>
+<div class="large-12 columns " id="MTool">
+    <div class="row">
+        <div class="large-12 columns">
+            <br />
+            <button onclick="refreshData(); return false;">查询</button>
+            <button onclick="AddPersons(); return false;">新增</button>
+            <button onclick="DelPersons(); return false;">删除</button>
+        </div>
+    </div>
+</div>
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+    });
+
+    function AddPersons() {
+        SGH.GridRowAdd({ 'PersonID': '' });
+        refreshData();
+    }
+    function DelPersons() {
+      SGH.GridRowDel({ 'RowIDs': SGH.getSelectedRowIDsStr() });
+      refreshData();
+    }
+    function GetFilterData() {
+        var FilterData = { '':'' };
+        return FilterData;
+    }
+    function refreshData() {
+        jQuery.event.trigger({ type: "refreshSG" });
+    }
+    function exportData() { jQuery.event.trigger({ type: "exportSG" }); }
+    window.DoGridInit = true;
+    window.DefaultGridOptions = { RefreshOnLoad: 0 };
+
+</script>
