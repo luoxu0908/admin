@@ -30,11 +30,11 @@ BEGIN
 	BEGIN
 		 DECLARE @CurrentID NVARCHAR(50)
 		 SELECT @CurrentID= dbo.fnSF_GetNextHouseInfoID ('XXXYLZJ');
-		 select @HouseID=@CurrentID;
+		 SELECT @HouseID=@CurrentID;
 		 INSERT INTO  dbo.tblYLHouses (ID,HousesType,JYLX,FCZJ,FCDK,FCHU1,FCHU2,FCHU3,FCMJ,SZLC,GYLC,JZNF,MSF,ZXYQ,FWCX,XQXZ,
 		 XQDZ,FCTS,FXBT,FXMS,XXLH,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate)
 		 VALUES (@CurrentID,@HousesType,@JYLX,@FCZJ,@FCDK,@FCHU1,@FCHU2,@FCHU3,@FCMJ,@SZLC,@GYLC,@JZNF,@MSF,@ZXYQ,@FWCX,@XQXZ,@XQDZ,
-		 @FCTS,@FXBT,@FXMS,(SELECT TagData FROM dbo.tblTicketLookup WHERE LookupCat=N'置顶推荐' AND LookupKey=@ZDTJ),@LoginID,GETDATE(),@LoginID,GETDATE())
+		 @FCTS,@FXBT,@FXMS,@ZDTJ,@LoginID,GETDATE(),@LoginID,GETDATE())
 		 IF LEN(ISNULL(@Picture,''))>0
 		 BEGIN
 			  DECLARE @PictureTbl TABLE(PicName NVARCHAR(300),FLName NVARCHAR(300))
@@ -46,18 +46,25 @@ BEGIN
 			  SELECT PicName,@CurrentID,FLName FROM @PictureTbl P INNER JOIN (SELECT val from dbo.tfMain_StrToTblStr(@PictureGUID,'•')) T ON P.PicName=T.val
 		 END
 		 DECLARE @FCZD INT;
+
+		 --订单表
+		 DECLARE @Amount DECIMAL(18,2)
+		 SELECT @Amount= TRY_CONVERT(DECIMAL(18,2),TagData) FROM dbo.tblTicketLookup WHERE LookupCat=N'置顶推荐' AND LookupKey=@ZDTJ
+		 INSERT INTO tblYLOrderPay(ID,ProductID,OrderStatus,OrderAmount,CreateDate)
+		 VALUES(NEWID(),@CurrentID,'P',@Amount,GETDATE())
+
 		 SELECT  @FCZD=TRY_CONVERT(int,@ZDTJ)
 		 IF @FCZD=1 OR @FCZD=3 OR @FCZD=7 OR  @FCZD=365
 		 BEGIN 
-			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS)VALUES(NEWID(),@CurrentID,DATEADD(DAY,@FCZD,GETDATE()),@ZDTJ)
+			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS,ModifiedDate,ModifiedBy)VALUES(NEWID(),@CurrentID,DATEADD(DAY,@FCZD,GETDATE()),@ZDTJ,GETDATE(),@LoginID)
 		 END
 		 ELSE IF @FCZD=30
 		 BEGIN 
-			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS)VALUES(NEWID(),@CurrentID,DATEADD(MONTH,1,GETDATE()),@ZDTJ)
+			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS,ModifiedDate,ModifiedBy)VALUES(NEWID(),@CurrentID,DATEADD(MONTH,1,GETDATE()),@ZDTJ,GETDATE(),@LoginID)
 		 END  
 		 ELSE IF @FCZD=90
 		 BEGIN 
-			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS)VALUES(NEWID(),@CurrentID,DATEADD(MONTH,3,GETDATE()),@ZDTJ)
+			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS,ModifiedDate,ModifiedBy)VALUES(NEWID(),@CurrentID,DATEADD(MONTH,3,GETDATE()),@ZDTJ,GETDATE(),@LoginID)
 		 END 
 		 SELECT @Success=1;
     END
