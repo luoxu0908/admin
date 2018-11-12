@@ -43,13 +43,6 @@
          var html=$('#PayMinSpan').html("("+time+"s)");;
          time--;
     }
-    function GetOrderNoByProcudId() {
-        return $.JSONPost('YL1.GetOrderNoByProcudId.json', { "ProductId": PagProductId }).done(function (data) {
-            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
-            PageOrderNo = R[0].OrderNo;
-        });
-    }
-
     $PayFrame.dialog({
         autoOpen: false, height: '430', width: '256', modal: true, title: "请支付",
         open: function () { },
@@ -57,25 +50,17 @@
     });
     function QueryOrder() {
         $.get("../example/OrderQueryPage.aspx?Action=Query", { 'ProductId': PagProductId }, function (data, status) {
-            console.log(data);
-            alert("支付成功！");$('#payrow').hide();$('#successrow').show();
             if(data!='Success'){
                 $.alert("支付失败，请确认您已支付！");
             }
             else{
-                alert("支付成功！");$('#payrow').hide();$('#successrow').show();
+                setTimeout(function(){
+                    $('#payrow').hide();$('#successrow').show();
+                },2000);
             }
         });
     }
     function RefreshOrder() {
         $('#OrderPay').attr('src', $('#OrderPay').attr('src'));
-    }
-    function UpdateOrderPay(){
-        return $.JSONPost('YL1.UpdateOrderPay.json', { "ProductId": PagProductId }).done(function (data) {
-            if ((data) && (data.d.RetVal === -1)) {
-                    $.alert("申请成功，请等待系统审核！", { theme: 'growlsuccess', sticky: true });
-                }
-            else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
-        });
     }
 </script>
