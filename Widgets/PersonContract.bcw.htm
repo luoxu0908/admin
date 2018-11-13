@@ -2,7 +2,7 @@
     <div class="row">
         <div class="large-2 columns end">
             <label for="StaffName">姓名</label>
-            <input type="text" id="StaffName" />
+            <input type="text" id="StaffName"  style="width:100%;"/>
         </div>
     </div>
 </div>
@@ -22,8 +22,39 @@
     $(document).ready(function () {
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+        $("#StaffName").select2({ minimumInputLength: 2, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
+            if (e.val == 'AddInd') {
+                var Ind = {}; Ind.IndName = window.SearchTerm;
+                $("#StaffName").select2("val", "");
+            }
+            else { $("#StaffName").select2("val", e.val); }
+        });
     });
-
+    function InitItemSelection(element, callback) {
+        var RoleID = $(element).val();
+        if (RoleID != "") {
+            $.JSONPost('Ctc1.SearchTextEntity.json', { "RoleID": RoleID })
+                .done(function (data) {
+                    var R = data.d.RetData.Tbl.Rows;
+                    if (R.length > 0) {
+                        callback({ id: R[0].RoleID, text: R[0].SearchText });
+                    } else {
+                        callback({ id: -1, text: "非法ID" });
+                    }
+                });
+        }
+    }
+    function GetSearchMatches(query) {
+        window.SearchTerm = query.term;
+        $.JSONPost('Ctc1.SearchEntity.json', { "SearchTerm": query.term, "ReturnID": "RoleID" }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            for (var i = 0; i < RowCnt; i++) {
+                return_data.results.push({ id: R[i]["RoleID"], text: R[i]["SearchText"] });
+            }
+            query.callback(return_data);
+        });
+    }
     function AddPersons() {
         SGH.GridRowAdd({ 'PersonID': '' });
         refreshData();
@@ -33,7 +64,7 @@
       refreshData();
     }
     function GetFilterData() {
-        var FilterData = { '':'' };
+        var FilterData = { 'RoleID':$("#StaffName").val() };
         return FilterData;
     }
     function refreshData() {
@@ -41,6 +72,6 @@
     }
     function exportData() { jQuery.event.trigger({ type: "exportSG" }); }
     window.DoGridInit = true;
-    window.DefaultGridOptions = { RefreshOnLoad: 0 };
+   // window.DefaultGridOptions = { RefreshOnLoad: 0 };
 
 </script>
