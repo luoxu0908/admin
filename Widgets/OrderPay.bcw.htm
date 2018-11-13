@@ -54,6 +54,7 @@
                 $.alert("支付失败，请确认您已支付！");
             }
             else{
+                UpdateDB();
                 setTimeout(function(){
                     $('#payrow').hide();$('#successrow').show();
                 },2000);
@@ -62,5 +63,9 @@
     }
     function RefreshOrder() {
         $('#OrderPay').attr('src', $('#OrderPay').attr('src'));
+    }
+    function UpdateDB(){
+        return $.JSONPost('YL2.UpdateOrderDB.json', { 'ProductId': PagProductId })
+            .done(function (data) { }); 
     }
 </script>
