@@ -19,15 +19,16 @@
 
 <link rel="stylesheet" href="../styles/font-awesome-4.7.0/css/font-awesome.min.css">
 <script>
-    var $PayFrame = $('#PayFrame'), PageOrderNo = '', PagProductId = '';      var time=10,interval='';
+    var $PayFrame = $('#PayFrame'), PageOrderNo = '', PagProductId = '';     
+    var time=10,interval='';
     function ShowPayFrame(ProductId) {
         if (!ProductId) {
             alert('商品ID不能为空！'); return;
         }
         PagProductId = ProductId;
-        $PayFrame.dialog('open');
         $('#OrderPay').attr('src', '../example/NativePayPage.aspx?ProductId=' + PagProductId);
-        interval=setInterval(loadMin,1000);
+        $PayFrame.dialog('open');
+        interval=setInterval(loadMin,1000);    
     }
     function ReloadPage(){
         $PayFrame.dialog("close");
@@ -50,17 +51,22 @@
     });
     function QueryOrder() {
         $.get("../example/OrderQueryPage.aspx?Action=Query", { 'ProductId': PagProductId }, function (data, status) {
-            if(data!='Success'){
+            if(data!='SUCCESS'){
                 $.alert("支付失败，请确认您已支付！");
             }
             else{
+                UpdateDB();
                 setTimeout(function(){
                     $('#payrow').hide();$('#successrow').show();
-                },2000);
+                },1000);
             }
         });
     }
     function RefreshOrder() {
         $('#OrderPay').attr('src', $('#OrderPay').attr('src'));
+    }
+    function UpdateDB(){
+         $.JSONPost('YL2.UpdateOrderDB.json', { 'ProductId': PagProductId })
+            .done(function (data) { }); 
     }
 </script>
