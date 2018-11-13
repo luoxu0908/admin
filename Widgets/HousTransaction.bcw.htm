@@ -12,18 +12,33 @@
         background-color: white;
         border: 0px;
     }
-
         table td {
             border: 2px solid black;
             background-color: white;
             color: white;
         }
         .delbutton{
-            display:inline; left:140px;position:absolute;top:5px;cursor: pointer;
+            display:inline; right:10px;position:absolute;top:-5px;cursor: pointer;background-color:#f5f5f5;;border-radius: 50%;
         }
         .uploadimg{
-            width:150px;height:150px;border:1px solid #ccc;
+            width:100%;height:170px;border:1px solid #f5f5f5;margin-bottom: 15px;border-radius: 5px;
         }
+        .files{opacity: 0;
+        width: 150px;
+        height: 170px;
+        width: 100%;}
+        .uploadDiv{
+            position:absolute;
+        height: 170px;
+        font-size: 150px;
+        line-height: 170px;
+        color:black;
+        text-align: center;
+        width: 90%;
+        border:1px solid #ccc;
+        margin: 0 0 0.75em;
+        }
+       
 </style>
 <div id="mainform" class="large-12 columns end">
     <fieldset>
@@ -117,17 +132,15 @@
         </div>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
-                <div class="row">
-                    <div class="large-8 columns end">
-                        <label for="Attachment">上传图片</label>
-                        <input type="file" id="Attachment" name="files[]">
-                        <div id="filelist"></div>
-                    </div>
-                </div>
-                <div class="row" id="preview">
-                    <!-- <div class="large-8 columns end">
-                        <div id="preview"></div>
-                    </div> -->
+                    <div class="row">
+                        <div  id="preview"></div>
+                        <div class="large-3 columns end">
+                                <div class="large-12 columns">
+                                <div class="uploadDiv">+</div>
+                                <input type="file" id="Attachment" name="files[]" class="files">
+                                <div id="filelist"></div>
+                          </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -229,7 +242,7 @@
             } else { $("#XQXZ").select2("val", ""); }
         });
     });
-    window.TempFolder = ''; window.Pic = '', window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
+    window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
     function GetDropdownList(id, category) {
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;

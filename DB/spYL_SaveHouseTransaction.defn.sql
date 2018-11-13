@@ -22,7 +22,29 @@ BEGIN
 				 UPDATE dbo.tblYLHouses SET HousesType =@HousesType,JYLX =@JYLX ,FCZJ =@FCZJ ,FCDK = @FCDK,FCHU1 =@FCHU1,FCHU2 =@FCHU2,FCHU3 =@FCHU3
 				 ,FCMJ = @FCMJ,SZLC =@SZLC ,GYLC =@GYLC ,JZNF = @JZNF,MSF =@MSF ,ZXYQ =@ZXYQ ,FWCX = @FWCX,XQXZ =@XQXZ ,XQDZ = @XQDZ
 				 ,FCTS =@FCTS ,FXBT =@FXBT ,FXMS = @FXMS,XXLH=@ZDTJ,UDF1=CASE WHEN TRY_CONVERT(INT,@ZDTJ)>0 THEN '1' ELSE '0' END,ModifiedBy =@LoginID,ModifiedDate = GETDATE() WHERE ID=@ID;
-				 SELECT @Success=1;
+				
+
+				IF LEN(ISNULL(@Picture,''))>0
+				BEGIN
+				      DELETE FROM tblYLFCImage WHERE ItemKey=@ID;
+
+					  DECLARE @PictureTbl2 TABLE(PicName NVARCHAR(300),FLName NVARCHAR(300))
+					   
+					  INSERT INTO @PictureTbl2(PicName,FLName)
+					  SELECT (select  dbo.fnMain_GetStrSegment(val,N'|',1)),(select  dbo.fnMain_GetStrSegment(val,N'|',2)) from dbo.tfMain_StrToTblStr(@Picture,'•')
+
+					  INSERT INTO dbo.tblYLFCImage(ImageID,ItemKey,[FileName])
+					  SELECT PicName,@ID,FLName FROM @PictureTbl2  
+				END
+				if len(@ZDTJ)>0
+				BEGIN
+				 	DECLARE @Amount2 DECIMAL(18,2)
+					SELECT @Amount2= TRY_CONVERT(DECIMAL(18,2),TagData) FROM dbo.tblTicketLookup WHERE LookupCat=N'置顶推荐' AND LookupKey=@ZDTJ
+		 			select @OrderID=NEWID();
+		 			INSERT INTO tblYLOrderPay(ID,ProductID,OrderStatus,OrderAmount,CreateDate)
+			 		VALUES(@OrderID,@ID,'P',@Amount2,GETDATE())
+				 END
+				SELECT @Success=1;
 		  END
            
 	END
