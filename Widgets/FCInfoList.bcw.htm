@@ -30,15 +30,29 @@
         </div>
     </div>
 </div>
+<div id="PayDialog" title="zhifu" style="display: none;">
+</div>
 <script type="text/javascript">
     var $filters = $('#Filters'), $MTool = $('#MTool');
+    var $PayDialog = $('#PayDialog');
     $(document).ready(function () {
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
         window.QS = $.parseQS();
         GetDropdownList('FBLX', '发布类型');
         GetDropdownList('FCLX', '房产类型');
+        $PayDialog.load('../Widgets/OrderPay.bcw.htm', function (response, status, xhr) {
+            if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
+        });
     });
+    function RefershInfo (ID){
+        return $.JSONPost('YL1.OrderInfoRefresh.json', { 'ProductID': ID }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            if (RowCnt>0){
+                ShowPayFrame(R[0].OrderID);
+            }
+        });
+    }
     function GetDropdownList(id, category) {
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
