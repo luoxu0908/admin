@@ -26,7 +26,7 @@ Elements
 	<SGAction>Export</SGAction>
 	<SQL><![CDATA[DECLARE  @LoginID INT,@Status NVARCHAR(50),@EntityType NVARCHAR(50),@GroupID INT,@RoleID INT ;
 SELECT @LoginID=0,@Status='',@GroupID=0,@RoleID=0;
-SELECT @LoginID=LoginID,@EntityType=EntityType,@Status=[Status] FROM dbo.tblCtcPersons WHERE LoginID={{@@LoginID}})
+SELECT @LoginID=LoginID,@EntityType=EntityType,@Status=[Status] FROM dbo.tblCtcPersons WHERE LoginID={{@@LoginID}}
 IF EXISTS(SELECT TOP 1 1 FROM dbo.tblSecGroups WHERE SecGroupID in (SELECT SecGroupID FROM tblSecGroupPersons WHERE LoginID=@LoginID) 
 AND SecGroupName='Security Admin')
 BEGIN
@@ -73,6 +73,7 @@ BEGIN
 	AND (YL.ModifiedDate>= dateadd(ms,0,DATEADD(dd, DATEDIFF(dd,0,{{FBSJ}}), 0))  OR LEN(ISNULL({{FBSJ}},''))=0)
 	AND (YL.ModifiedDate<= dateadd(ms,-3,DATEADD(dd, DATEDIFF(dd,-1,{{FBSJ}}), 0)) OR LEN(ISNULL({{FBSJ}},''))=0)
 	AND (YL.FXMS={{FCZD}} OR LEN(ISNULL({{FCZD}},''))=0)
+  AND YL.Status=N'A'
 	ORDER BY YL.ModifiedDate DESC
 END
 ELSE
@@ -93,7 +94,8 @@ BEGIN
 	AND (YL.ModifiedDate>= dateadd(ms,0,DATEADD(dd, DATEDIFF(dd,0,{{FBSJ}}), 0))  OR LEN(ISNULL({{FBSJ}},''))=0)
 	AND (YL.ModifiedDate<= dateadd(ms,-3,DATEADD(dd, DATEDIFF(dd,-1,{{FBSJ}}), 0)) OR LEN(ISNULL({{FBSJ}},''))=0)
 	AND (YL.FXMS={{FCZD}} OR LEN(ISNULL({{FCZD}},''))=0)
-	AND YL.CreatedBy=@LoginID=@LoginID
+	AND YL.CreatedBy=@LoginID
+  AND YL.Status=N'A'
 	ORDER BY YL.ModifiedDate DESC
 END]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
