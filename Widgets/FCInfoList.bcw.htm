@@ -2,11 +2,11 @@
     <div class="row">
         <div class="large-2 columns end">
             <label for="FCLX">房产类型</label>
-            <input type="text" id="FCLX" tabindex="-1"  style="width: 100%"/>
+            <input type="text" id="FCLX" tabindex="-1" style="width: 100%" />
         </div>
         <div class="large-2 columns">
             <label for="FBLX">发布类型</label>
-            <input type="text" id="FBLX" tabindex="-1"  style="width: 100%"/>
+            <input type="text" id="FBLX" tabindex="-1" style="width: 100%" />
         </div>
         <div class="large-2 columns end">
             <label for="FBSJ">发布时间</label>
@@ -26,7 +26,7 @@
             <br />
             <button onclick="refreshData(); return false;">查询</button>
             <button onclick="exportData(); return false;">导出Excel</button>
-            <button onclick="XXLH(); return false;">信息拉黑</button>
+            <button onclick="XXLH(); return false;" style="display:none" id="XXLH">信息拉黑</button>
         </div>
     </div>
 </div>
@@ -44,11 +44,41 @@
         $PayDialog.load('../Widgets/OrderPay.bcw.htm', function (response, status, xhr) {
             if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
         });
+        CheckIsAdmin();
     });
-    function RefershInfo (ID){
+
+    function CheckIsAdmin() {
+        return $.JSONPost('YL1.CheckIsAdmin.json', { '': '' }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            if (RowCnt > 0) {
+                if (R[0].IsAdmin == 1 || IsAdmin == "1") {
+                    $("#XXLH").css('display', '');
+
+                } else {
+                    $("#XXLH").css('display', 'none');
+                }
+            }
+        });
+
+    }
+    function XXLH(){
+        return $.JSONPost('YL1.OrderInfoXXLH.json', {'RowIDs': SGH.getSelectedRowIDsStr()})
+            .then(function (data) {
+                if ((data) && (data.d.RetVal === -1)) {
+                    if (data.d.RetData.Tbl.Rows[0].Success == true) {
+                        refreshData();
+                    } else {
+                        $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
+                    }
+                }
+                else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
+            });
+    }
+
+    function RefershInfo(ID) {
         return $.JSONPost('YL1.OrderInfoRefresh.json', { 'ProductID': ID }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
-            if (RowCnt>0){
+            if (RowCnt > 0) {
                 ShowPayFrame(R[0].OrderID);
             }
         });
@@ -68,9 +98,9 @@
     }
 
     function GetFilterData() {
-        var FCZD=''
-        if ($('#FCZD').is(':checked')){
-            FCZD=$('#FCZD').val();
+        var FCZD = ''
+        if ($('#FCZD').is(':checked')) {
+            FCZD = $('#FCZD').val();
         }
         var FilterData = { 'FCLX': $('#FCLX').val(), 'FBLX': $('#FBLX').val() || '', 'FBSJ': $('#FBSJ').val(), 'FCZD': FCZD };
         return FilterData;
