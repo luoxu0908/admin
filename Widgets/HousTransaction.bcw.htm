@@ -203,8 +203,6 @@
                         $.JSONPost('HR2.DeleteFile.json', { 'LookupCat': 'LeaveSettings', 'FileName': $delete.parent('.filename').data('filename'), 'Folder': $delete.data('fld') })
                             .done(function (data) {
                                 $.jGrowl(filename + ' 图片删除成功!', { 'theme': 'growlsuccess', 'life': 10000 });
-                                window.TempFolder = window.TempFolder.replace($delete.data('fld'), '');
-                                console.log(window.TempFolder);
                                 $delete.parent().parent().parent().remove();
                             });
                     });

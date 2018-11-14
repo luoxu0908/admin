@@ -21,7 +21,7 @@ header {
   vertical-align: middle;
 }
 .tpl-header-logo img {
-  width: 170px;
+  width: 100%;
 }
 .tpl-header-fluid {
   margin-left: 240px;
@@ -599,7 +599,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
   width: 100%;
 }
 .tpl-login-logo {
-  max-width: 159px;
+  max-width: 205px;
   height: 205px;
   margin: 0 auto;
   margin-bottom: 20px;
@@ -728,6 +728,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
 }
 .theme-white .tpl-login-logo {
   background: url(../img/logoa.png) center no-repeat;
+  background-size: 100%;
 }
 .theme-white .sub-active {
   color: #23abf0!important;
@@ -748,7 +749,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
   padding: 6px 12px;
 }
 .theme-white .tpl-login-btn {
-  background-color: #32c5d2;
+  background-color: #006E31;
   border: none;
   padding: 10px 16px;
   font-size: 14px;

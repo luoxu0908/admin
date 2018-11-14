@@ -29,8 +29,6 @@
 </div>
 <div id="AddNewDialog" title="新增用户" style="display: none;">
 </div>
-<div id="PayDialog" title="新增用户" style="display: none;">
-</div>
 </style>
 
 
@@ -126,9 +124,7 @@
     });
 
     function AddNewStaff() { 
-        var OrderNo=''+moment().format('YYYYMMDDhhmmss');
-        ShowPayFrame(OrderNo);
- 
+        $AddNewStaff.dialog("open");
     }
     function GetFilterData() {
         var FilterData = { 'GroupID': window.GroupID || '', 'StaffName': $('#StaffName').val() || '' };
