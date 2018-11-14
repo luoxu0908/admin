@@ -61,8 +61,11 @@
                             <div class="paddingcolumns">
                                 <input id="FCDK" type="checkbox" name="FCDK" value="1">&nbsp;不能贷款
                             </div>
+                           
                         </td>
-                        <td></td>
+                        <td>
+                                单价 <input id="UnitPrice" />&nbsp;&nbsp;元
+                        </td>
                     </tr>
                     <tr>
                         <td>户　　型</td>
@@ -304,6 +307,8 @@
                         $('#JYLX').select2('val', Tbl.Rows[0].JYLX || '');
                         $('#FCLX').select2('val', Tbl.Rows[0].HousesType || '');
                         $('#FCZJ').val(Tbl.Rows[0].FCZJ || '');
+                        $('#UnitPrice').val(Tbl.Rows[0].UDF2 || '');
+                        
                         if (Tbl.Rows[0].FCDK == '1') {
                             $('#FCDK').prop('checked', true);
                         } else {
@@ -411,7 +416,7 @@
             'FCMJ': $('#FCMJ').val() || '', 'SZLC': $('#SZLC').val() || '', 'GYLC': $('#GYLC').val() || '', 'JZNF': $('#JZNF').val() || '',
             'MSF': MSF, 'ZXYQ': $('#ZXYQ').val() || '', 'FWCX': $('#FWCX').val() || '', 'XQXZ': $('#XQXZ').val() || '',
             'XQDZ': $('#XQDZ').val() || '', 'FCTS': HouseCharacter, 'FXBT': $('#FXBT').val() || '', 'FXMS': $('#FXMS').val() || '',
-            'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ,
+            'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ,'UnitPrice':$('#UnitPrice').val()||''
         }
         return $.JSONPost('YL1.SaveHouseTransaction.json', data)
             .then(function (data) {
