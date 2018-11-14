@@ -157,16 +157,20 @@
                         } else if (Tbl.Rows[0].Sex == 'F') {
                             $('#GenderYes').prop('checked', false); $('#GenderNo').prop('checked', true);
                         }
-                        if (Tbl.Rows[0].BirthDate.length > 0) {
-                            $("#Birth").val(moment(Tbl.Rows[0].BirthDate).format("YYYY-MM-DD"));
+                        var BirthDate = Tbl.Rows[0].BirthDate || '';
+                        if (BirthDate.length > 0) {
+                            $("#Birth").val(moment(BirthDate).format("YYYY-MM-DD"));
                         }
                         $('#Phone').val(Tbl.Rows[0].Tel2 || '');
                         $('#TelPhone').val(Tbl.Rows[0].Tel1 || '');
 
                         $('#Address').val(Tbl.Rows[0].FullAddress || '');
                         $('#Remarks').val(Tbl.Rows[0].Remarks);
-                        if (Tbl.Rows[0].EntityType == 'O') {
+                        var Status = Tbl.Rows[0].Status || '';
+                        if (Tbl.Rows[0].EntityType == 'O' && Status == "申请中") {
                             $('#Apply').text('店铺名称：' + Tbl.Rows[0].OtherName + '      状态：' + (Tbl.Rows[0].Status || '申请中')).attr('disabled', 'disabled');
+                        } else if (Tbl.Rows[0].EntityType == 'O' && Status == "已通过") {
+                            $('#Apply').text('店铺名称：' + Tbl.Rows[0].OtherName + '      状态：' + (Tbl.Rows[0].Status || '以通过')).attr('disabled', 'disabled');
                         }
                     }
                 }
@@ -210,6 +214,7 @@
             .done(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
                     $.alert("申请成功，请等待系统审核！", { theme: 'growlsuccess', sticky: true });
+                    location.reload();
                 }
                 else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
             });
