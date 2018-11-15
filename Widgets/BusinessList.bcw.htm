@@ -10,14 +10,14 @@
         </div>
         <div class="large-2 columns end">
             <label for="ApplyStartDate">申请开始时间</label>
-            <input type="text" id="ApplyStartDate" class="datepicker"/>
-            
+            <input type="text" id="ApplyStartDate" class="datepicker" />
+
         </div>
         <div class="large-2 columns end">
-                <label for="ApplyEndDate">结束时间</label>
-                <input type="text" id="ApplyEndDate" class="datepicker"/>
-                
-            </div>
+            <label for="ApplyEndDate">结束时间</label>
+            <input type="text" id="ApplyEndDate" class="datepicker" />
+
+        </div>
     </div>
 
 </div>
@@ -35,29 +35,35 @@
 <script type="text/javascript">
     var $filters = $('#Filters'), $MTool = $('#MTool');
     $(document).ready(function () {
-        $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
     });
     function MakeBussiness(PersonID) {
         return $.JSONPost('YL1.MakeBussiness.json', { 'RowIDs': PersonID })
             .done(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
-                    $.alert("操作成功！", { theme: 'growlsuccess', sticky: true });refreshData();
+                    if (data.d.RetData.Tbl.Rows[0].Success == true) {
+                        $.alert("操作成功！", { theme: 'growlsuccess', sticky: true }); refreshData();
+                    } else {
+                        $.alert(data.d.RetData.Tbl.Rows[0].RetMsg, { sticky: false, 'life': 60000 }); return false;
+                    }
                 }
-                else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
+                else {
+                    $.alert(data.d.RetMsg, { theme: 'growlsuccess', sticky: true });
+                }
             });
     }
     function RubishBussiness() {
         return $.JSONPost('YL1.RubishBussiness.json', { 'RowIDs': SGH.getSelectedRowIDsStr() })
             .done(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
-                    $.alert("操作成功！", { theme: 'growlsuccess', sticky: true });refreshData();
+                    $.alert("操作成功！", { theme: 'growlsuccess', sticky: true }); refreshData();
                 }
-                else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
+                else { $.alert(data.d.RetMsg, { theme: 'growlsuccess', sticky: true }); }
             });
     }
     function GetFilterData() {
-        var FilterData = { 'ApplyStatus':$('#ApplyStatus').val(),'BusinessName': $('#BusinessName').val() || '', 'ApplyStartDate': $('#ApplyStartDate').val(),'ApplyEndDate': $('#ApplyEndDate').val() };
+        var FilterData = { 'ApplyStatus': $('#ApplyStatus').val(), 'BusinessName': $('#BusinessName').val() || '', 'ApplyStartDate': $('#ApplyStartDate').val(), 'ApplyEndDate': $('#ApplyEndDate').val() };
         return FilterData;
     }
     function refreshData() { jQuery.event.trigger({ type: "refreshSG" }); }

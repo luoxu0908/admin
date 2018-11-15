@@ -26,7 +26,7 @@ Elements
 	<SGAction></SGAction>
 	<SQL><![CDATA[	DECLARE @Success BIT, @RetMsg nvarchar(max); 
 	EXEC [dbo].[spYL_MakeBussiness] {{RowIDs}}, {{@@LoginID}}, @Success OUTPUT, @RetMsg OUTPUT;
-	SELECT @Success AS Success, @RetMsg AS RetMsg;]]></SQL>
+	SELECT @Success AS Success,'' AS DelIDs, @RetMsg AS RetMsg;]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
