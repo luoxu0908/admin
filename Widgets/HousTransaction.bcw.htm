@@ -51,20 +51,19 @@
                     <tr>
                         <td>发布类型</td>
                         <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /></td>
-                        <td style="width:30%;text-align:right">房产类型</td>
-                        <td><input id="FCLX" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td>总价&nbsp;<input id="FCZJ" />&nbsp;&nbsp;万元</td>
                     </tr>
                     <tr>
-                        <td>总　　价</td>
-                        <td><input id="FCZJ" />&nbsp;&nbsp;万元</td>
+                        <td>首付</td>
+                        <td><input id="FirstPayment" />&nbsp;&nbsp;万元</td>
+                        <td>
+                            单价 <input id="UnitPrice" />&nbsp;&nbsp;元
+                         </td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
                                 <input id="FCDK" type="checkbox" name="FCDK" value="1">&nbsp;不能贷款
                             </div>
-                           
-                        </td>
-                        <td>
-                                单价 <input id="UnitPrice" />&nbsp;&nbsp;元
                         </td>
                     </tr>
                     <tr>
@@ -145,6 +144,38 @@
                           </div>
                         </div>
                 </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>核心卖点</legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+               <textarea id="CoreSellingPoint" cols="3" rows="3"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>业主心态</legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+               <textarea id="OwnerMentality" cols="3" rows="3"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>小区配套</legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+               <textarea id="VillageMatch" cols="3" rows="3"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>服务介绍</legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+               <textarea id="ServiceIntroduction" cols="3" rows="3"></textarea>
             </div>
         </div>
     </fieldset>
@@ -339,6 +370,16 @@
                                 $('#HouseCharacter' + FCTSArr[i] + '').attr('checked', true);
                             }
                         }
+                        $('#FirstPayment').val(Tbl.Rows[0].FirstPayment || '');
+                        $('#CoreSellingPoint').val(Tbl.Rows[0].CoreSellingPoint || '');
+                        $('#OwnerMentality').val(Tbl.Rows[0].OwnerMentality || '');
+                        $('#VillageMatch').val(Tbl.Rows[0].VillageMatch || '');
+                        $('#ServiceIntroduction').val(Tbl.Rows[0].ServiceIntroduction || '');
+
+                        var XXLH= Tbl.Rows[0].XXLH||'';
+                        if(XXLH.length>0){
+                            $('#ZDTJ'+XXLH).prop('checked', true);
+                        }
 
                         $('#FXBT').val(Tbl.Rows[0].FXBT || '');
                         $('#FXMS').val(Tbl.Rows[0].FXMS || '');
@@ -412,11 +453,13 @@
 
         var data = {
             'ID': window.QS.ID || '', 'JYLX': $('#JYLX').val() || '', 'HousesType': $('#FCLX').val() || '', 'FCZJ': $('#FCZJ').val() || '',
-            'FCDK': FCDK, 'FCHU1': $('#FCHU1').val() || '', 'FCHU2': $('#FCHU2').val() || '', 'FCHU3': $('#FCHU3').val() || '',
+            'FirstPayment':$('#FirstPayment').val(),'FCDK': FCDK, 'FCHU1': $('#FCHU1').val() || '', 'FCHU2': $('#FCHU2').val() || '', 'FCHU3': $('#FCHU3').val() || '',
             'FCMJ': $('#FCMJ').val() || '', 'SZLC': $('#SZLC').val() || '', 'GYLC': $('#GYLC').val() || '', 'JZNF': $('#JZNF').val() || '',
             'MSF': MSF, 'ZXYQ': $('#ZXYQ').val() || '', 'FWCX': $('#FWCX').val() || '', 'XQXZ': $('#XQXZ').val() || '',
             'XQDZ': $('#XQDZ').val() || '', 'FCTS': HouseCharacter, 'FXBT': $('#FXBT').val() || '', 'FXMS': $('#FXMS').val() || '',
-            'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ,'UnitPrice':$('#UnitPrice').val()||''
+            'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ,'UnitPrice':$('#UnitPrice').val()||'',
+            'CoreSellingPoint':$('#CoreSellingPoint').val()||'','OwnerMentality':$('#OwnerMentality').val()||'',
+            'VillageMatch':$('#VillageMatch').val()||'','ServiceIntroduction':$('#ServiceIntroduction').val()||''
         }
         return $.JSONPost('YL1.SaveHouseTransaction.json', data)
             .then(function (data) {

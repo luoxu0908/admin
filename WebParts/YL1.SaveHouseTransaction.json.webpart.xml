@@ -25,9 +25,10 @@ Elements
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
 	<SQL><![CDATA[CDATA[DECLARE @Success BIT,@RetMsg NVARCHAR(MAX),@ProductID  NVARCHAR(150);
-EXEC [dbo].[spYL_SaveHouseTransaction] {{ID}},{{JYLX}},{{HousesType}},{{FCZJ}},{{FCDK}},{{FCHU1}},{{FCHU2}},{{FCHU3}},{{FCMJ}},
+EXEC [dbo].[spYL_SaveHouseTransaction] {{ID}},{{JYLX}},{{HousesType}},{{FCZJ}},{{FirstPayment}},{{FCDK}},{{FCHU1}},{{FCHU2}},{{FCHU3}},{{FCMJ}},
 {{SZLC}},{{GYLC}},{{JZNF}},{{MSF}},{{ZXYQ}},{{FWCX}},{{XQXZ}},{{XQDZ}},{{FCTS}},{{FXBT}},{{FXMS}},{{Picture}},{{PictureGUID}},{{ZDTJ}},
-{{UnitPrice}},{{@@LoginID}},@Success OUTPUT,@RetMsg OUTPUT,@ProductID OUTPUT; SELECT @Success AS Success,@RetMsg AS ReturnMsg,@ProductID AS ProductID ;]]></SQL>
+{{UnitPrice}},{{CoreSellingPoint}},{{OwnerMentality}},{{VillageMatch}},{{ServiceIntroduction}},
+{{@@LoginID}},@Success OUTPUT,@RetMsg OUTPUT,@ProductID OUTPUT; SELECT @Success AS Success,@RetMsg AS ReturnMsg,@ProductID AS ProductID ;]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
