@@ -5,6 +5,48 @@
 		<link rel="stylesheet" type="text/css" href="index_files/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="index_files/style.css">
 		<title></title>
+          <script type="text/javascript" src="index_files/jquery.js"></script>
+          <script type="text/javascript" src="index_files/lib.js"></script>
+         
+          <script type="text/javascript">
+              var PID = '', Step = '';
+              $(function () {
+                  $.when(GetQueryString('PID')).then(function () {
+                      if (PID.length > 0) {
+                          $.when(GetStepByPersonID()).then(function () {
+                              if (Step.length > 0) {
+                                  //bsStep(Step);
+                              }
+                          });
+                      }
+                  });
+                  //bsStep(i) i 为number 可定位到第几步 如bsStep(2)/bsStep(3)
+              })
+              function GetStepByPersonID() {
+                  var data = { 'PersonID': PID }
+                  return $.JSONPost('YL1.GetStepByPersonID.json', data)
+                      .done(function (data) {
+                          if ((data) && (data.d.RetVal == -1)) {
+                              var Tbl = data.d.RetData.Tbl;
+                              var RowCnt = Tbl.Rows.length;
+                              if (RowCnt > 0) {
+                                  Step = Tbl.Rows[0].Step;
+                              }
+                          }
+                      });
+              }
+
+              function GetQueryString(name) {
+                  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                  var r = window.location.search.substr(1).match(reg);
+                  var context = "";
+                  if (r != null)
+                      context = r[2];
+                  reg = null;
+                  r = null;
+                  PID = (context == null || context == "" || context == "undefined" ? "" : context);
+              }
+          </script>
 	</head>
 
 	<body>
@@ -28,15 +70,6 @@
 			</ul>
 		</div>
 		
-		<script type="text/javascript" src="index_files/jquery.js"></script>
-		<script type="text/javascript" src="index_files/lib.js"></script>
-		<script>
-			$(function() {
-				bsStep(3);
-				//bsStep(i) i 为number 可定位到第几步 如bsStep(2)/bsStep(3)
-			})
-		</script>
-		
-	
-
+        <script src="scripts/Master.js"></script>
+        <script src="assets/js/app.js"></script>
 </body></html>
