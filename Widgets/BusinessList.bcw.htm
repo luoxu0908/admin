@@ -28,6 +28,7 @@
             <button onclick="refreshData(); return false;">查询</button>
             <button onclick="exportData(); return false;">导出Excel</button>
             <button onclick="RubishBussiness(); return false;">拉黑商家</button>
+            <button onclick="ActiveBussiness(); return false;">激活商家</button>
         </div>
     </div>
 </div>
@@ -55,6 +56,15 @@
     }
     function RubishBussiness() {
         return $.JSONPost('YL1.RubishBussiness.json', { 'RowIDs': SGH.getSelectedRowIDsStr() })
+            .done(function (data) {
+                if ((data) && (data.d.RetVal === -1)) {
+                    $.alert("操作成功！", { theme: 'growlsuccess', sticky: true }); refreshData();
+                }
+                else { $.alert(data.d.RetMsg, { theme: 'growlsuccess', sticky: true }); }
+            });
+    }
+    function ActiveBussiness() {
+        return $.JSONPost('YL1.ActiveBussiness.json', { 'RowIDs': SGH.getSelectedRowIDsStr() })
             .done(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
                     $.alert("操作成功！", { theme: 'growlsuccess', sticky: true }); refreshData();

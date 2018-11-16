@@ -21,20 +21,20 @@ Elements
   SQLAsyncKey: For running long queries w Event Service
   UsageRemarks: API instructions for use
 -->
-<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin">
+<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin|Event Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
 	<SQL><![CDATA[DECLARE @LoginID INT ,@PersonID INT,@RoleID INT ,@GroupID INT;
 SELECT @LoginID=LoginID, @PersonID=PersonID,@RoleID=DefaultRoleID FROM dbo.tblCtcPersons WHERE PersonID IN (SELECT Val FROM tfMain_StrToTblStr ({{RowIDs}},'•'));
 
-UPDATE dbo.tblCtcPersons SET Status=N'已禁用' WHERE PersonID=@PersonID;
+UPDATE dbo.tblCtcPersons SET Status=N'已通过' WHERE PersonID=@PersonID;
 
-UPDATE dbo.tblSecLogins SET Status='D' WHERE LoginID=@LoginID
+UPDATE dbo.tblSecLogins SET Status='A' WHERE LoginID=@LoginID
 
 SELECT @GroupID=GroupID FROM dbo.tblCtcGroupRoles CGR INNER JOIN dbo.tblCtcRoleTags CRT ON CRT.TagName = CGR.TagName
 WHERE RoleID=@RoleID AND RoleName ='Staff Admin'
 
-UPDATE dbo.tblSecLogins SET Status='D' WHERE LoginID IN (SELECT LoginID FROM dbo.tblCtcPersons WHERE PersonID IN(SELECT PersonID FROM  [dbo].[tfYL_GetStaffsListing](@GroupID)))
+UPDATE dbo.tblSecLogins SET Status='A' WHERE LoginID IN (SELECT LoginID FROM dbo.tblCtcPersons WHERE PersonID IN(SELECT PersonID FROM  [dbo].[tfYL_GetStaffsListing](@GroupID)))
 
 SELECT 1 AS Success,'' as RetMsg;]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
