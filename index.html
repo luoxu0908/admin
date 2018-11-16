@@ -286,6 +286,7 @@
                                 }
                             }
                             var menuHtml = '';
+                            var defaultPageUrl=''
                             var arry = new Array('home', 'search', 'wpforms', 'user', 'phone', 'ship', 'simplybuilt', 'server', 'search', 'table', 'phone', 'search', 'table', 'phone', 'search', 'table', 'phone', 'search')
                             for (var i = 0; i < menuList.length; i++) {
                                 menuHtml += '<li class="sidebar-nav-link">';
@@ -293,6 +294,9 @@
                                 menuHtml += '<a href="javascript:;" class="sidebar-nav-sub-title"><i class="am-icon-' + arry[i] + ' sidebar-nav-link-logo"></i> ' + menuList[i].Name + '<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span></a>';
                                 menuHtml += '<ul class="sidebar-nav sidebar-nav-sub">';
                                 for (var j = 0; j < menuList[i].URLList.length; j++) {
+                                   if(menuList[i].URLList[j].Name == "个人资料"){
+                                    defaultPageUrl=menuList[i].URLList[j].Value + '&PID=' + window.PID;
+                                   }
                                     if (menuList[i].URLList[j].Name == "架构中心" || menuList[i].URLList[j].Name == "我的收藏") {
                                         menuHtml += '<li class="sidebar-nav-link"><i class="fa fa-phone"></i><a target="_top" onclick="ChangeFrameSrc(\'' + menuList[i].URLList[j].Value + '?PID=' + window.PID + '\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + (menuList[i].URLList[j].Name || menuList[i].Name) + '</a></li>';
                                     } else {
@@ -304,6 +308,7 @@
                             }
 
                             $('#menuContent').html(menuHtml); BindEvent();
+                            ChangeFrameSrc(defaultPageUrl);
                         }
                     }
                 });
