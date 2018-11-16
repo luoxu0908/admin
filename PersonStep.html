@@ -15,7 +15,14 @@
                       if (PID.length > 0) {
                           $.when(GetStepByPersonID()).then(function () {
                               if (Step.length > 0) {
-                                  //bsStep(Step);
+                                  $(".container ul").find('li').each(function (index, element) {
+                                      index += 1;
+                                      if (Step == index) {
+                                          $(this).addClass("active")
+                                      } else {
+                                          $(this).removeClass("active")
+                                      }
+                                  });
                               }
                           });
                       }
@@ -31,6 +38,7 @@
                               var RowCnt = Tbl.Rows.length;
                               if (RowCnt > 0) {
                                   Step = Tbl.Rows[0].Step;
+                                 
                               }
                           }
                       });
@@ -50,9 +58,10 @@
 	</head>
 
 	<body>
+        <!--class="active"-->
 		<div class="container" style="margin-top:15%">
 			<ul class="nav nav-pills nav-justified step step-arrow">
-				<li class="active">
+				<li >
 					<a>第一步</a>
 				</li>
 				<li>
