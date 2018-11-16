@@ -24,15 +24,28 @@ Elements
 <WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[DECLARE @OrderID NVARCHAR(50),@LoginID INT;
---SELECT @OrderID={{ProductID}},@LoginID={{@@LoginID}};
-select  @OrderID ='FA481FB9-6FFE-49F1-8450-F1088B824242',@LoginID=1
-    
- update FCZD set FCZD.ModifiedDate=Pay.PayDate,FCZD.ModifiedBy=@LoginID from tblYLFCZD FCZD inner join tblYLOrderPay Pay on FCZD.FCID = Pay.ProductID
- where Pay.ID=@OrderID AND PAY.OrderStatus=N'已支付'
+	<SQL><![CDATA[DECLARE @OrderID NVARCHAR(50),@LoginID INT, @ZDTS INT;
+SELECT @OrderID={{ProductID}},@LoginID={{@@LoginID}};
+ 
+UPDATE FCZD SET FCZD.ModifiedDate=Pay.PayDate,FCZD.ModifiedBy=@LoginID FROM tblYLFCZD FCZD 
+INNER JOIN tblYLOrderPay Pay on FCZD.FCID = Pay.ProductID
+WHERE Pay.ID=@OrderID AND PAY.OrderStatus=N'已支付'
 
-IF @@ROWCOUNT>0
-SELECT 1 AS Success,'' as RetMsg;]]></SQL>
+SELECT @ZDTS=TRY_CONVERT(INT,ZDTS) FROM dbo.tblYLFCZD WHERE FCID= @OrderID;
+IF @ZDTS=1 OR @ZDTS=3 OR @ZDTS=7 OR  @ZDTS=365
+BEGIN
+ UPDATE dbo.tblYLFCZD SET ZDSJ=DATEADD(DAY,@ZDTS,GETDATE()) WHERE FCID=@OrderID;
+END
+ELSE IF @ZDTS=30
+BEGIN
+	 UPDATE dbo.tblYLFCZD SET ZDSJ=DATEADD(MONTH,1,GETDATE()) WHERE FCID=@OrderID;
+END
+ELSE IF @ZDTS=90
+BEGIN
+	 UPDATE dbo.tblYLFCZD SET ZDSJ=DATEADD(MONTH,3,GETDATE()) WHERE FCID=@OrderID;
+END
+
+SELECT 1 AS Success,'' AS RetMsg;]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

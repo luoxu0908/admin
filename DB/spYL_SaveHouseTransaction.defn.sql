@@ -47,6 +47,9 @@ BEGIN
 		 			select @OrderID=NEWID();
 		 			INSERT INTO tblYLOrderPay(ID,ProductID,OrderStatus,OrderAmount,CreateDate)
 			 		VALUES(@OrderID,@ID,'P',@Amount2,GETDATE())
+					--置顶更新数据
+					UPDATE dbo.tblYLFCZD SET ZDTS=@ZDTJ WHERE FCID=@ID;
+				
 				 END
 				SELECT @Success=1;
 		  END
@@ -76,23 +79,12 @@ BEGIN
 		 --订单表
 		 DECLARE @Amount DECIMAL(18,2)
 		 SELECT @Amount= TRY_CONVERT(DECIMAL(18,2),TagData) FROM dbo.tblTicketLookup WHERE LookupCat=N'置顶推荐' AND LookupKey=@ZDTJ
-		 select @OrderID=NEWID();
+		 SELECT @OrderID=NEWID();
 		 INSERT INTO tblYLOrderPay(ID,ProductID,OrderStatus,OrderAmount,CreateDate)
 		 VALUES(@OrderID,@CurrentID,'P',@Amount,GETDATE())
 
-		 SELECT  @FCZD=TRY_CONVERT(int,@ZDTJ)
-		 IF @FCZD=1 OR @FCZD=3 OR @FCZD=7 OR  @FCZD=365
-		 BEGIN 
-			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS,ModifiedDate,ModifiedBy)VALUES(NEWID(),@CurrentID,DATEADD(DAY,@FCZD,GETDATE()),@ZDTJ,GETDATE(),@LoginID)
-		 END
-		 ELSE IF @FCZD=30
-		 BEGIN 
-			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS,ModifiedDate,ModifiedBy)VALUES(NEWID(),@CurrentID,DATEADD(MONTH,1,GETDATE()),@ZDTJ,GETDATE(),@LoginID)
-		 END  
-		 ELSE IF @FCZD=90
-		 BEGIN 
-			INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDSJ,ZDTS,ModifiedDate,ModifiedBy)VALUES(NEWID(),@CurrentID,DATEADD(MONTH,3,GETDATE()),@ZDTJ,GETDATE(),@LoginID)
-		 END 
+		 INSERT INTO dbo.tblYLFCZD (InfoID,FCID,ZDTS)VALUES(NEWID(),@CurrentID,@ZDTJ)
+		 
 		 SELECT @Success=1;
     END
 	IF @Success=0
