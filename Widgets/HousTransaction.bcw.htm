@@ -12,33 +12,58 @@
         background-color: white;
         border: 0px;
     }
+
         table td {
             border: 2px solid black;
             background-color: white;
             color: white;
         }
-        .delbutton{
-            display:inline; right:10px;position:absolute;top:-5px;cursor: pointer;background-color:#f5f5f5;;border-radius: 50%;
-        }
-        .uploadimg{
-            width:100%;height:170px;border:1px solid #f5f5f5;margin-bottom: 15px;border-radius: 5px;
-        }
-        .files{opacity: 0;
+
+    .delbutton {
+        display: inline;
+        right: 10px;
+        position: absolute;
+        top: -5px;
+        cursor: pointer;
+        background-color: #f5f5f5;
+        ;
+        border-radius: 50%;
+    }
+
+    .uploadimg {
+        width: 100%;
+        height: 170px;
+        border: 1px solid #f5f5f5;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+    .files {
+        opacity: 0;
         width: 150px;
         height: 170px;
-        width: 100%;}
-        .uploadDiv{
-            position:absolute;
+        width: 100%;
+    }
+
+    .uploadDiv {
+        position: absolute;
         height: 170px;
         font-size: 150px;
         line-height: 170px;
-        color:black;
+        color: black;
         text-align: center;
         width: 90%;
-        border:1px solid #ccc;
+        border: 1px solid #ccc;
         margin: 0 0 0.75em;
-        }
-       
+    }
+
+    .cssInput {
+        border: 1px solid red;
+    }
+    .cssSpan {
+        color: red;
+    }
+
 </style>
 <div id="mainform" class="large-12 columns end">
     <fieldset>
@@ -50,16 +75,16 @@
                 <table>
                     <tr>
                         <td>发布类型</td>
-                        <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /></td>
-                        <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /></td>
-                        <td>总价&nbsp;<input id="FCZJ" />&nbsp;&nbsp;万元</td>
+                        <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                        <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                        <td>总价&nbsp;<input id="FCZJ" />&nbsp;&nbsp;万元<span class="cssSpan">*</span></td>
                     </tr>
                     <tr>
                         <td>首付</td>
-                        <td><input id="FirstPayment" />&nbsp;&nbsp;万元</td>
+                        <td><input id="FirstPayment" />&nbsp;&nbsp;万元<span class="cssSpan">*</span></td>
                         <td>
                             单价 <input id="UnitPrice" />&nbsp;&nbsp;元
-                         </td>
+                        </td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
                                 <input id="FCDK" type="checkbox" name="FCDK" value="1">&nbsp;不能贷款
@@ -68,19 +93,19 @@
                     </tr>
                     <tr>
                         <td>户　　型</td>
-                        <td><input id="FCHU1" />&nbsp;&nbsp;室</td>
-                        <td style="width: 30%"><input id="FCHU2" />&nbsp;&nbsp;厅</td>
-                        <td><input id="FCHU3" />&nbsp;&nbsp;卫</td>
+                        <td><input id="FCHU1" />&nbsp;&nbsp;室<span class="cssSpan">*</span></td>
+                        <td style="width: 30%"><input id="FCHU2" />&nbsp;&nbsp;厅<span class="cssSpan">*</span></td>
+                        <td><input id="FCHU3" />&nbsp;&nbsp;卫<span class="cssSpan">*</span></td>
                     </tr>
                     <tr>
                         <td>面　　积</td>
-                        <td><input id="FCMJ" />&nbsp;&nbsp;平米</td>
+                        <td><input id="FCMJ" />&nbsp;&nbsp;平米<span class="cssSpan">*</span></td>
                         <td>所在楼层<input id="SZLC" /></td>
                         <td>共有楼层<input id="GYLC" /></td>
                     </tr>
                     <tr>
                         <td>建筑年份</td>
-                        <td><input id="JZNF" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td><input id="JZNF" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
                                 <input id="MSF" type="checkbox" name="MSF" value="1">&nbsp;免税房
@@ -90,13 +115,13 @@
                     </tr>
                     <tr>
                         <td>装修要求</td>
-                        <td><input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td><input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td style="text-align:right">房屋朝向</td>
                         <td><input id="FWCX" tabindex="-1" title="" style="width: 50%" /></td>
                     </tr>
                     <tr>
                         <td>小区选择</td>
-                        <td><input id="XQXZ" tabindex="-1" type="hidden" style="width: 60%" /></td>
+                        <td><input id="XQXZ" tabindex="-1" type="hidden" style="width: 60%" /><span class="cssSpan">*</span></td>
                         <td colspan="2">
                             <span style="width:30%;text-align:right">小区地址</span><input id="XQDZ" style="width: 80%" />
                         </td>
@@ -110,7 +135,7 @@
 
     </fieldset>
     <fieldset>
-        <legend>房产特色</legend>
+        <legend>房产特色<span class="cssSpan">*</span></legend>
         <div class="row">
 
             <div class="large-offset-1 large-9 columns">
@@ -130,44 +155,44 @@
             <div class="large-offset-1 large-9 columns end">
                 <span>详细描述</span>
                 <textarea id="FXMS" cols="2" rows="2" />
-                </div>
+            </div>
         </div>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
-                    <div class="row">
-                        <div  id="preview"></div>
-                        <div class="large-3 columns end">
-                                <div class="large-12 columns">
-                                <div class="uploadDiv">+</div>
-                                <input type="file" id="Attachment" name="files[]" class="files">
-                                <div id="filelist"></div>
-                          </div>
+                <div class="row">
+                    <div id="preview"></div>
+                    <div class="large-3 columns end">
+                        <div class="large-12 columns">
+                            <div class="uploadDiv">+</div>
+                            <input type="file" id="Attachment" name="files[]" class="files">
+                            <div id="filelist"></div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
     </fieldset>
     <fieldset>
-        <legend>核心卖点</legend>
+        <legend>核心卖点<span class="cssSpan">*</span></legend>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
-               <textarea id="CoreSellingPoint" cols="3" rows="3"></textarea>
+                <textarea id="CoreSellingPoint" cols="3" rows="3"></textarea>
             </div>
         </div>
     </fieldset>
     <fieldset>
-        <legend>业主心态</legend>
+        <legend>业主心态<span class="cssSpan">*</span></legend>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
-               <textarea id="OwnerMentality" cols="3" rows="3"></textarea>
+                <textarea id="OwnerMentality" cols="3" rows="3"></textarea>
             </div>
         </div>
     </fieldset>
     <fieldset>
-        <legend>小区配套</legend>
+        <legend>小区配套<span class="cssSpan">*</span></legend>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
-               <textarea id="VillageMatch" cols="3" rows="3"></textarea>
+                <textarea id="VillageMatch" cols="3" rows="3"></textarea>
             </div>
         </div>
     </fieldset>
@@ -175,7 +200,7 @@
         <legend>服务介绍</legend>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
-               <textarea id="ServiceIntroduction" cols="3" rows="3"></textarea>
+                <textarea id="ServiceIntroduction" cols="3" rows="3"></textarea>
             </div>
         </div>
     </fieldset>
@@ -264,12 +289,14 @@
 
         });
         $('#Save').click(function () {
-            Save();
+            if ( SaveCheck()) {
+                Save();
+            }
         });
         $PayDialog.load('../Widgets/OrderPay.bcw.htm', function (response, status, xhr) {
             if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
         });
-        $('#XQXZ').select2({ minimumInputLength: 2, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
+        $('#XQXZ').select2({ minimumInputLength: 1, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
             if (e.val.length > 0) {
             } else { $("#XQXZ").select2("val", ""); }
         });
@@ -339,7 +366,7 @@
                         $('#FCLX').select2('val', Tbl.Rows[0].HousesType || '');
                         $('#FCZJ').val(Tbl.Rows[0].FCZJ || '');
                         $('#UnitPrice').val(Tbl.Rows[0].UDF2 || '');
-                        
+
                         if (Tbl.Rows[0].FCDK == '1') {
                             $('#FCDK').prop('checked', true);
                         } else {
@@ -376,9 +403,9 @@
                         $('#VillageMatch').val(Tbl.Rows[0].VillageMatch || '');
                         $('#ServiceIntroduction').val(Tbl.Rows[0].ServiceIntroduction || '');
 
-                        var XXLH= Tbl.Rows[0].XXLH||'';
-                        if(XXLH.length>0){
-                            $('#ZDTJ'+XXLH).prop('checked', true);
+                        var XXLH = Tbl.Rows[0].XXLH || '';
+                        if (XXLH.length > 0) {
+                            $('#ZDTJ' + XXLH).prop('checked', true);
                         }
 
                         $('#FXBT').val(Tbl.Rows[0].FXBT || '');
@@ -413,7 +440,149 @@
         return $.JSONPost('YL2.DeleteYLFile.json', { 'img': img })
             .done(function (data) { });
     }
+    function SaveCheck() {
+        var ResultFlag = true;
+        var JYLX = $('#JYLX').val() || '';
+        if (JYLX.length <= 0) {
+            $.alert('发布类型 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        var FCLX = $('#FCLX').val() || '';
+        if (FCLX.length <= 0) {
+            $.alert('房产类型 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        var FCZJ = $('#FCZJ').val() || '';
+        if (FCZJ.length <= 0) {
+            $.alert('总价 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidMoney(FCZJ)) {
+                $('#FCZJ').addClass('cssInput');
+                $.alert('请输入大于零的正数.'); return false;
+            } else {
+                $('#FCZJ').removeClass('cssInput');
+            }
+        }
+
+        
+        var FirstPayment = $('#FirstPayment').val() || '';
+        if (FirstPayment.length <= 0) {
+            $.alert('首付 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidMoney(FirstPayment)) {
+                $('#FirstPayment').addClass('cssInput');
+                $.alert('请输入大于零的正数.'); return false;
+            } else {
+                $('#FirstPayment').removeClass('cssInput');
+            }
+        }
+        
+        var FCHU1 = $('#FCHU1').val() || '', FCHU2 = $('#FCHU2').val() || '', FCHU3 = $('#FCHU3').val() || '';
+        if (FCHU1.length <= 0) {
+            $.alert('户型[室] 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(FCHU1)) {
+                $('#FCHU1').addClass('cssInput');
+                $.alert('请输入大于零的正整数.'); return false;
+            } else {
+                $('#FCHU1').removeClass('cssInput');
+            }
+        }
+        if (FCHU2.length <= 0) {
+            $.alert('户型[厅] 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(FCHU2)) {
+                $('#FCHU2').addClass('cssInput');
+                $.alert('请输入大于零的正整数.'); return false;
+            } else {
+                $('#FCHU2').removeClass('cssInput');
+            }
+        }
+        if (FCHU3.length <= 0) {
+            $.alert('户型[卫] 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(FCHU3)) {
+                $('#FCHU3').addClass('cssInput');
+                $.alert('请输入大于零的正整数.'); return false;
+            } else {
+                $('#FCHU3').removeClass('cssInput');
+            }
+        }
+
+        var FCMJ = $('#FCMJ').val() || '';
+        if (FCMJ.length <= 0) {
+            $.alert('面积 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidMoney(FCZJ)) {
+                $('#FCMJ').addClass('cssInput');
+                $.alert('请输入大于零的正数.'); return false;
+            } else {
+                $('#FCMJ').removeClass('cssInput');
+            }
+        }
+        var ZXYQ = $('#ZXYQ').val() || '';
+        if (ZXYQ.length <= 0) {
+            $.alert('装修要求 必填.');
+            ResultFlag = false;
+            return false;
+        }
+     
+        var XQXZ = $('#XQXZ').val() || '';
+        if (XQXZ.length <= 0) {
+            $.alert('小区选择 必填.');
+            ResultFlag = false;
+            return false;
+        }
+     
+        var HouseChara = '', FXBT = $('#FXBT').val() || '';
+        $('input[name="HouseCharacter"]').each(function () {
+            if ($(this).is(':checked')) {
+                HouseChara += $(this).val() + '•';
+            }
+        });
+
+        if (HouseChara.length <= 0 || FXBT.length <= 0) {
+            $.alert('房产特色 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        var CoreSellingPoint = $('#CoreSellingPoint').val() || '';
+        if (CoreSellingPoint.length <= 0) {
+            $.alert('核心卖点 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        var OwnerMentality = $('#OwnerMentality').val() || '';
+        if (OwnerMentality.length <= 0) {
+            $.alert('业主心态 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        var VillageMatch = $('#VillageMatch').val() || '';
+        if (VillageMatch.length <= 0) {
+            $.alert('小区配套 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        return ResultFlag;
+        
+    }
     function Save() {
+      
         var HouseCharacter = '', FCDK = '0', MSF = '0', ZDTJ = '';
         if ($('#FCDK').is(':checked')) {
             FCDK = $('#FCDK').val();
@@ -431,11 +600,7 @@
             }
         });
 
-        $('input[name="HouseCharacter"]').each(function () {
-            if ($(this).is(':checked')) {
-                HouseCharacter += $(this).val() + '•';
-            }
-        });
+       
         $('input[name="ZDTJ"]').each(function () {
             if ($(this).is(':checked')) {
                 ZDTJ = $(this).val();
@@ -453,13 +618,13 @@
 
         var data = {
             'ID': window.QS.ID || '', 'JYLX': $('#JYLX').val() || '', 'HousesType': $('#FCLX').val() || '', 'FCZJ': $('#FCZJ').val() || '',
-            'FirstPayment':$('#FirstPayment').val(),'FCDK': FCDK, 'FCHU1': $('#FCHU1').val() || '', 'FCHU2': $('#FCHU2').val() || '', 'FCHU3': $('#FCHU3').val() || '',
+            'FirstPayment': $('#FirstPayment').val(), 'FCDK': FCDK, 'FCHU1': $('#FCHU1').val() || '', 'FCHU2': $('#FCHU2').val() || '', 'FCHU3': $('#FCHU3').val() || '',
             'FCMJ': $('#FCMJ').val() || '', 'SZLC': $('#SZLC').val() || '', 'GYLC': $('#GYLC').val() || '', 'JZNF': $('#JZNF').val() || '',
             'MSF': MSF, 'ZXYQ': $('#ZXYQ').val() || '', 'FWCX': $('#FWCX').val() || '', 'XQXZ': $('#XQXZ').val() || '',
             'XQDZ': $('#XQDZ').val() || '', 'FCTS': HouseCharacter, 'FXBT': $('#FXBT').val() || '', 'FXMS': $('#FXMS').val() || '',
-            'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ,'UnitPrice':$('#UnitPrice').val()||'',
-            'CoreSellingPoint':$('#CoreSellingPoint').val()||'','OwnerMentality':$('#OwnerMentality').val()||'',
-            'VillageMatch':$('#VillageMatch').val()||'','ServiceIntroduction':$('#ServiceIntroduction').val()||''
+            'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ, 'UnitPrice': $('#UnitPrice').val() || '',
+            'CoreSellingPoint': $('#CoreSellingPoint').val() || '', 'OwnerMentality': $('#OwnerMentality').val() || '',
+            'VillageMatch': $('#VillageMatch').val() || '', 'ServiceIntroduction': $('#ServiceIntroduction').val() || ''
         }
         return $.JSONPost('YL1.SaveHouseTransaction.json', data)
             .then(function (data) {
@@ -517,4 +682,14 @@
         }
         return obj;
     }
+
+    function IsValidPositive(data) {
+        var re = /^[A-Z]{1}[0-9]{7}[A-Z]{1}$/;
+        return re.test(data);
+    }
+    function IsValidMoney(data) {
+        var re = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
+        return re.test(data);
+    }
+    
 </script>
