@@ -186,11 +186,11 @@
                         if (BirthDate.length > 0) {
                             $("#Birth").val(moment(BirthDate).format("YYYY-MM-DD"));
                         }
-                        $('#Phone').val(Tbl.Rows[0].Tel2 || '');
+                        $('#Phone').val(Tbl.Rows[0].Mobile || '');
                         $('#Email').val(Tbl.Rows[0].Email1 || '');
                         $('#TelPhone').val(Tbl.Rows[0].Tel1 || '');
 
-                        $('#Address').val(Tbl.Rows[0].FullAddress || '');
+                        $('#Address').val(Tbl.Rows[0].Address || '');
                         $('#Remarks').val(Tbl.Rows[0].Remarks);
                         var Status = Tbl.Rows[0].Status || '';
                         if (Tbl.Rows[0].EntityType == 'O' && Status == "申请中") {
