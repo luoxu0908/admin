@@ -94,7 +94,7 @@
             for (var i = 0; i < RowCnt; i++) {
                 return_data.results.push({ id: R[i]["RoleID"], text: R[i]["SearchText"] });
             }
-            return_data.results.push({ id: "AddInd", text: "新增用户" });
+            //return_data.results.push({ id: "AddInd", text: "新增用户" });
             query.callback(return_data);
         });
     }
