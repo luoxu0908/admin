@@ -640,15 +640,20 @@
             .then(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
                     if (data.d.RetData.Tbl.Rows[0].Success == true) {
+                        $('#Save').attr('disabled', 'disabled');
                         alert('发布成功！');
                         if (ZDTJ.length > 0 && ZDTJ != "0") {
                             ShowPayFrame(data.d.RetData.Tbl.Rows[0].ProductID);
                         }
                     } else {
+                        $('#Save').removeAttr('disabled', 'disabled');
                         $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
                     }
                 }
-                else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
+                else {
+                    $('#Save').removeAttr('disabled', 'disabled');
+                    $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open');
+                }
             });
     }
 
