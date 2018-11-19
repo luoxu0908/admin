@@ -468,7 +468,17 @@
             }
         }
 
-        
+        var UnitPrice = $('#UnitPrice').val() || '';
+        if (UnitPrice.length > 0) {
+            if (!IsValidMoney(UnitPrice)) {
+                $('#UnitPrice').addClass('cssInput');
+                $.alert('请输入大于零的正数.'); return false;
+            } else {
+                $('#UnitPrice').removeClass('cssInput');
+            }
+        } 
+
+
         var FirstPayment = $('#FirstPayment').val() || '';
         if (FirstPayment.length <= 0) {
             $.alert('首付 必填.');
@@ -684,7 +694,7 @@
     }
 
     function IsValidPositive(data) {
-        var re = /^[A-Z]{1}[0-9]{7}[A-Z]{1}$/;
+        var re = /^[1-9]+\d*$/;
         return re.test(data);
     }
     function IsValidMoney(data) {
