@@ -26,7 +26,7 @@ Elements
 	<SGAction>GetData</SGAction>
 	<SQL><![CDATA[DECLARE  @LoginID INT,@Status NVARCHAR(50),@EntityType NVARCHAR(50),@GroupID INT,@RoleID INT ;
 SELECT @LoginID=0,@Status='',@GroupID=0,@RoleID=0;
-SELECT @LoginID=LoginID,@EntityType=EntityType,@Status=[Status] FROM dbo.tblCtcPersons WHERE LoginID={{@@LoginID}}
+SELECT @LoginID=LoginID,@EntityType=EntityType,@Status=[Status],@RoleID=DefaultRoleID FROM dbo.tblCtcPersons WHERE LoginID={{@@LoginID}}
 IF EXISTS(SELECT TOP 1 1 FROM dbo.tblSecGroups WHERE SecGroupID in (SELECT SecGroupID FROM tblSecGroupPersons WHERE LoginID=@LoginID) 
 AND SecGroupName='Security Admin')
 BEGIN

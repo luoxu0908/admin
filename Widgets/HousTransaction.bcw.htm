@@ -462,6 +462,7 @@
         } else {
             if (!IsValidMoney(FCZJ)) {
                 $('#FCZJ').addClass('cssInput');
+                ResultFlag = false;
                 $.alert('请输入大于零的正数.'); return false;
             } else {
                 $('#FCZJ').removeClass('cssInput');
@@ -472,6 +473,7 @@
         if (UnitPrice.length > 0) {
             if (!IsValidMoney(UnitPrice)) {
                 $('#UnitPrice').addClass('cssInput');
+                ResultFlag = false;
                 $.alert('请输入大于零的正数.'); return false;
             } else {
                 $('#UnitPrice').removeClass('cssInput');
@@ -487,6 +489,7 @@
         } else {
             if (!IsValidMoney(FirstPayment)) {
                 $('#FirstPayment').addClass('cssInput');
+                ResultFlag = false;
                 $.alert('请输入大于零的正数.'); return false;
             } else {
                 $('#FirstPayment').removeClass('cssInput');
@@ -501,6 +504,7 @@
         } else {
             if (!IsValidPositive(FCHU1)) {
                 $('#FCHU1').addClass('cssInput');
+                ResultFlag = false;
                 $.alert('请输入大于零的正整数.'); return false;
             } else {
                 $('#FCHU1').removeClass('cssInput');
@@ -513,6 +517,7 @@
         } else {
             if (!IsValidPositive(FCHU2)) {
                 $('#FCHU2').addClass('cssInput');
+                ResultFlag = false;
                 $.alert('请输入大于零的正整数.'); return false;
             } else {
                 $('#FCHU2').removeClass('cssInput');
@@ -525,6 +530,7 @@
         } else {
             if (!IsValidPositive(FCHU3)) {
                 $('#FCHU3').addClass('cssInput');
+                ResultFlag = false;
                 $.alert('请输入大于零的正整数.'); return false;
             } else {
                 $('#FCHU3').removeClass('cssInput');
@@ -539,6 +545,7 @@
         } else {
             if (!IsValidMoney(FCZJ)) {
                 $('#FCMJ').addClass('cssInput');
+                ResultFlag = false;
                 $.alert('请输入大于零的正数.'); return false;
             } else {
                 $('#FCMJ').removeClass('cssInput');

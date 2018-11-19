@@ -29,7 +29,7 @@ DECLARE @SearchTokens TABLE (Token nvarchar(100));
 INSERT INTO @SearchTokens (Token) SELECT SUBSTRING(LTRIM(RTRIM(Val)), 1, 100) FROM dbo.tfMain_StrToTblStr(@InputStr, N' ');
 DECLARE @Res TABLE (ID NVARCHAR(MAX), MatchCnt int);
 DECLARE @Token nvarchar(100);
-DECLARE Cur_CtcSearch_R CURSOR FOR SELECT DISTINCT Token FROM @SearchTokens WHERE LEN(Token)>1;
+DECLARE Cur_CtcSearch_R CURSOR FOR SELECT DISTINCT Token FROM @SearchTokens WHERE LEN(Token)>=1;
 OPEN Cur_CtcSearch_R;
 FETCH NEXT FROM Cur_CtcSearch_R INTO @Token;
 WHILE @@FETCH_STATUS<>-1
