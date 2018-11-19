@@ -1,23 +1,30 @@
 <style>
     .nopaddingrow label.inlineblock {
-            margin-top: 0;
-            padding: 0;
-            margin-bottom: 0;
-        }
-    </style>
+        margin-top: 0;
+        padding: 0;
+        margin-bottom: 0;
+    }
+    .cssInput {
+        border-color: red;
+    }
+
+    .cssSpan {
+        color: red;
+    }
+</style>
 <div id="mainform" class="large-10 columns end">
     <fieldset>
         <legend>基本信息</legend>
         <div class="row">
             <div class="large-6 columns">
                 <label for="Nickname">
-                    昵称
+                    昵称<span class="cssSpan">*</span>
                 </label>
                 <input type="text" id="Nickname" />
             </div>
             <div class="large-6 columns">
                 <label for="Name">
-                    姓名
+                    姓名<span class="cssSpan">*</span>
                 </label>
                 <input type="text" id="Name" />
             </div>
@@ -39,10 +46,12 @@
                 <label for="Gender">
                     性别
                 </label>
-                <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;"><input
-                        type="radio" value="M" name="Gender" id="GenderYes" />男</label>
-                <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;"><input
-                        type="radio" value="F" name="Gender" id="GenderNo" /> 女</label>
+                <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;">
+                    <input type="radio" value="M" name="Gender" id="GenderYes" />男
+                </label>
+                <label class="inlineblock" style="margin-top: 0px !important; margin-bottom: 0px !important;">
+                    <input type="radio" value="F" name="Gender" id="GenderNo" /> 女
+                </label>
             </div>
         </div>
     </fieldset>
@@ -51,16 +60,19 @@
         <div class="row">
             <div class="large-6 columns">
                 <label for="Phone">
-                    手机
+                    手机<span class="cssSpan">*</span>
                 </label>
                 <input type="text" id="Phone" />
             </div>
             <div class="large-6 columns">
                 <label for="TelPhone">
-                    固定电话
+                    固定电话 029-8888888
                 </label>
                 <input type="text" id="TelPhone" />
             </div>
+          
+        </div>
+        <div class="row">
             <div class="large-6 columns">
                 <label for="PersonalQQ">
                     QQ号码
@@ -72,6 +84,15 @@
                     微信
                 </label>
                 <input type="text" id="WeChatNum" />
+            </div>
+          
+        </div>
+        <div class="row">
+            <div class="large-6 columns end">
+                <label for="Email">
+                    邮箱<span class="cssSpan">*</span>
+                </label>
+                <input type="text" id="Email" />
             </div>
         </div>
     </fieldset>
@@ -119,7 +140,7 @@
     <a id="Photo" href="#" onclick="return false;">
         <img src="../styles/default/images/iContact/NoPhoto.gif" style="border: 1px solid black;
                         height: 200px; width: 150px;"
-            id="ImgPhoto" />
+             id="ImgPhoto" />
     </a>
 </div>
 <script type="text/javascript">
@@ -131,11 +152,15 @@
         RetrievePersonalInfo();
         RefreshPhoto('Photo', 'ImgPhoto', window.QS.PID, function () { });
         $('#Submit').click(function () {
-            Submit();
+            if (SaveCheck()) {
+                Submit();
+            }
         });
         $('#Birth').change(function () {
             if ($('#Birth').length > 0) {
                 $('#Age').val(moment().diff(moment($('#Birth').val()), 'years'))
+            } else {
+                $('#Age').val('');
             }
         })
     });
@@ -162,6 +187,7 @@
                             $("#Birth").val(moment(BirthDate).format("YYYY-MM-DD"));
                         }
                         $('#Phone').val(Tbl.Rows[0].Tel2 || '');
+                        $('#Email').val(Tbl.Rows[0].Email1 || '');
                         $('#TelPhone').val(Tbl.Rows[0].Tel1 || '');
 
                         $('#Address').val(Tbl.Rows[0].FullAddress || '');
@@ -175,6 +201,65 @@
                     }
                 }
             });
+    }
+
+    function SaveCheck() {
+        var ResultFlag = true;
+        var Nickname = $('#Nickname').val() || '';
+        if (Nickname.length <= 0) {
+            $.alert('昵称 必填.');
+            ResultFlag = false;
+            return false;
+        }
+
+        var Name = $('#Name').val() || '';
+        if (Name.length <= 0) {
+            $.alert('姓名 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        var VaPhone = $('#Phone').val() || '';
+        if (VaPhone.length <= 0) {
+            $.alert('手机 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!isPhoneNo(VaPhone)) {
+                $('#Phone').css('border-color', 'red');
+                ResultFlag = false;
+                $.alert('手机号码 格式不对.'); return false;
+            } else {
+                $('#Phone').css('border-color', '');
+            }
+        }
+        var TelPhone = $('#TelPhone').val() || '';
+        if (TelPhone.length > 0) {
+            if (!isTel(TelPhone)) {
+                $('#TelPhone').css('border-color', 'red');
+                ResultFlag = false;
+                $.alert('固定电话 格式不对.'); return false;
+            } else {
+                $('#TelPhone').css('border-color', '');
+            }
+        }
+     
+       
+        var Email = $('#Email').val() || '';
+        if (Email.length <= 0) {
+            $.alert('邮箱 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidEmail(Email)) {
+                $('#Email').css('border-color', 'red');
+                ResultFlag = false;
+                $.alert('邮箱 格式不对.'); return false;
+            } else {
+                $('#Email').css('border-color', '');
+            }
+        }
+      
+        return ResultFlag;
     }
     function Submit() {
         var Gender = '';
@@ -190,6 +275,7 @@
             'TelPhone': $('#TelPhone').val() || '',
             'PersonalQQ': $('#PersonalQQ').val() || '',
             'WeChatNum': $('#WeChatNum').val() || '',
+            'Email': $('#Email').val()||'',
             'Address': $('#Address').val() || '',
             'Remarks': $('#Remarks').val() || ''
         }
@@ -251,5 +337,18 @@
         //setTimeout(function () { w.onunload = function () { window.parent.RefreshPhoto(HID, IID, PID, function () { }) }; }, 300); //when popup unloads, we refresh to update
         setTimeout(function () { w.onunload = function () { RefreshPhoto(HID, IID, PID, function () { }) }; }, 300); //when popup unloads, we refresh to update
     }
+  
+    function isPhoneNo(str) {
+        var pattern = /0?(13|14|15|18)[0-9]{9}/;
+        return pattern.test(str);
+    }
+    function IsValidEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
 
+    function isTel(data) {
+        var re = /^((0\d{2,3})-?)(\d{7,8})(-(\d{3,}))?$/;
+        return re.test(data);
+    }
 </script>

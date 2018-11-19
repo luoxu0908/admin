@@ -26,6 +26,8 @@ BEGIN
 
 		EXEC [dbo].[spSec_CreateNewLogin] @Mobile, @UserName, N'A', @Pwd, '', @LoginID OUTPUT, @PasswordIfLoginCreated OUTPUT, @RetMsg OUTPUT;
 		UPDATE dbo.tblCtcPersons SET LoginID=@LoginID WHERE PersonID=@PersonID;
+		UPDATE dbo.tblCtcRoles SET Tel2=@Mobile WHERE PersonID=@PersonID
+		 
 	END
 	ELSE
     BEGIN
