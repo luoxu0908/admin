@@ -1,0 +1,80 @@
+﻿<!-- <!doctype html> -->
+<!-- <!doctype html> -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IP访问量</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="Scripts/echarts.min.js"></script>
+    <script src="Scripts/jquery.min.js"></script>
+    <link href="Styles/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-ui.min.js"></script>
+    <script src="assets/js/Master.js"></script>
+    <script src="assets/js/Security.js"></script>
+</head>
+<body>
+    <br><br>
+    <div>
+        <label for="ParentEventFilter">开始日期&nbsp;&nbsp;</label>
+        <input id="DateFrom" type="text" class="datepicker" placeholder="请选择日期" onchange="GetList()" />
+    </div>
+    <br><br>
+    <div id="main" style="width: 600px;height:400px;"></div>
+</body>
+<script type="text/javascript">
+    var return_data = new Array();
+    var return_dataX = new Array();
+    $(document).ready(function () {
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+        $(".datepicker").datepicker({ dateFormat: 'dd MM yy', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+        $.when(GetDataList()).then(function () {
+            DoReport();
+        });
+        
+    });
+    function GetList() {
+        $.when(GetDataList()).then(function () {
+            DoReport();
+        });
+
+    }
+    function GetDataList() {
+        return $.JSONPost('YL1.GetIPAddressCount.json', { 'TgtDate': $("#DateFrom").val() }).done(function (data) {
+        var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+        if (RowCnt > 0) {
+            for (var i = 0; i < RowCnt; i++) {
+                return_dataX[i]= R[i]["DayDt"];
+                return_data[i] = R[i]["Number"];
+            }
+        }
+       });
+    }
+    function DoReport() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '每日访问量'
+            },
+            tooltip: {},
+            legend: {
+                data: ['点击量']
+            },
+            xAxis: {
+                data: return_dataX
+            },
+            yAxis: {},
+            series: [{
+                name: '点击量',
+                type: 'bar',
+                data: return_data
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+</script>
+</html>
