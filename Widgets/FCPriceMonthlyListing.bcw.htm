@@ -1,0 +1,157 @@
+<style>
+    .cssSpan {
+        color: red;
+    }
+</style>
+<div id="Filters" class="large-12 columns">
+    <div class="row">
+        <div class="large-2 columns end">
+            <label for="Village">小区</label>
+            <input type="text" id="Village" tabindex="-1" style="width: 100%" />
+        </div>
+        <div class="large-2 columns end">
+            <label for="FCYear">年份</label>
+            <input type="text" id="FCYear" tabindex="-1" style="width: 100%" />
+        </div>
+    </div>
+</div>
+<div class="large-12 columns " id="MTool">
+    <div class="row">
+        <div class="large-12 columns">
+            <br />
+            <button onclick="refreshData(); return false;">查询</button>
+            <button onclick="AddRow(); return false;">添加</button>
+            <button onclick="delSelRows(); return false;">删除</button>
+            <button onclick="exportData(); return false;">导出Excel</button>
+        </div>
+    </div>
+</div>
+<div id="FCVillageDiv" title="添加" style="display: none;margin-top:12px;">
+    <div class="row">
+        <div class="large-12 columns">
+            <label for="AddVillage">小区<span class="cssSpan">*</span></label>
+            <input type="text" id="AddVillage" tabindex="-1" style="width: 100%" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="large-12 columns">
+            <label for="AddFCYear">年份<span class="cssSpan">*</span></label>
+            <input type="text" id="AddFCYear" tabindex="-1" style="width: 100%" />
+        </div>
+    </div>
+    
+</div>
+<script type="text/javascript">
+    var $filters = $('#Filters'), $MTool = $('#MTool'), $FCVillageDiv = $('#FCVillageDiv');
+    $(document).ready(function () {
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+        GetYear('FCYear');
+        GetYear('AddFCYear');
+        $('#AddVillage').select2({ minimumInputLength: 1, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
+            if (e.val.length > 0) {
+            } else { $("#AddVillage").select2("val", ""); }
+        });
+        $('#Village').select2({ minimumInputLength: 1, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
+            if (e.val.length > 0) {
+            } else { $("#Village").select2("val", ""); }
+        });
+    });
+
+    //function CheckIsAdmin() {
+    //    return $.JSONPost('YL1.CheckIsAdmin.json', { '': '' }).done(function (data) {
+    //        var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+    //        if (RowCnt > 0) {
+    //            if (R[0].IsAdmin == 1 || IsAdmin == "1") {
+    //                $("#XXLH").css('display', '');
+    //                $("#XXJH").css('display', '');
+
+    //            } else {
+    //                $("#XXLH").css('display', 'none');
+    //                $("#XXJH").css('display', '');
+    //            }
+    //        }
+    //    });
+
+    //}
+    function AddRow() {
+        $FCVillageDiv.dialog("open");
+    }
+
+    $FCVillageDiv.dialog({
+        autoOpen: false, height: 250, width: 400, modal: true,
+        buttons: {
+            "保存": function () {
+                var AddVillage = $('#AddVillage').val() || '';
+                var AddFCYear = $('#AddFCYear').val() || '';
+                if (AddVillage.length <= 0 || AddFCYear.length <= 0) {
+                    $.alert('小区和年份必选.');
+                } else {
+                    SGH.GridRowAdd({ 'AddVillage': AddVillage, 'AddFCYear': AddFCYear });
+                    Clear();
+                }
+            }
+        },
+        open: function () { Clear() },
+        close: function () { $(this).dialog("close"); }
+    });
+    function Clear() {
+        $('#AddVillage').select2('val', '');
+        $('#AddFCYear').select2('val', '')
+    }
+    function delSelRows() {
+        //var Cfm = prompt("Are you sure you want to delete selected Rows? please input 'del' below.");
+        //if ((Cfm) && (Cfm.toLowerCase() == "del")) {
+        //    SGH.GridRowDel({ 'RowIDs': SGH.getSelectedRowIDsStr() });
+        //}
+        SGH.GridRowDel({ 'RowIDs': SGH.getSelectedRowIDsStr() });
+    }
+    function GetYear(id) {
+        var YearNow = new Date().getFullYear();
+        var startYear = YearNow - 50;
+        var return_data = { results: [] };
+        return_data.results.push({ id: "", text: "" });
+        for (var Y = startYear; Y <= YearNow; Y++) {
+            return_data.results.push({ id: Y.toString(), text: Y.toString() });
+        }
+        $("#" + id).select2({
+            data: return_data
+        });
+    }
+
+    function GetSearchMatches(query) {
+        window.SearchTerm = query.term;
+        $.JSONPost('YL1.SearchEntityVillage.json', { "SearchTerm": query.term, "ReturnID": "LookupKey" }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            return_data.results.push({ id: "", text: "" });
+            for (var i = 0; i < RowCnt; i++) {
+                return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["SearchText"] });
+            }
+            query.callback(return_data);
+        });
+    }
+
+    function InitItemSelection(element, callback) {
+        var LookupKey = $(element).val();
+        if (LookupKey != "") {
+            $.JSONPost('YL1.SearchTextEntityVillage.json', { "LookupKey": LookupKey })
+                    .done(function (data) {
+                        var R = data.d.RetData.Tbl.Rows;
+                        if (R.length > 0) {
+                            callback({ id: R[0].LookupKey, text: R[0].SearchText });
+                        } else {
+                            callback({ id: -1, text: "Invalid ID" });
+                        }
+                    });
+        }
+    }
+    function GetFilterData() {
+        var FilterData = { 'VillageKey': $('#Village').val(), 'PartYear': $('#FCYear').val() };
+        return FilterData;
+    }
+    function refreshData() { jQuery.event.trigger({ type: "refreshSG" }); }
+    function exportData() { jQuery.event.trigger({ type: "exportSG" }); }
+    window.DoGridInit = true;
+</script>

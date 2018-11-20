@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Attributes
+  WPType Values: Handler URL/Exec SQL/Export SQL/SlickGrid
+  AllowedExternalDomains: | separated for multiple domains
+  ReqSecret: 1 if secret key is required
+  LogType: 1 if request is to be logged
+  CacheDurationS: Number of seconds to cache request
+  CacheOnParams: Key to use for caching {{Params}} may be used
+  ExportFilename: Filename for export (.xslx)
+  ExportSheetnames: Exporting to .xslx, | separated sheet names
+  ExportReportCategory: tblMainReports.DisplayCategory
+  ExportReportName: tblMainReports.ReportName
+  ExportReportDescription: tblMainReports.Description
+  ExportReportDispOrder: tblMainReports.DispOrder
+  SecGroupNames: | separated list of sec groups to allow access
+Elements
+  HandlerURL: URL to handle incoming request (used by WPType="Handler URL")
+  SGAction Values: GetData/AddRow/UpdRow/UpdRowFld/DelRow/Custom/Export (used by WPType="SlickGrid")
+  SQL: SQL Query to run (used by WPType="Exec SQL" OR WPType="SlickGrid")
+  SQLAsyncKey: For running long queries w Event Service
+  UsageRemarks: API instructions for use
+-->
+<WebPart WPType="SlickGrid" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" ExportFilename="" ExportSheetnames="" ExportReportCategory="" ExportReportName="" ExportReportDescription="" ExportReportDispOrder="" SecGroupNames="Security Admin">
+	<HandlerURL><![CDATA[]]></HandlerURL>
+	<SGAction>Export</SGAction>
+	<SQL><![CDATA[SELECT FM.ID,TL.Description AS VillageKey,FM.PartYear,FM.Janurary,FM.February,FM.March,
+FM.April,FM.May,FM.June,FM.July,FM.August,FM.September,FM.October,FM.November,FM.December,
+CP1.DisplayName AS CreatedBy,(SELECT CONVERT(nvarchar(10), FM.CreatedDate, 121)) AS CreatedDate,CP2.DisplayName AS ModifiedBy,
+(SELECT CONVERT(nvarchar(10), FM.ModifiedDate, 121)) AS ModifiedDate
+  FROM tblYLFCPriceMonthlySummary FM
+LEFT JOIN tblTicketLookup TL ON FM.VillageKey=TL.LookupKey AND TL.LookupCat=N'小区名称'
+LEFT JOIN dbo.tblCtcPersons CP1 ON CP1.LoginID=FM.CreatedBy
+LEFT JOIN dbo.tblCtcPersons CP2 ON CP2.LoginID=FM.ModifiedBy
+WHERE  (FM.VillageKey={{VillageKey}} OR LEN(ISNULL({{VillageKey}},''))=0)
+AND (FM.PartYear={{PartYear}} OR LEN(ISNULL({{PartYear}},''))=0)
+ORDER BY CONVERT(INT,FM.PartYear) DESC]]></SQL>
+	<SQLAsyncKey></SQLAsyncKey>
+	<UsageRemarks><![CDATA[]]></UsageRemarks>
+</WebPart>
