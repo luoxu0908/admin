@@ -147,7 +147,7 @@
     $(document).ready(function () {
         window.QS = $.parseQS();
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
-        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-50:+50' });
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '-80:+0' });
         disabledprofile();
         RetrievePersonalInfo();
         RefreshPhoto('Photo', 'ImgPhoto', window.QS.PID, function () { });
@@ -156,8 +156,15 @@
                 Submit();
             }
         });
+        $('#Birth').blur(function () {
+            if ($('#Birth').val().length > 0) {
+                $('#Age').val(moment().diff(moment($('#Birth').val()), 'years'))
+            } else {
+                $('#Age').val('');
+            }
+        })
         $('#Birth').change(function () {
-            if ($('#Birth').length > 0) {
+            if ($('#Birth').val().length > 0) {
                 $('#Age').val(moment().diff(moment($('#Birth').val()), 'years'))
             } else {
                 $('#Age').val('');
