@@ -297,7 +297,7 @@
                                    if(menuList[i].URLList[j].Name == "个人资料"){
                                     defaultPageUrl=menuList[i].URLList[j].Value + '&PID=' + window.PID;
                                    }
-                                    if (menuList[i].URLList[j].Name == "架构中心" || menuList[i].URLList[j].Name == "我的收藏") {
+                                    if (menuList[i].URLList[j].Name == "架构中心" || menuList[i].URLList[j].Name == "我的收藏"|| menuList[i].URLList[j].Name == "日访问量") {
                                         menuHtml += '<li class="sidebar-nav-link"><i class="fa fa-phone"></i><a target="_top" onclick="ChangeFrameSrc(\'' + menuList[i].URLList[j].Value + '?PID=' + window.PID + '\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + (menuList[i].URLList[j].Name || menuList[i].Name) + '</a></li>';
                                     } else {
                                         menuHtml += '<li class="sidebar-nav-link"><i class="fa fa-phone"></i><a target="_top" onclick="ChangeFrameSrc(\'' + menuList[i].URLList[j].Value + '&PID=' + window.PID + '\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + (menuList[i].URLList[j].Name || menuList[i].Name) + '</a></li>';
