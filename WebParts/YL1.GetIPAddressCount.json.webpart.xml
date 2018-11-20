@@ -24,7 +24,9 @@ Elements
 <WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[SELECT OrderNo,(SELECT CONVERT(nvarchar(11), DayDt, 113)) AS DayDt,Number  FROM [dbo].[tfYL_GetIPAccount] ( {{TgtDate}});]]></SQL>
+	<SQL><![CDATA[DECLARE @InputDate DATETIME;
+SELECT @InputDate= [dbo].[fnYL_ChangeTime]({{TgtDate}})
+SELECT OrderNo,(SELECT CONVERT(nvarchar(11), DayDt, 113)) AS DayDt,Number  FROM [dbo].[tfYL_GetIPAccount] (@InputDate);]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
