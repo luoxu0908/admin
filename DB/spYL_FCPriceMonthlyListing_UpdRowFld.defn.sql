@@ -23,7 +23,8 @@ BEGIN
 				ELSE 
 				BEGIN
 					   SELECT @VillageText=Description FROM dbo.tblTicketLookup WHERE LookupCat=N'小区名称' AND LookupKey=@FldVal
-					   SELECT 0 AS Success,'' AS DelIDs, @VillageText+N' '+@PartYear+N' 年数据已存在.' AS RetMsg;
+					   SELECT @Success=1,@RetMsg=@VillageText+N' '+@PartYear+N' 年数据已存在.';
+					   RETURN;
 				END 
 				
 			END
@@ -37,7 +38,8 @@ BEGIN
 				ELSE 
 				BEGIN
 					   SELECT @VillageText=Description FROM dbo.tblTicketLookup WHERE LookupCat=N'小区名称' AND LookupKey=@VillageKey
-					   SELECT 0 AS Success,'' AS DelIDs, @VillageText+N' '+@FldVal+N' 年数据已存在.' AS RetMsg;
+					   SELECT @Success=1,@RetMsg=@VillageText+N' '+@FldVal+N' 年数据已存在.';
+					   RETURN ;
 				END 
 				
 			 END
@@ -89,22 +91,19 @@ BEGIN
 			BEGIN
 				  UPDATE tblYLFCPriceMonthlySummary SET December=@FldVal WHERE ID=@RowID;
 			END
-	IF len (@RetMsg)>0
+		IF len (@RetMsg)=0
 		BEGIN 
-			SELECT 0 AS Success,'' AS DelIDs,@RetMsg AS RetMsg;
-		END
-		ELSE 
-		BEGIN
 			SELECT 1 AS Success,'' AS DelIDs,'' AS RetMsg;
+			SELECT FM.ID,TL.Description AS VillageKey,FM.PartYear,FM.Janurary,FM.February,FM.March,
+			FM.April,FM.May,FM.June,FM.July,FM.August,FM.September,FM.October,FM.November,FM.December,
+			CP1.DisplayName AS CreatedBy,(SELECT CONVERT(nvarchar(10), FM.CreatedDate, 121)) AS CreatedDate,CP2.DisplayName AS ModifiedBy,
+			(SELECT CONVERT(nvarchar(10), FM.ModifiedDate, 121)) AS ModifiedDate
+			  FROM tblYLFCPriceMonthlySummary FM
+			LEFT JOIN tblTicketLookup TL ON FM.VillageKey=TL.LookupKey AND TL.LookupCat=N'小区名称'
+			LEFT JOIN dbo.tblCtcPersons CP1 ON CP1.LoginID=FM.CreatedBy
+			LEFT JOIN dbo.tblCtcPersons CP2 ON CP2.LoginID=FM.ModifiedBy
+			WHERE  FM.ID=@RowID;
 		END
-		SELECT FM.ID,TL.Description AS VillageKey,FM.PartYear,FM.Janurary,FM.February,FM.March,
-		FM.April,FM.May,FM.June,FM.July,FM.August,FM.September,FM.October,FM.November,FM.December,
-		CP1.DisplayName AS CreatedBy,(SELECT CONVERT(nvarchar(10), FM.CreatedDate, 121)) AS CreatedDate,CP2.DisplayName AS ModifiedBy,
-		(SELECT CONVERT(nvarchar(10), FM.ModifiedDate, 121)) AS ModifiedDate
-		  FROM tblYLFCPriceMonthlySummary FM
-		LEFT JOIN tblTicketLookup TL ON FM.VillageKey=TL.LookupKey AND TL.LookupCat=N'小区名称'
-		LEFT JOIN dbo.tblCtcPersons CP1 ON CP1.LoginID=FM.CreatedBy
-		LEFT JOIN dbo.tblCtcPersons CP2 ON CP2.LoginID=FM.ModifiedBy
-		WHERE  FM.ID=@RowID;
+		
 END
 GO
