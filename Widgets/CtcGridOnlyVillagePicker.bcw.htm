@@ -1,0 +1,80 @@
+<!--<div id="AddNewDialogInd" style="display: none;"></div>-->
+<script>
+	$(document).ready(function () {
+		//$(document).on("AddedNewIndividual", function (e) {
+		//    if (window.$CurEntityPicker) window.$CurEntityPicker.select2("val", e.LookupKey);
+		//	window.$CurEntityPicker = false; window.CurEntityPickerVal = false;
+		//	$.jGrowl('Successfully added new individual!', { theme: 'growlsuccess', life: 10000 });
+		//});
+		//$(document).on("ErrorAddNewIndividual", function (e) {
+		//	window.$CurEntityPicker.select2("val", window.CurEntityPickerVal).select2("open");
+		//	window.$CurEntityPicker = false; window.CurEntityPickerVal = false;
+		//	$.jGrowl((e.ReturnMsg || 'Failed to add new individual'), { theme: 'growlalert', sticky: true });
+		//});
+		//$(document).on("CancelAddNewIndividual", function (e) {
+		//	window.$CurEntityPicker.select2("val", window.CurEntityPickerVal).select2("open");
+		//	window.$CurEntityPicker = false; window.CurEntityPickerVal = false;
+		//});
+		
+		//Load in the Add Ind & Add Org dialogs
+		//$('#AddNewDialogInd').load('../iContact/Widgets/AddNewIndividual.bcw.htm', function (response, status, xhr) {
+		//	if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
+		//});
+		
+	});
+	function CtcGridOnlyVillagePicker(args) {
+	    var $select, defaultValue, scope = this, lookupJsonURL = (args.column.lookupjson || 'YL1.SearchTextEntityVillage.json'), searchJsonURL = (args.column.searchjson || 'YL1.SearchEntityVillage.json');
+		this.init = function () {
+			$select = $("<input type='hidden' tabindex='-1' style='width: 100%;' />").appendTo(args.container).select2({ minimumInputLength: 1, query: GetEntitySearchMatches, placeholder: "Search contacts", initSelection: InitEntityItemSelection }).on("change", function (e) {
+			    if (e.val.length > 0) {
+			    } else { $select.select2("val", ""); }
+			});
+
+
+			function GetEntitySearchMatches(query) {
+			    window.SearchTerm = query.term;
+			    $.JSONPost(searchJsonURL, { "SearchTerm": query.term, "ReturnID": "LookupKey" }).done(function (data) {
+			        var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+			        var return_data = { results: [] };
+			        for (var i = 0; i < RowCnt; i++) { return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["SearchText"] }); }
+	
+			        query.callback(return_data);
+			    });
+			}
+			function InitEntityItemSelection(element, callback) {
+			    var LookupKey = $(element).val();
+			    if (LookupKey != "") {
+			        $.JSONPost(lookupJsonURL, { "LookupKey": LookupKey })
+							.done(function (data) {
+							    var R = data.d.RetData.Tbl.Rows;
+							    if (R.length > 0) {
+							        callback({ id: R[0].LookupKey, text: R[0].SearchText });
+							    } else {
+							        callback({ id: '', text: "Invalid ID" });
+							    }
+							});
+			    }
+			}
+
+			//scope.position(args.position);
+			$select.select2("open");
+		};
+		this.destroy = function () { $select.select2("destroy").remove(); };
+		this.focus = function () { $select.select2("open"); };
+		this.loadValue = function (item) {
+			defaultValue = item[args.column.field];
+			$select.select2("val", defaultValue).select2("open");
+		};
+		this.serializeValue = function () { return $select.select2("val"); };
+		this.applyValue = function (item, state) { item[args.column.field] = state; };
+		this.isValueChanged = function () { return (!($select.select2("val") == "" && defaultValue == null)) && ($select.select2("val") != defaultValue); };
+		this.validate = function () {
+			if (args.column.validator) {
+				var validationResults = args.column.validator($select.select2("val"));
+				if (!validationResults.valid) { return validationResults; }
+			}
+			return { valid: true, msg: null };
+		};
+		this.init();
+	}
+</script>
