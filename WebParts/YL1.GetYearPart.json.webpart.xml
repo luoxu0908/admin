@@ -21,12 +21,20 @@ Elements
   SQLAsyncKey: For running long queries w Event Service
   UsageRemarks: API instructions for use
 -->
-<WebPart WPType="SlickGrid" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin">
+<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone|Security Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
-	<SGAction>UpdRowFld</SGAction>
-	<SQL><![CDATA[DECLARE @Success bit, @RetMsg nvarchar(800); 
-EXEC dbo.spYL_FCPriceMonthlyListing_UpdRowFld {{RowID}},{{FldName}},{{FldVal}},{{@@LoginID}},@Success OUTPUT,@RetMsg OUTPUT; 
-SELECT @Success AS Success, '' AS DelIDs, @RetMsg AS RetMsg;]]></SQL>
+	<SGAction></SGAction>
+	<SQL><![CDATA[DECLARE @Rcpt TABLE (YearPart INT)
+DECLARE @CurrentYear INT;
+SELECT @CurrentYear=DATEPART(YEAR,GETDATE())
+declare @i int  
+SELECT  @i=@CurrentYear-50
+while @i<@CurrentYear
+BEGIN
+    set @i=@i +1
+	INSERT INTO @Rcpt(YearPart) VALUES(@i)
+END
+SELECT YearPart FROM @Rcpt ORDER BY YearPart DESC]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

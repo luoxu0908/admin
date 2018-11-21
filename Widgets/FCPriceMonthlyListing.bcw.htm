@@ -58,53 +58,33 @@
             } else { $("#Village").select2("val", ""); }
         });
     });
-
-    //function CheckIsAdmin() {
-    //    return $.JSONPost('YL1.CheckIsAdmin.json', { '': '' }).done(function (data) {
-    //        var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
-    //        if (RowCnt > 0) {
-    //            if (R[0].IsAdmin == 1 || IsAdmin == "1") {
-    //                $("#XXLH").css('display', '');
-    //                $("#XXJH").css('display', '');
-
-    //            } else {
-    //                $("#XXLH").css('display', 'none');
-    //                $("#XXJH").css('display', '');
-    //            }
-    //        }
-    //    });
-
-    //}
     function AddRow() {
-        $FCVillageDiv.dialog("open");
+        SGH.GridRowAdd({ 'AddVillage': '', 'AddFCYear': '' });
+        //$FCVillageDiv.dialog("open");
     }
 
-    $FCVillageDiv.dialog({
-        autoOpen: false, height: 250, width: 400, modal: true,
-        buttons: {
-            "保存": function () {
-                var AddVillage = $('#AddVillage').val() || '';
-                var AddFCYear = $('#AddFCYear').val() || '';
-                if (AddVillage.length <= 0 || AddFCYear.length <= 0) {
-                    $.alert('小区和年份必选.');
-                } else {
-                    SGH.GridRowAdd({ 'AddVillage': AddVillage, 'AddFCYear': AddFCYear });
-                    Clear();
-                }
-            }
-        },
-        open: function () { Clear() },
-        close: function () { $(this).dialog("close"); }
-    });
+    //$FCVillageDiv.dialog({
+    //    autoOpen: false, height: 250, width: 400, modal: true,
+    //    buttons: {
+    //        "保存": function () {
+    //            var AddVillage = $('#AddVillage').val() || '';
+    //            var AddFCYear = $('#AddFCYear').val() || '';
+    //            if (AddVillage.length <= 0 || AddFCYear.length <= 0) {
+    //                $.alert('小区和年份必选.');
+    //            } else {
+    //                SGH.GridRowAdd({ 'AddVillage': AddVillage, 'AddFCYear': AddFCYear });
+    //                Clear();
+    //            }
+    //        }
+    //    },
+    //    open: function () { Clear() },
+    //    close: function () { $(this).dialog("close"); }
+    //});
     function Clear() {
         $('#AddVillage').select2('val', '');
         $('#AddFCYear').select2('val', '')
     }
     function delSelRows() {
-        //var Cfm = prompt("Are you sure you want to delete selected Rows? please input 'del' below.");
-        //if ((Cfm) && (Cfm.toLowerCase() == "del")) {
-        //    SGH.GridRowDel({ 'RowIDs': SGH.getSelectedRowIDsStr() });
-        //}
         SGH.GridRowDel({ 'RowIDs': SGH.getSelectedRowIDsStr() });
     }
     function GetYear(id) {
@@ -122,6 +102,7 @@
 
     function GetSearchMatches(query) {
         window.SearchTerm = query.term;
+        alert(query.term)
         $.JSONPost('YL1.SearchEntityVillage.json', { "SearchTerm": query.term, "ReturnID": "LookupKey" }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
             var return_data = { results: [] };
