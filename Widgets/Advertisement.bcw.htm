@@ -2,13 +2,13 @@
     <div class="row">
         <div class="large-3 columns">
             <label for="GGWZ">
-                广告位置
+                广告位置<span style="color:red">*</span>
             </label>
             <input id="GGWZ" type="hidden" tabindex="-1" style="width: 100%" />
         </div>
         <div class="large-3 columns">
             <label for="GGSX">
-                广告顺序
+                广告顺序<span style="color:red">*</span>
             </label>
             <input id="GGSX" type="hidden" tabindex="-1" style="width: 100%" />
         </div>
@@ -72,5 +72,19 @@
         $("#GGSX").select2({
             data: return_data
         });
+    }
+    function Save() {
+        var GGWZ = $('#GGWZ').val() || '';
+        if (GGWZ <= 0) {
+            $.alert('请选择广告位置.');
+            ResultFlag = false;
+            return false;
+        }
+        var GGSX = $('#GGSX').val() || '';
+        if (GGSX <= 0) {
+            $.alert('请选择广告顺序.');
+            ResultFlag = false;
+            return false;
+        }
     }
 </script>
