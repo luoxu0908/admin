@@ -59,10 +59,17 @@ BEGIN
 	BEGIN
 		 DECLARE @CurrentID NVARCHAR(50)
 		 SELECT @CurrentID= dbo.fnSF_GetNextHouseInfoID ('XXXYLZJ');
+
+		 DECLARE @FCPublish NVARCHAR(10);
+		 SELECT @FCPublish='';
+		 IF EXISTS (SELECT TOP 1 1  FROM tblSecGroupPersons WHERE LoginID=@LoginID AND SecGroupID<>(SELECT SecGroupID FROM dbo.tblSecGroups WHERE SecGroupName='Everyone'))
+		 BEGIN
+			SELECT @FCPublish='O';
+		 END
 		  INSERT INTO  dbo.tblYLHouses (ID,HousesType,JYLX,FCZJ,FCDK,FCHU1,FCHU2,FCHU3,FCMJ,SZLC,GYLC,JZNF,MSF,ZXYQ,FWCX,XQXZ,
-		 XQDZ,FCTS,FXBT,FXMS,XXLH,UDF2,FirstPayment,CoreSellingPoint,OwnerMentality,VillageMatch,ServiceIntroduction,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate)
+		 XQDZ,FCTS,FXBT,FXMS,XXLH,UDF2,FirstPayment,CoreSellingPoint,OwnerMentality,VillageMatch,ServiceIntroduction,FCPublish,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate)
 		 VALUES (@CurrentID,@HousesType,@JYLX,@FCZJ,@FCDK,@FCHU1,@FCHU2,@FCHU3,@FCMJ,@SZLC,@GYLC,@JZNF,@MSF,@ZXYQ,@FWCX,@XQXZ,@XQDZ,
-		 @FCTS,@FXBT,@FXMS,@ZDTJ,@UnitPrice,@FirstPayment,@CoreSellingPoint,@OwnerMentality,@VillageMatch,@ServiceIntroduction,
+		 @FCTS,@FXBT,@FXMS,@ZDTJ,@UnitPrice,@FirstPayment,@CoreSellingPoint,@OwnerMentality,@VillageMatch,@ServiceIntroduction,@FCPublish,
 		 @LoginID,GETDATE(),@LoginID,GETDATE())
 		 IF LEN(ISNULL(@Picture,''))>0
 		 BEGIN
