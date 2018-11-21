@@ -1,0 +1,76 @@
+﻿<div class="large-12 columns">
+    <div class="row">
+        <div class="large-3 columns">
+            <label for="GGWZ">
+                广告位置
+            </label>
+            <input id="GGWZ" type="hidden" tabindex="-1" style="width: 100%" />
+        </div>
+        <div class="large-3 columns">
+            <label for="GGSX">
+                广告顺序
+            </label>
+            <input id="GGSX" type="hidden" tabindex="-1" style="width: 100%" />
+        </div>
+        <div class="large-3 columns end">
+            <label for="GGLJ">
+                广告链接
+            </label>
+            <input id="GGLJ" type="text" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-8 columns end">
+            <label for="GGBT">
+                广告标题
+            </label>
+            <input id="GGBT" type="text" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns" id="Image">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <br>
+            <button id="Save" onclick="Save();return fasle">
+                保  存
+            </button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $AddNewImage = $('#Image');
+    $(document).ready(function () {
+        $AddNewImage.load('../Widgets/FileUpload.bcw.htm');
+        GetGGWZ();
+        GetGGSX();
+    });
+
+    function GetGGWZ() {
+        var return_data = { results: [] };
+        return_data.results.push({ id: "", text: "- 请选择 -" });
+        return_data.results.push({ id: "1", text: "广告位01" });
+        return_data.results.push({ id: "2", text: "广告位02" });
+        return_data.results.push({ id: "3", text: "广告位03" });
+        return_data.results.push({ id: "4", text: "广告位04" });
+        return_data.results.push({ id: "5", text: "广告位05" });
+        $("#GGWZ").select2({
+            data: return_data
+        });
+    }
+    function GetGGSX() {
+        var return_data = { results: [] };
+        return_data.results.push({ id: "", text: "- 请选择 -" });
+        return_data.results.push({ id: "1", text: "广告顺序01" });
+        return_data.results.push({ id: "2", text: "广告顺序02" });
+        return_data.results.push({ id: "3", text: "广告顺序03" });
+        return_data.results.push({ id: "4", text: "广告顺序04" });
+        return_data.results.push({ id: "5", text: "广告顺序05" });
+        $("#GGSX").select2({
+            data: return_data
+        });
+    }
+</script>
