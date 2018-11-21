@@ -112,7 +112,7 @@
         var startYear = YearNow - 50;
         var return_data = { results: [] };
         return_data.results.push({ id: "", text: "" });
-        for (var Y = startYear; Y <= YearNow; Y++) {
+        for (var Y = YearNow; Y >= startYear; Y--) {
             return_data.results.push({ id: Y.toString(), text: Y.toString() });
         }
         $("#" + id).select2({
