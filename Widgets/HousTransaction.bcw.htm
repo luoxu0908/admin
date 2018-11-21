@@ -60,10 +60,10 @@
     .cssInput {
         border: 1px solid red;
     }
+
     .cssSpan {
         color: red;
     }
-
 </style>
 <div id="mainform" class="large-12 columns end">
     <fieldset>
@@ -77,13 +77,13 @@
                         <td>发布类型</td>
                         <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
-                        <td>总价&nbsp;<input id="FCZJ" />&nbsp;&nbsp;万元<span class="cssSpan">*</span></td>
+                        <td>总价&nbsp;<input id="FCZJ" />&nbsp;&nbsp;万元<span id="FCZJSpan" class="cssSpan">*</span></td>
                     </tr>
                     <tr>
                         <td>首付</td>
-                        <td><input id="FirstPayment" />&nbsp;&nbsp;万元<span class="cssSpan">*</span></td>
+                        <td><input id="FirstPayment" />&nbsp;&nbsp;万元<span id="FirstPaymentSpan" class="cssSpan">*</span></td>
                         <td>
-                            单价 <input id="UnitPrice" />&nbsp;&nbsp;元
+                            <span id="UnitPriceSpan">单价</span> <input id="UnitPrice" />&nbsp;&nbsp;元<span class="cssSpan">*</span>
                         </td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
@@ -105,7 +105,7 @@
                     </tr>
                     <tr>
                         <td>建筑年份</td>
-                        <td><input id="JZNF" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                        <td><input id="JZNF" tabindex="-1" title="" style="width: 50%" /><span id="JZNFSpan" class="cssSpan">*</span></td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
                                 <input id="MSF" type="checkbox" name="MSF" value="1">&nbsp;免税房
@@ -135,19 +135,20 @@
 
     </fieldset>
     <fieldset>
-        <legend>房产特色<span class="cssSpan">*</span></legend>
+        <legend>房产特色</legend>
         <div class="row">
 
             <div class="large-offset-1 large-9 columns">
                 <div class="paddingcolumns" id="HouseCharacteristic">
-
+                    
                 </div>
+               
             </div>
         </div>
         <div class="row">
             <br>
             <div class="large-offset-1 large-9 columns end">
-                <span>标题</span>
+                <span>标题<span class="cssSpan">*</span></span>
                 <input id="FXBT" style="width:80%;"> <br> <br>
             </div>
         </div>
@@ -288,8 +289,23 @@
             }
 
         });
+
+        $('#JYLX').change(function () {
+            var JYLX =$('#JYLX').val()||'';
+            if (JYLX == '2' || JYLX == '4') {
+                $('#FCZJSpan').html('');
+                $('#FirstPaymentSpan').html('');
+                $('#JZNFSpan').html('');
+                $('#UnitPriceSpan').html('租金');
+            } else {
+                $('#FCZJSpan').html('*');
+                $('#FirstPaymentSpan').html('*');
+                $('#JZNFSpan').html('*');
+                $('#UnitPriceSpan').html('单价');
+            }
+        });
         $('#Save').click(function () {
-            if ( SaveCheck()) {
+            if (SaveCheck()) {
                 Save();
             }
         });
@@ -323,8 +339,8 @@
             var Name = 'HouseCharacter'
             for (var i = 0; i < RowCnt; i++) {
                 html += '<label for="' + Name + R[i]["LookupKey"] + '" class="inlineblock"><input type="checkbox" value="' + R[i]["LookupKey"] + '" name="' + Name + '" id="' + Name + R[i]["LookupKey"] + '" /> ' + R[i]["Description"] + '</label>';
-
             }
+            html += '<span class="cssSpan">*</span>'
             $("#" + id).html(html);
         });
     }
@@ -454,23 +470,33 @@
             ResultFlag = false;
             return false;
         }
-        var FCZJ = $('#FCZJ').val() || '';
-        if (FCZJ.length <= 0) {
-            $.alert('总价 必填.');
-            ResultFlag = false;
-            return false;
-        } else {
-            if (!IsValidMoney(FCZJ)) {
-                $('#FCZJ').addClass('cssInput');
+
+       
+
+        if (JYLX == '1' || JYLX == '1' || JYLX == '1') {
+            var FCZJ = $('#FCZJ').val() || '';
+            if (FCZJ.length <= 0) {
+                $.alert('总价 必填.');
                 ResultFlag = false;
-                $.alert('请输入大于零的正数.'); return false;
+                return false;
             } else {
-                $('#FCZJ').removeClass('cssInput');
+                if (!IsValidMoney(FCZJ)) {
+                    $('#FCZJ').addClass('cssInput');
+                    ResultFlag = false;
+                    $.alert('请输入大于零的正数.'); return false;
+                } else {
+                    $('#FCZJ').removeClass('cssInput');
+                }
             }
         }
 
         var UnitPrice = $('#UnitPrice').val() || '';
-        if (UnitPrice.length > 0) {
+        if (UnitPrice.length <= 0) {
+            var message = $('#UnitPriceSpan').html() + '必填'
+            $.alert(message);
+            ResultFlag = false;
+            return false;
+        } else {
             if (!IsValidMoney(UnitPrice)) {
                 $('#UnitPrice').addClass('cssInput');
                 ResultFlag = false;
@@ -478,23 +504,25 @@
             } else {
                 $('#UnitPrice').removeClass('cssInput');
             }
-        } 
+        }
 
-
-        var FirstPayment = $('#FirstPayment').val() || '';
-        if (FirstPayment.length <= 0) {
-            $.alert('首付 必填.');
-            ResultFlag = false;
-            return false;
-        } else {
-            if (!IsValidMoney(FirstPayment)) {
-                $('#FirstPayment').addClass('cssInput');
+        if (JYLX == '1' || JYLX == '1' || JYLX == '1') {
+            var FirstPayment = $('#FirstPayment').val() || '';
+            if (FirstPayment.length <= 0) {
+                $.alert('首付 必填.');
                 ResultFlag = false;
-                $.alert('请输入大于零的正数.'); return false;
+                return false;
             } else {
-                $('#FirstPayment').removeClass('cssInput');
+                if (!IsValidMoney(FirstPayment)) {
+                    $('#FirstPayment').addClass('cssInput');
+                    ResultFlag = false;
+                    $.alert('请输入大于零的正数.'); return false;
+                } else {
+                    $('#FirstPayment').removeClass('cssInput');
+                }
             }
         }
+        
         
         var FCHU1 = $('#FCHU1').val() || '', FCHU2 = $('#FCHU2').val() || '', FCHU3 = $('#FCHU3').val() || '';
         if (FCHU1.length <= 0) {
@@ -543,7 +571,7 @@
             ResultFlag = false;
             return false;
         } else {
-            if (!IsValidMoney(FCZJ)) {
+            if (!IsValidPositive(FCMJ)) {
                 $('#FCMJ').addClass('cssInput');
                 ResultFlag = false;
                 $.alert('请输入大于零的正数.'); return false;
@@ -551,29 +579,44 @@
                 $('#FCMJ').removeClass('cssInput');
             }
         }
+
+        
+        if (JYLX == '1' || JYLX == '1' || JYLX == '1') {
+            var JZNF = $('#JZNF').val() || '';
+            if (JZNF.length <= 0) {
+                $.alert('建筑年份 必填.');
+                ResultFlag = false;
+                return false;
+            }
+        }
+
         var ZXYQ = $('#ZXYQ').val() || '';
         if (ZXYQ.length <= 0) {
             $.alert('装修要求 必填.');
             ResultFlag = false;
             return false;
         }
-     
+
         var XQXZ = $('#XQXZ').val() || '';
         if (XQXZ.length <= 0) {
             $.alert('小区选择 必填.');
             ResultFlag = false;
             return false;
         }
-     
+
         var HouseChara = '', FXBT = $('#FXBT').val() || '';
         $('input[name="HouseCharacter"]').each(function () {
             if ($(this).is(':checked')) {
                 HouseChara += $(this).val() + '•';
             }
         });
-
-        if (HouseChara.length <= 0 || FXBT.length <= 0) {
+        if (HouseChara.length <= 0) {
             $.alert('房产特色 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        if (FXBT.length <= 0) {
+            $.alert('标题 必填.');
             ResultFlag = false;
             return false;
         }
@@ -596,10 +639,10 @@
             return false;
         }
         return ResultFlag;
-        
+
     }
     function Save() {
-      
+
         var HouseCharacter = '', FCDK = '0', MSF = '0', ZDTJ = '';
         if ($('#FCDK').is(':checked')) {
             FCDK = $('#FCDK').val();
@@ -617,7 +660,7 @@
             }
         });
 
-       
+
         $('input[name="ZDTJ"]').each(function () {
             if ($(this).is(':checked')) {
                 ZDTJ = $(this).val();
@@ -713,5 +756,5 @@
         var re = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
         return re.test(data);
     }
-    
+
 </script>
