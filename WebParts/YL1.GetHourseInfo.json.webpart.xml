@@ -33,7 +33,7 @@ BEGIN
 	
 	IF @Number>8
 	BEGIN
-		SELECT TL.Description,FXBT,FCZJ,FCMJ,ID,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc,N'优' AS WordSrc 
+		SELECT TL.Description,FXBT,FCZJ,FCMJ,ID,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc,N'优' AS WordSrc ,UDF2
 		FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 		ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 		INNER JOIN dbo.tblYLFCZD YLF ON YL.ID=YLF.FCID
@@ -47,13 +47,13 @@ BEGIN
 		SELECT FCID,ModifiedDate FROM dbo.tblYLFCZD WHERE ZDSJ>GETDATE() ORDER BY ModifiedDate DESC;
 
 		SELECT * FROM (
-		SELECT 1 AS Flag,TL.Description,FXBT,FCZJ,FCMJ,YL.ID,T.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'优' AS WordSrc
+		SELECT 1 AS Flag,TL.Description,FXBT,FCZJ,FCMJ,YL.ID,T.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'优' AS WordSrc,UDF2
 		FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 		ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 		INNER JOIN @Temp T ON T.ID = YL.ID
 		WHERE LEN(YL.XQXZ)>0 AND YL.Status='A' AND (YL.FCPublish LIKE '%' + @PersonType +'%' OR LEN(ISNULL(@PersonType,''))=0) 
 		UNION ALL
-		SELECT TOP (8-@Number) 0 AS Flag,TL.Description,FXBT,FCZJ,FCMJ,YL.ID,YL.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'' AS WordSrc
+		SELECT TOP (8-@Number) 0 AS Flag,TL.Description,FXBT,FCZJ,FCMJ,YL.ID,YL.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'' AS WordSrc,UDF2
 		FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 		ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 		WHERE LEN(YL.XQXZ)>0 AND (YL.FCPublish= @PersonType OR LEN(ISNULL(@PersonType,''))=0) AND YL.ID NOT IN(SELECT ID FROM @Temp) AND YL.Status='A') T ORDER BY Flag DESC,ModifiedDate DESC
@@ -67,7 +67,7 @@ BEGIN
 
 	IF @Number>8
 	BEGIN
-		SELECT TL.Description,FXBT,FCZJ,FCMJ,ID,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'优' AS WordSrc
+		SELECT TL.Description,FXBT,FCZJ,FCMJ,ID,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'优' AS WordSrc,UDF2
 		FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 		ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 		INNER JOIN dbo.tblYLFCZD YLF ON YL.ID=YLF.FCID
@@ -82,13 +82,13 @@ BEGIN
 		WHERE ZDSJ>GETDATE() AND YLH.JYLX=@Type;
 
 		SELECT * FROM (
-		SELECT 1 AS Flag,TL.Description,FXBT,FCZJ,FCMJ,YL.ID,T.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'优' AS WordSrc
+		SELECT 1 AS Flag,TL.Description,FXBT,FCZJ,FCMJ,YL.ID,T.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'优' AS WordSrc,UDF2
 		FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 		ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 		INNER JOIN @Temp T ON T.ID = YL.ID
 		WHERE LEN(YL.XQXZ)>0 AND YL.JYLX=@Type AND YL.Status='A' AND (YL.FCPublish= @PersonType OR LEN(ISNULL(@PersonType,''))=0) 
 		UNION ALL
-		SELECT TOP (8-@Number) 0 AS Flag,TL.Description,FXBT,FCZJ,FCMJ,YL.ID,YL.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'' AS WordSrc
+		SELECT TOP (8-@Number) 0 AS Flag,TL.Description,FXBT,FCZJ,FCMJ,YL.ID,YL.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc ,N'' AS WordSrc,UDF2
 		FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 		ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 		WHERE LEN(YL.XQXZ)> 0AND (YL.FCPublish= @PersonType OR LEN(ISNULL(@PersonType,''))=0)  AND YL.ID NOT IN(SELECT ID FROM @Temp) AND YL.JYLX=@Type AND YL.Status='A') T ORDER BY Flag DESC,ModifiedDate DESC
