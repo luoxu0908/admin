@@ -24,13 +24,13 @@ Elements
 <WebPart WPType="Exec SQL" AllowedExternalDomains="*" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Guest">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[DECLARE @Type NVARCHAR(30),@InputStr NVARCHAR(150);
+	<SQL><![CDATA[DECLARE @Type NVARCHAR(30),@InputStr NVARCHAR(150),@Page int,@PageNum INT;
 DECLARE @Temp TABLE(ID  NVARCHAR(50),ModifiedDate datetime)
 
-SELECT @Type={{Type}},@InputStr={{InputStr}};
+SELECT @Type='1',@InputStr='',@Page=1,@PageNum=30;
 INSERT @Temp(ID,ModifiedDate)
 SELECT YLF.FCID,YLF.ModifiedDate FROM dbo.tblYLHouses YLH INNER JOIN dbo.tblYLFCZD YLF ON YLH.ID=YLF.FCID
-WHERE ZDSJ>GETDATE() AND YLH.HousesType=@Type;
+WHERE ZDSJ>GETDATE() AND YLH.JYLX=@Type;
 
 SELECT * FROM (
 SELECT 1 AS Flag,FXBT,SZLC,GYLC,FWCX,FCPublish,UDF2 AS FCDJ,TL.Description,FCZJ,FCMJ,YL.ID,T.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'http://web.tool8.cc/UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc,N'优' AS WordSrc,CP.DisplayName
@@ -38,18 +38,18 @@ FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL
 ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 INNER JOIN @Temp T ON T.ID = YL.ID
 LEFT JOIN dbo.tblCtcPersons CP ON CP.LoginID = YL.ModifiedBy
-WHERE LEN(YL.XQXZ)>0 AND YL.HousesType=@Type AND YL.Status='A'
+WHERE LEN(YL.XQXZ)>0 AND YL.JYLX=@Type AND YL.Status='A'
 UNION ALL
 SELECT 0 AS Flag,FXBT,SZLC,GYLC,FWCX,FCPublish,UDF2 AS FCDJ,TL.Description,FCZJ,FCMJ,YL.ID,YL.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'http://web.tool8.cc/UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc,N'' AS WordSrc,CP.DisplayName
 FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 LEFT JOIN dbo.tblCtcPersons CP ON CP.LoginID = YL.ModifiedBy
-WHERE LEN(YL.XQXZ)>0 AND YL.ID NOT IN(SELECT ID FROM @Temp) AND YL.HousesType=@Type AND YL.Status='A'
+WHERE LEN(YL.XQXZ)>0 AND YL.ID NOT IN(SELECT ID FROM @Temp) AND YL.JYLX=@Type AND YL.Status='A'
 ) T
 WHERE (T.HouseLevelDetail LIKE '%' + @InputStr +'%' OR LEN(ISNULL(@InputStr,''))=0)
 	OR (T.Description LIKE '%' + @InputStr +'%' OR LEN(ISNULL(@InputStr,''))=0)
 	OR (T.FXBT LIKE '%' + @InputStr +'%' OR LEN(ISNULL(@InputStr,''))=0)
-ORDER BY Flag DESC,ModifiedDate DESC]]></SQL>
+ORDER BY Flag DESC,ModifiedDate DESC offset (@Page-1)*@PageNum rows fetch next @PageNum rows only]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
