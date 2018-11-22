@@ -21,15 +21,23 @@ Elements
   SQLAsyncKey: For running long queries w Event Service
   UsageRemarks: API instructions for use
 -->
-<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone">
+<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone|Security Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[DECLARE @ImageList nvarchar(max);
-SELECT @ImageList='';
-SELECT @ImageList=@ImageList+ImageID+'/'+FileName+';' FROM tblYLFCImage 
-where ItemKey={{ID}};
-
-SELECT *,@ImageList AS ImageList FROM tblYLHouses WHERE ID={{ID}}]]></SQL>
+	<SQL><![CDATA[DECLARE @Success BIT, @RetMsg NVARCHAR(500);
+IF NOT EXISTS(SELECT TOP 1 1 FROM dbo.tblYLAdvertisement WHERE GGWZ={{GGWZ}} AND GGSX={{GGSX}})
+BEGIN
+	 INSERT INTO dbo.tblYLAdvertisement(GGWZ ,GGSX ,GGLJ , GGBT,ImagePath ,ImageName)
+	 VALUES ({{GGWZ}},{{GGSX}},{{GGLJ}},{{GGBT}},{{PictureGUID}},{{Picture}})
+	 SELECT @Success=1
+END
+BEGIN
+	UPDATE dbo.tblYLAdvertisement 
+	SET GGWZ={{GGWZ}},GGSX={{GGSX}},GGLJ={{GGLJ}},GGBT={{GGBT}},ImagePath={{PictureGUID}},ImageName={{Picture}} 
+	WHERE GGWZ={{GGWZ}} AND GGSX={{GGSX}}
+	 SELECT @Success=1
+END
+SELECT @Success AS Success,'' AS DelIDs,@RetMsg AS RetMsg; ]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

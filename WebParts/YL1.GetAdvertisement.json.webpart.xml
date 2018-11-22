@@ -21,15 +21,10 @@ Elements
   SQLAsyncKey: For running long queries w Event Service
   UsageRemarks: API instructions for use
 -->
-<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone">
+<WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone|Security Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[DECLARE @ImageList nvarchar(max);
-SELECT @ImageList='';
-SELECT @ImageList=@ImageList+ImageID+'/'+FileName+';' FROM tblYLFCImage 
-where ItemKey={{ID}};
-
-SELECT *,@ImageList AS ImageList FROM tblYLHouses WHERE ID={{ID}}]]></SQL>
+	<SQL><![CDATA[select ID,GGWZ,GGSX,GGLJ,GGBT,ImagePath ,REPLACE(ImageName,'|','/') AS ImageList from tblYLAdvertisement WHERE GGWZ={{GGWZ}} AND GGSX={{GGSX}}]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
