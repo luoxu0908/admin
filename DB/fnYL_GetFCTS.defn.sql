@@ -5,7 +5,7 @@ Usage remarks / example:
 ---------------------------------------------------*/
 BEGIN TRY DROP FUNCTION [dbo].[fnYL_GetFCTS] END TRY BEGIN CATCH END CATCH
 GO
-CREATE FUNCTION [dbo].[fnYL_GetFCTS](@FCTS nvarchar(300))
+CREATE FUNCTION [dbo].[fnYL_GetFCTS](@FCTS nvarchar(300),@JYLX NVARCHAR(20))
 RETURNS nvarchar(100)
 AS
 BEGIN
@@ -13,7 +13,7 @@ BEGIN
 	DECLARE @FCHX nvarchar(max);
 	IF LEN(ISNULL(@FCTS,''))>0
 	BEGIN
-		SELECT @FCHX=ISNULL(@FCHX,'') + ISNULL(TL.Description,'')+',' FROM (SELECT Val FROM tfMain_StrToTblStr (@FCTS,'•')) T LEFT JOIN tblTicketLookup TL ON  TL.LookupKey=T.Val  WHERE  TL.LookupCat=N'房屋特色'
+		SELECT @FCHX=ISNULL(@FCHX,'') + ISNULL(TL.Val,'')+',' FROM (SELECT Val FROM tfMain_StrToTblStr (@FCTS,'•')) TL
 		SELECT @FCHX=LEFT(@FCHX,LEN(@FCHX)-1);
 	END
 	RETURN ISNULL(@FCHX,'');

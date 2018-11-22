@@ -137,14 +137,15 @@
     <fieldset>
         <legend>房产特色</legend>
         <div class="row">
-
             <div class="large-offset-1 large-9 columns">
                 <div class="paddingcolumns" id="HouseCharacteristic">
-                    
                 </div>
-               
             </div>
         </div>
+    </fieldset>
+    <fieldset>
+        <legend>标题及房源描述</legend>
+       
         <div class="row">
             <br>
             <div class="large-offset-1 large-9 columns end">
@@ -158,6 +159,9 @@
                 <textarea id="FXMS" cols="2" rows="2" />
             </div>
         </div>
+    </fieldset>
+    <fieldset>
+        <legend>上传图片</legend>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
                 <div class="row">
@@ -273,9 +277,9 @@
                 $.jGrowl('上传失败. 请联系管理员!', { theme: 'growlalert', life: 10000 });
             }
         });
-        $.when(GetDropdownList('JYLX', '发布类型'), GetDropdownList('FCLX', '房产类型'), GetDropdownList('ZXYQ', '装修要求'), GetDropdownList('FWCX', '房屋朝向'), GetDropdownListCheckBox('HouseCharacteristic', '房屋特色'), GetYear('JZNF'), GetDropdownListRedio('ZDTJ', '置顶推荐')).then(function () {
+        $.when(GetDropdownList1('JYLX', '发布类型', 'JaoYi'), GetDropdownList('FCLX', '房产类型'), GetDropdownList('ZXYQ', '装修要求'), GetDropdownList('FWCX', '房屋朝向'), GetDropdownListCheckBox('HouseCharacteristic', '房屋特色'), GetYear('JZNF'), GetDropdownListRedio('ZDTJ', '置顶推荐')).then(function () {
             var CurrID = window.QS.ID || '';
-            var CurrType = window.QS.TYPE || '';
+            var CurrType = window.QS.ViewOrEdit || '';
             if (CurrID.length > 0 && CurrID != 'undefined') {
                 if (CurrType.length > 0 && CurrType != 'undefined') {
                     if (CurrType == 'View') {
@@ -291,7 +295,7 @@
         });
 
         $('#JYLX').change(function () {
-            var JYLX =$('#JYLX').val()||'';
+            var JYLX = $('#JYLX').val() || '';
             if (JYLX == '2' || JYLX == '4') {
                 $('#FCZJSpan').html('');
                 $('#FirstPaymentSpan').html('');
@@ -331,6 +335,21 @@
             });
         });
     }
+    function GetDropdownList1(id, category, flag) {
+        return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            return_data.results.push({ id: "", text: "请选择" });
+            for (var i = 0; i < RowCnt; i++) {
+                if (flag == 'JaoYi' && R[i]["LookupKey"] == '1' || R[i]["LookupKey"] == '3' || R[i]["LookupKey"] == '5') {
+                    return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
+                } 
+            }
+            $("#" + id).select2({
+                data: return_data
+            });
+        });
+    }
     function GetDropdownListCheckBox(id, category) {
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
@@ -362,8 +381,8 @@
         var YearNow = new Date().getFullYear();
         var startYear = YearNow - 50;
         var return_data = { results: [] };
-        return_data.results.push({ id: "", text: "不限" });
-        for (var Y = startYear; Y <= YearNow; Y++) {
+        return_data.results.push({ id: "", text: "请选择" });
+        for (var Y = YearNow; Y >= startYear; Y--) {
             return_data.results.push({ id: Y.toString(), text: Y.toString() });
         }
         $("#" + id).select2({
@@ -470,30 +489,39 @@
             ResultFlag = false;
             return false;
         }
-
-       
-
-        if (JYLX == '1' || JYLX == '1' || JYLX == '1') {
-            var FCZJ = $('#FCZJ').val() || '';
-            if (FCZJ.length <= 0) {
-                $.alert('总价 必填.');
+        var FCZJ = $('#FCZJ').val() || '';
+        if (FCZJ.length <= 0) {
+            $.alert('总价 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidMoney(FCZJ)) {
+                $('#FCZJ').addClass('cssInput');
                 ResultFlag = false;
-                return false;
+                $.alert('请输入大于零的正数.'); return false;
             } else {
-                if (!IsValidMoney(FCZJ)) {
-                    $('#FCZJ').addClass('cssInput');
-                    ResultFlag = false;
-                    $.alert('请输入大于零的正数.'); return false;
-                } else {
-                    $('#FCZJ').removeClass('cssInput');
-                }
+                $('#FCZJ').removeClass('cssInput');
+            }
+        }
+
+        var FirstPayment = $('#FirstPayment').val() || '';
+        if (FirstPayment.length <= 0) {
+            $.alert('首付 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidMoney(FirstPayment)) {
+                $('#FirstPayment').addClass('cssInput');
+                ResultFlag = false;
+                $.alert('请输入大于零的正数.'); return false;
+            } else {
+                $('#FirstPayment').removeClass('cssInput');
             }
         }
 
         var UnitPrice = $('#UnitPrice').val() || '';
         if (UnitPrice.length <= 0) {
-            var message = $('#UnitPriceSpan').html() + '必填'
-            $.alert(message);
+            $.alert('单价 必填.');
             ResultFlag = false;
             return false;
         } else {
@@ -506,24 +534,8 @@
             }
         }
 
-        if (JYLX == '1' || JYLX == '1' || JYLX == '1') {
-            var FirstPayment = $('#FirstPayment').val() || '';
-            if (FirstPayment.length <= 0) {
-                $.alert('首付 必填.');
-                ResultFlag = false;
-                return false;
-            } else {
-                if (!IsValidMoney(FirstPayment)) {
-                    $('#FirstPayment').addClass('cssInput');
-                    ResultFlag = false;
-                    $.alert('请输入大于零的正数.'); return false;
-                } else {
-                    $('#FirstPayment').removeClass('cssInput');
-                }
-            }
-        }
-        
-        
+
+
         var FCHU1 = $('#FCHU1').val() || '', FCHU2 = $('#FCHU2').val() || '', FCHU3 = $('#FCHU3').val() || '';
         if (FCHU1.length <= 0) {
             $.alert('户型[室] 必填.');
@@ -579,17 +591,12 @@
                 $('#FCMJ').removeClass('cssInput');
             }
         }
-
-        
-        if (JYLX == '1' || JYLX == '1' || JYLX == '1') {
-            var JZNF = $('#JZNF').val() || '';
-            if (JZNF.length <= 0) {
-                $.alert('建筑年份 必填.');
-                ResultFlag = false;
-                return false;
-            }
+        var JZNF = $('#JZNF').val() || '';
+        if (JZNF.length <= 0) {
+            $.alert('建筑年份 必填.');
+            ResultFlag = false;
+            return false;
         }
-
         var ZXYQ = $('#ZXYQ').val() || '';
         if (ZXYQ.length <= 0) {
             $.alert('装修要求 必填.');

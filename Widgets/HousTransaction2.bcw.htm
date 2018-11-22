@@ -1,0 +1,689 @@
+<style>
+    .nopaddingrow label.inlineblock {
+        margin-top: 0;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    table {
+        /*border: 2px solid black;*/
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        border: 0px;
+    }
+
+        table td {
+            border: 2px solid black;
+            background-color: white;
+            color: white;
+        }
+
+    .delbutton {
+        display: inline;
+        right: 10px;
+        position: absolute;
+        top: -5px;
+        cursor: pointer;
+        background-color: #f5f5f5;
+        ;
+        border-radius: 50%;
+    }
+
+    .uploadimg {
+        width: 100%;
+        height: 170px;
+        border: 1px solid #f5f5f5;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+    .files {
+        opacity: 0;
+        width: 150px;
+        height: 170px;
+        width: 100%;
+    }
+
+    .uploadDiv {
+        position: absolute;
+        height: 170px;
+        font-size: 150px;
+        line-height: 170px;
+        color: black;
+        text-align: center;
+        width: 90%;
+        border: 1px solid #ccc;
+        margin: 0 0 0.75em;
+    }
+
+    .cssInput {
+        border: 1px solid red;
+    }
+
+    .cssSpan {
+        color: red;
+    }
+</style>
+<div id="mainform" class="large-12 columns end">
+    <fieldset>
+        <legend>房产信息</legend>
+        <div class="row">
+            <div class="large-1 columns">
+            </div>
+            <div class="large-9 columns">
+                <table>
+                    <tr>
+                        <td>发布类型</td>
+                        <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                        <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                        <td>租金&nbsp;<input id="UnitPrice" />&nbsp;&nbsp;元<span class="cssSpan">*</span></td>
+                    </tr>
+                    <tr style="display:none">
+                        <td>总价</td>
+                        <td><input id="FCZJ" />&nbsp;&nbsp;万元</td>
+                        <td>
+                            首付 <input id="FirstPayment" />&nbsp;&nbsp;万元
+                        </td>
+                        <td style="width: 30%">
+                            <div class="paddingcolumns">
+                                <input id="FCDK" type="checkbox" name="FCDK" value="1">&nbsp;不能贷款
+                            </div>
+                            <div class="paddingcolumns">
+                                <input id="MSF" type="checkbox" name="MSF" value="1">&nbsp;免税房
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>户　　型</td>
+                        <td><input id="FCHU1" />&nbsp;&nbsp;室<span class="cssSpan">*</span></td>
+                        <td style="width: 30%"><input id="FCHU2" />&nbsp;&nbsp;厅<span class="cssSpan">*</span></td>
+                        <td><input id="FCHU3" />&nbsp;&nbsp;卫<span class="cssSpan">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>面　　积</td>
+                        <td><input id="FCMJ" />&nbsp;&nbsp;平米<span class="cssSpan">*</span></td>
+                        <td>所在楼层<input id="SZLC" /></td>
+                        <td>共有楼层<input id="GYLC" /></td>
+                    </tr>
+                    <tr>
+                        <td>建筑年份</td>
+                        <td><input id="JZNF" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td style="text-align:right">
+                            装修要求
+                        </td>
+                        <td><input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>房屋朝向</td>
+                        <td><input id="FWCX" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td style="text-align:right">小区选择</td>
+                        <td><input id="XQXZ" tabindex="-1" type="hidden" style="width: 60%" /><span class="cssSpan">*</span></td>
+                    </tr>
+                    <tr>
+                        <td >小区地址</td>
+                        <td colspan="3"><input id="XQDZ" style="width: 80%" /></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="large-2 columns">
+            </div>
+        </div>
+
+    </fieldset>
+    <fieldset>
+        <legend>房屋配置</legend>
+        <div class="row">
+
+            <div class="large-offset-1 large-9 columns">
+                <div class="paddingcolumns" id="HouseConfigure">
+
+                </div>
+
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>标题及房源描述</legend>
+        <div class="row">
+
+            <div class="large-offset-1 large-9 columns end">
+                <span>标题<span class="cssSpan">*</span></span>
+                <input id="FXBT" style="width:80%;"> <br> <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+                <span>房源描述</span>
+                <textarea id="FXMS" cols="2" rows="2" />
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>上传图片</legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+                <div class="row">
+                    <div id="preview"></div>
+                    <div class="large-3 columns end">
+                        <div class="large-12 columns">
+                            <div class="uploadDiv">+</div>
+                            <input type="file" id="Attachment" name="files[]" class="files">
+                            <div id="filelist"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset style="display:none">
+        <legend>核心卖点<span class="cssSpan">*</span></legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+                <textarea id="CoreSellingPoint" cols="3" rows="3"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset style="display:none">
+        <legend>业主心态<span class="cssSpan">*</span></legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+                <textarea id="OwnerMentality" cols="3" rows="3"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset style="display:none">
+        <legend>小区配套<span class="cssSpan">*</span></legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+                <textarea id="VillageMatch" cols="3" rows="3"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset style="display:none">
+        <legend>服务介绍</legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+                <textarea id="ServiceIntroduction" cols="3" rows="3"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>置顶推荐</legend>
+        <div class="row">
+            <div class="large-offset-1 large-9 columns end">
+                <span style="color:red">  信息黄金位置展示，效果提高 6~8 倍！</span>
+            </div>
+            <div class="large-offset-1 large-9 columns end">
+                <br>
+                <div class="paddingcolumns" id="ZDTJ">
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="row">
+        <div class="large-offset-1 large-9 columns">
+            <button id="Save">信息发布</button>
+        </div>
+    </div>
+</div>
+<div id="PayDialog" title="zhifu" style="display: none;">
+</div>
+<script src="../blueimp/js/jquery.fileupload.js"></script>
+<link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui.css">
+<noscript><link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
+<script type="text/javascript">
+    window.ServerTempFolder = "../../../UploadImages/Temp/";
+    $(document).ready(function () {
+        window.QS = $.parseQS();
+        var $PayDialog = $('#PayDialog');
+        var jqXHR = null;
+        $('#Attachment').fileupload({
+            dataType: 'json',
+            url: '../HR/FileHandler.ashx?Action=FileUpload',
+            sequentialUploads: true,
+            maxFileSize: 500000000,
+            add: function (e, data) {
+                var $preview = $('#preview');
+                $.each(data.files, function (index, file) {
+                    data.context = $('<div class="upFile large-3 columns end">').html('<div class="large-12 columns"><span class="filename">' + data.files[0].name + '</span></div></div>').appendTo($preview);
+                    data.formData = { 'LookupCat': 'LeaveSettings' }
+                    jqXHR = data.submit();
+                });
+            },
+            progress: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                data.context.children('div:first').children('.progress').children('.bar').css({ 'width': progress + '%' });
+            },
+            done: function (e, data) {
+                data.context.parent('p').children('.cancelupload').addClass('bchide');
+                if (data.result.d.RetVal === -1) {
+                    var filename = data.context.children('div:first').children('.filename').html();
+                    data.context.children('div:first').children('.filename').data('filename', filename).html('<img src="' + window.ServerTempFolder + data.result.d.RetData + '/' + filename + '" class="uploadimg" style=""/>');
+                    data.context = $('<img src="../styles/images/ui/cross-20.png" class="delbutton" title="删除图片" data-fld="' + data.result.d.RetData + '" />').appendTo(data.context.children('div:first').children('.filename')).click(function (e) {
+                        e.preventDefault();
+                        $delete = $(this);
+                        $.JSONPost('HR2.DeleteFile.json', { 'LookupCat': 'LeaveSettings', 'FileName': $delete.parent('.filename').data('filename'), 'Folder': $delete.data('fld') })
+                            .done(function (data) {
+                                $.jGrowl(filename + ' 图片删除成功!', { 'theme': 'growlsuccess', 'life': 10000 });
+                                $delete.parent().parent().parent().remove();
+                            });
+                    });
+                    $.jGrowl('图片上传成功!.', { 'theme': 'growlsuccess', 'life': 10000 });
+                }
+            },
+            fail: function (e, data) {
+                $.jGrowl('上传失败. 请联系管理员!', { theme: 'growlalert', life: 10000 });
+            }
+        });
+        $.when(GetDropdownList1('JYLX', '发布类型', 'ZuFang'), GetDropdownList('FCLX', '房产类型'), GetDropdownList('ZXYQ', '装修要求'), GetDropdownList('FWCX', '房屋朝向'), GetDropdownListCheckBox('HouseConfigure', '房屋配置'), GetYear('JZNF'), GetDropdownListRedio('ZDTJ', '置顶推荐')).then(function () {
+            var CurrID = window.QS.ID || '';
+            var CurrType = window.QS.ViewOrEdit || '';
+            if (CurrID.length > 0 && CurrID != 'undefined') {
+                if (CurrType.length > 0 && CurrType != 'undefined') {
+                    if (CurrType == 'View') {
+                        $("#Save").css('display', 'none');
+                    } else {
+
+                        $("#Save").css('display', '');
+                    }
+                }
+                GetHouseTransaction(CurrID);
+            }
+
+        });
+
+      
+        $('#Save').click(function () {
+            if (SaveCheck()) {
+                Save();
+            }
+        });
+        $PayDialog.load('../Widgets/OrderPay.bcw.htm', function (response, status, xhr) {
+            if (status == "error") { alert('Error loading widget: ' + xhr.status + ' ' + xhr.statusText); }
+        });
+        $('#XQXZ').select2({ minimumInputLength: 1, query: GetSearchMatches, initSelection: InitItemSelection }).on("change", function (e) {
+            if (e.val.length > 0) {
+            } else { $("#XQXZ").select2("val", ""); }
+        });
+    });
+    window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
+    function GetDropdownList(id, category) {
+        return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            return_data.results.push({ id: "", text: "请选择" });
+            for (var i = 0; i < RowCnt; i++) {
+                return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
+            }
+            $("#" + id).select2({
+                data: return_data
+            });
+        });
+    }
+    function GetDropdownList1(id, category,flag) {
+        return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            return_data.results.push({ id: "", text: "请选择" });
+            for (var i = 0; i < RowCnt; i++) {
+                if (flag == 'ZuFang' && R[i]["LookupKey"] == '2' || R[i]["LookupKey"] == '4') {
+                    return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
+                } 
+            }
+            $("#" + id).select2({
+                data: return_data
+            });
+        });
+    }
+    function GetDropdownListCheckBox(id, category) {
+        return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            var html = '';
+            var Name = 'HouseConfigure'
+            for (var i = 0; i < RowCnt; i++) {
+                html += '<label for="' + Name + R[i]["LookupKey"] + '" class="inlineblock"><input type="checkbox" value="' + R[i]["LookupKey"] + '" name="' + Name + '" id="' + Name + R[i]["LookupKey"] + '" /> ' + R[i]["Description"] + '</label>';
+            }
+            $("#" + id).html(html);
+        });
+    }
+    function GetDropdownListRedio(id, category) {
+        return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            var html = '';
+            var Name = 'ZDTJ';
+            for (var i = 0; i < RowCnt; i++) {
+                html += '<label for="' + Name + R[i]["LookupKey"] + '" class="inlineblock"><input id="' + Name + R[i]["LookupKey"] + '" type="radio" name="ZDTJ" value="' + R[i]["LookupKey"] + '">&nbsp;&nbsp;' + R[i]["Description"] + '&nbsp;&nbsp;&nbsp;</label>';
+
+            }
+            $("#" + id).html(html);
+        });
+    }
+    function GetYear(id) {
+        var YearNow = new Date().getFullYear();
+        var startYear = YearNow - 50;
+        var return_data = { results: [] };
+        return_data.results.push({ id: "", text: "请选择" });
+        for (var Y = YearNow; Y >= startYear; Y--) {
+            return_data.results.push({ id: Y.toString(), text: Y.toString() });
+        }
+        $("#" + id).select2({
+            data: return_data
+        });
+    }
+    function GetHouseTransaction(CurrentID) {
+        var data = { 'ID': CurrentID }
+        return $.JSONPost('YL1.GetHouseTransaction.json', data)
+            .done(function (data) {
+                if ((data) && (data.d.RetVal == -1)) {
+                    var Tbl = data.d.RetData.Tbl;
+                    var RowCnt = Tbl.Rows.length;
+                    if (RowCnt > 0) {
+                        $('#JYLX').select2('val', Tbl.Rows[0].JYLX || '');
+                        $('#FCLX').select2('val', Tbl.Rows[0].HousesType || '');
+                        $('#FCZJ').val(Tbl.Rows[0].FCZJ || '');
+                        $('#UnitPrice').val(Tbl.Rows[0].UDF2 || '');
+
+                        if (Tbl.Rows[0].FCDK == '1') {
+                            $('#FCDK').prop('checked', true);
+                        } else {
+                            $('#FCDK').prop('checked', false);
+                        }
+                        $('#FCHU1').val(Tbl.Rows[0].FCHU1 || '');
+                        $('#FCHU2').val(Tbl.Rows[0].FCHU2 || '');
+                        $('#FCHU3').val(Tbl.Rows[0].FCHU3 || '');
+                        $('#FCMJ').val(Tbl.Rows[0].FCMJ || '');
+                        $('#SZLC').val(Tbl.Rows[0].SZLC || '');
+                        $('#GYLC').val(Tbl.Rows[0].GYLC || '');
+                        $('#JZNF').select2('val', Tbl.Rows[0].JZNF || '');
+                        if (Tbl.Rows[0].MSF == '1') {
+                            $('#MSF').prop('checked', true);
+                        } else {
+                            $('#MSF').prop('checked', false);
+                        }
+                        $('#ZXYQ').select2('val', Tbl.Rows[0].ZXYQ || '');
+                        $('#FWCX').select2('val', Tbl.Rows[0].FWCX || '');
+                        if (Tbl.Rows[0].XQXZ.length > 0) {
+                            $('#XQXZ').select2('val', Tbl.Rows[0].XQXZ);
+                        }
+                        $('#XQDZ').val(Tbl.Rows[0].XQDZ || '');
+                        var FCTS = Tbl.Rows[0].FCTS || '';
+                        if (FCTS.length > 0) {
+                            var FCTSArr = FCTS.split('•');
+                            for (var i = 0; i < FCTSArr.length; i++) {
+                                $('#HouseConfigure' + FCTSArr[i] + '').attr('checked', true);
+                            }
+                        }
+                        $('#FirstPayment').val(Tbl.Rows[0].FirstPayment || '');
+                        $('#CoreSellingPoint').val(Tbl.Rows[0].CoreSellingPoint || '');
+                        $('#OwnerMentality').val(Tbl.Rows[0].OwnerMentality || '');
+                        $('#VillageMatch').val(Tbl.Rows[0].VillageMatch || '');
+                        $('#ServiceIntroduction').val(Tbl.Rows[0].ServiceIntroduction || '');
+
+                        var XXLH = Tbl.Rows[0].XXLH || '';
+                        if (XXLH.length > 0) {
+                            $('#ZDTJ' + XXLH).prop('checked', true);
+                        }
+
+                        $('#FXBT').val(Tbl.Rows[0].FXBT || '');
+                        $('#FXMS').val(Tbl.Rows[0].FXMS || '');
+                        //加载图片
+                        if (Tbl.Rows[0].ImageList) {
+                            var images = Tbl.Rows[0].ImageList.split(";");
+                            var html = '';
+                            for (let index = 0; index < images.length; index++) {
+                                if (images[index].length <= 0) {
+                                    break;
+                                }
+                                html += '<div class="upFile large-3 columns end" id="' + images[index].split("/")[0] + '"><div class="large-12 columns"><span class="filename">';
+                                html += ' <img  src="' + window.ServerTempFolder + images[index] + '" class="uploadimg" ><img onclick="DeleteFile(\'' + images[index] + '\');return false;" src="../styles/images/ui/cross-20.png" alt="Delete Attachment" class="delbutton"  data-fld="' + images[index].split('/')[0] + '"></span>';
+                                html += '</div></div>';
+                            }
+                            $('#preview').html(html);
+                        }
+                    }
+                }
+            });
+    }
+    function DeleteFile(img) {
+        return $.JSONPost('HR2.DeleteFile.json', { 'LookupCat': 'LeaveSettings', 'FileName': img.split("/")[1], 'Folder': img.split("/")[0] })
+            .done(function (data) {
+                $.jGrowl(img.split("/")[1] + ' 图片删除成功!', { 'theme': 'growlsuccess', 'life': 10000 });
+                $('#' + img.split("/")[0]).remove();
+                DeleteImagData(img.split("/")[0]);
+            });
+    }
+    function DeleteImagData(img) {
+        return $.JSONPost('YL2.DeleteYLFile.json', { 'img': img })
+            .done(function (data) { });
+    }
+    function SaveCheck() {
+        var ResultFlag = true;
+        var JYLX = $('#JYLX').val() || '';
+        if (JYLX.length <= 0) {
+            $.alert('发布类型 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        var FCLX = $('#FCLX').val() || '';
+        if (FCLX.length <= 0) {
+            $.alert('房产类型 必填.');
+            ResultFlag = false;
+            return false;
+        }
+
+        var UnitPrice = $('#UnitPrice').val() || '';
+        if (UnitPrice.length <= 0) {
+            $.alert('租金 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidMoney(UnitPrice)) {
+                $('#UnitPrice').addClass('cssInput');
+                ResultFlag = false;
+                $.alert('请输入大于零的正数.'); return false;
+            } else {
+                $('#UnitPrice').removeClass('cssInput');
+            }
+        }
+
+        var FCHU1 = $('#FCHU1').val() || '', FCHU2 = $('#FCHU2').val() || '', FCHU3 = $('#FCHU3').val() || '';
+        if (FCHU1.length <= 0) {
+            $.alert('户型[室] 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(FCHU1)) {
+                $('#FCHU1').addClass('cssInput');
+                ResultFlag = false;
+                $.alert('请输入大于零的正整数.'); return false;
+            } else {
+                $('#FCHU1').removeClass('cssInput');
+            }
+        }
+        if (FCHU2.length <= 0) {
+            $.alert('户型[厅] 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(FCHU2)) {
+                $('#FCHU2').addClass('cssInput');
+                ResultFlag = false;
+                $.alert('请输入大于零的正整数.'); return false;
+            } else {
+                $('#FCHU2').removeClass('cssInput');
+            }
+        }
+        if (FCHU3.length <= 0) {
+            $.alert('户型[卫] 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(FCHU3)) {
+                $('#FCHU3').addClass('cssInput');
+                ResultFlag = false;
+                $.alert('请输入大于零的正整数.'); return false;
+            } else {
+                $('#FCHU3').removeClass('cssInput');
+            }
+        }
+
+        var FCMJ = $('#FCMJ').val() || '';
+        if (FCMJ.length <= 0) {
+            $.alert('面积 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(FCMJ)) {
+                $('#FCMJ').addClass('cssInput');
+                ResultFlag = false;
+                $.alert('请输入大于零的正数.'); return false;
+            } else {
+                $('#FCMJ').removeClass('cssInput');
+            }
+        }
+
+
+        var ZXYQ = $('#ZXYQ').val() || '';
+        if (ZXYQ.length <= 0) {
+            $.alert('装修要求 必填.');
+            ResultFlag = false;
+            return false;
+        }
+
+        var XQXZ = $('#XQXZ').val() || '';
+        if (XQXZ.length <= 0) {
+            $.alert('小区选择 必填.');
+            ResultFlag = false;
+            return false;
+        }
+
+        var FXBT = $('#FXBT').val() || '';
+       
+        if (FXBT.length <= 0) {
+            $.alert('标题 必填.');
+            ResultFlag = false;
+            return false;
+        }
+        return ResultFlag;
+    }
+    function Save() {
+
+        var HouseConfigure = '', FCDK = '0', MSF = '0', ZDTJ = '';
+        if ($('#FCDK').is(':checked')) {
+            FCDK = $('#FCDK').val();
+        } else {
+            FCDK = '0';
+        }
+        if ($('#MSF').is(':checked')) {
+            MSF = $('#MSF').val();
+        } else {
+            MSF = '0';
+        }
+        $('input[name="HouseConfigure"]').each(function () {
+            if ($(this).is(':checked')) {
+                HouseConfigure += $(this).val() + '•';
+            }
+        });
+
+
+        $('input[name="ZDTJ"]').each(function () {
+            if ($(this).is(':checked')) {
+                ZDTJ = $(this).val();
+            }
+        });
+        window.Pic = '', window.TempFolder = '';
+        if ($('#preview').find(".filename").length > 0) {
+            $('#preview').find(".filename").each(function (index, item) {
+                var src = $(item).find("img").attr("src").replace(window.ServerTempFolder, "");
+                window.Pic += src.replace("/", "|") + '•';
+                window.TempFolder += src.split("/")[0] + '•';
+            })
+        }
+        console.log(window.Pic); console.log(window.TempFolder);
+
+        var data = {
+            'ID': window.QS.ID || '', 'JYLX': $('#JYLX').val() || '', 'HousesType': $('#FCLX').val() || '', 'FCZJ': $('#FCZJ').val() || '',
+            'FirstPayment': $('#FirstPayment').val(), 'FCDK': FCDK, 'FCHU1': $('#FCHU1').val() || '', 'FCHU2': $('#FCHU2').val() || '', 'FCHU3': $('#FCHU3').val() || '',
+            'FCMJ': $('#FCMJ').val() || '', 'SZLC': $('#SZLC').val() || '', 'GYLC': $('#GYLC').val() || '', 'JZNF': $('#JZNF').val() || '',
+            'MSF': MSF, 'ZXYQ': $('#ZXYQ').val() || '', 'FWCX': $('#FWCX').val() || '', 'XQXZ': $('#XQXZ').val() || '',
+            'XQDZ': $('#XQDZ').val() || '', 'FCTS': HouseConfigure, 'FXBT': $('#FXBT').val() || '', 'FXMS': $('#FXMS').val() || '',
+            'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || '', 'ZDTJ': ZDTJ, 'UnitPrice': $('#UnitPrice').val() || '',
+            'CoreSellingPoint': $('#CoreSellingPoint').val() || '', 'OwnerMentality': $('#OwnerMentality').val() || '',
+            'VillageMatch': $('#VillageMatch').val() || '', 'ServiceIntroduction': $('#ServiceIntroduction').val() || ''
+        }
+        return $.JSONPost('YL1.SaveHouseTransaction.json', data)
+            .then(function (data) {
+                if ((data) && (data.d.RetVal === -1)) {
+                    if (data.d.RetData.Tbl.Rows[0].Success == true) {
+                        $('#Save').attr('disabled', 'disabled');
+                        alert('发布成功！');
+                        if (ZDTJ.length > 0 && ZDTJ != "0") {
+                            ShowPayFrame(data.d.RetData.Tbl.Rows[0].ProductID);
+                        }
+                    } else {
+                        $('#Save').removeAttr('disabled', 'disabled');
+                        $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
+                    }
+                }
+                else {
+                    $('#Save').removeAttr('disabled', 'disabled');
+                    $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open');
+                }
+            });
+    }
+
+
+    function GetSearchMatches(query) {
+        window.SearchTerm = query.term;
+        $.JSONPost('YL1.SearchEntityVillage.json', { "SearchTerm": query.term, "ReturnID": "LookupKey" }).done(function (data) {
+            var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+            var return_data = { results: [] };
+            for (var i = 0; i < RowCnt; i++) {
+                return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["SearchText"] });
+            }
+            query.callback(return_data);
+        });
+    }
+
+    function InitItemSelection(element, callback) {
+        var LookupKey = $(element).val();
+        if (LookupKey != "") {
+            $.JSONPost('YL1.SearchTextEntityVillage.json', { "LookupKey": LookupKey })
+                .done(function (data) {
+                    var R = data.d.RetData.Tbl.Rows;
+                    if (R.length > 0) {
+                        callback({ id: R[0].LookupKey, text: R[0].SearchText });
+                    } else {
+                        callback({ id: -1, text: "Invalid ID" });
+                    }
+                });
+        }
+    }
+
+
+    function charClass(data) {
+        var obj = [];
+        if (data.length === 0) return;
+        for (var i = 0; i < data.length; i++) {
+            if (!obj[$PinYin.searchCap(data[i])]) {
+                obj[$PinYin.searchCap(data[i])] = [];
+            }
+            obj[$PinYin.searchCap(data[i])].push(data[i]);
+        }
+        return obj;
+    }
+
+    function IsValidPositive(data) {
+        var re = /^[1-9]+\d*$/;
+        return re.test(data);
+    }
+    function IsValidMoney(data) {
+        var re = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
+        return re.test(data);
+    }
+
+</script>

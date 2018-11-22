@@ -30,10 +30,11 @@ SELECT @LoginID=LoginID,@EntityType=EntityType,@Status=[Status],@RoleID=DefaultR
 IF EXISTS(SELECT TOP 1 1 FROM dbo.tblSecGroups WHERE SecGroupID in (SELECT SecGroupID FROM tblSecGroupPersons WHERE LoginID=@LoginID) 
 AND SecGroupName='Security Admin')
 BEGIN
-	SELECT YL.ID,TL.Description AS HousesType,TL1.Description AS JYLX,(YL.FCZJ+N'  万元') AS FCZJ,YL.FCDK,
+	SELECT YL.ID,YL.JYLX AS JYFlag,TL.Description AS HousesType,TL1.Description AS JYLX,(YL.FCZJ+N'  万元') AS FCZJ,YL.FCDK,
 	(SELECT dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3)) AS FCHU1 ,(YL.FCMJ +N' 平方米') AS FCMJ,(YL.SZLC +N' 层') AS SZLC,
 	(YL.GYLC +N' 层') AS GYLC,YL.JZNF,YL.MSF,TL2.Description AS ZXYQ,TL3.Description AS FWCX,TL4.Description AS XQXZ,YL.XQDZ,
-	(SELECT dbo.fnYL_GetFCTS(YL.FCTS)) AS FCTS,YL.FXBT,YL.FXMS,CP.DisplayName AS ModifiedBy,
+	CASE WHEN YL.JYLX IN('1','3','5') THEN (SELECT dbo.fnYL_GetFCTS(YL.FCTS,YL.JYLX)) ELSE '' END AS FCTS,
+	CASE WHEN YL.JYLX IN('2','4') THEN (SELECT dbo.fnYL_GetFCTS(YL.FCTS,YL.JYLX)) ELSE '' END AS FCPZ,YL.FXBT,YL.FXMS,CP.DisplayName AS ModifiedBy,
 	(SELECT CONVERT(nvarchar(10), YL.ModifiedDate, 121)) AS ModifiedDate FROM tblYLHouses YL
 	LEFT JOIN dbo.tblTicketLookup TL ON YL.HousesType=TL.LookupKey AND TL.LookupCat=N'房产类型'
 	LEFT JOIN dbo.tblTicketLookup TL1 ON YL.JYLX=TL1.LookupKey AND TL1.LookupCat=N'发布类型'
@@ -53,10 +54,11 @@ BEGIN
 	SELECT @GroupID=CGR.GroupID FROM dbo.tblCtcRoleTags  CRT INNER JOIN dbo.tblCtcGroupRoles CGR ON CGR.TagName = CRT.TagName
     WHERE CRT.RoleID=@RoleID AND CRT.TagName LIKE '%Staff Admin%'
 
-	SELECT YL.ID,TL.Description AS HousesType,TL1.Description AS JYLX,(YL.FCZJ+N'  万元') AS FCZJ,YL.FCDK,
+	SELECT YL.ID,YL.JYLX AS JYFlag,TL.Description AS HousesType,TL1.Description AS JYLX,(YL.FCZJ+N'  万元') AS FCZJ,YL.FCDK,
 	(SELECT dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3)) AS FCHU1 ,(YL.FCMJ +N' 平方米') AS FCMJ,(YL.SZLC +N' 层') AS SZLC,
 	(YL.GYLC +N' 层') AS GYLC,YL.JZNF,YL.MSF,TL2.Description AS ZXYQ,TL3.Description AS FWCX,TL4.Description AS XQXZ,YL.XQDZ,
-	(SELECT dbo.fnYL_GetFCTS(YL.FCTS)) AS FCTS,YL.FXBT,YL.FXMS,CP.DisplayName AS ModifiedBy,
+	CASE WHEN YL.JYLX IN('1','3','5') THEN (SELECT dbo.fnYL_GetFCTS(YL.FCTS,YL.JYLX)) ELSE '' END AS FCTS,
+	CASE WHEN YL.JYLX IN('2','4') THEN (SELECT dbo.fnYL_GetFCTS(YL.FCTS,YL.JYLX)) ELSE '' END AS FCPZ,YL.FXBT,YL.FXMS,CP.DisplayName AS ModifiedBy,
 	(SELECT CONVERT(nvarchar(10), YL.ModifiedDate, 121)) AS ModifiedDate FROM tblYLHouses YL
 	LEFT JOIN dbo.tblTicketLookup TL ON YL.HousesType=TL.LookupKey AND TL.LookupCat=N'房产类型'
 	LEFT JOIN dbo.tblTicketLookup TL1 ON YL.JYLX=TL1.LookupKey AND TL1.LookupCat=N'发布类型'
@@ -78,10 +80,11 @@ BEGIN
 END
 ELSE
 BEGIN
-	SELECT YL.ID,TL.Description AS HousesType,TL1.Description AS JYLX,(YL.FCZJ+N'  万元') AS FCZJ,YL.FCDK,
+	SELECT YL.ID,YL.JYLX AS JYFlag,TL.Description AS HousesType,TL1.Description AS JYLX,(YL.FCZJ+N'  万元') AS FCZJ,YL.FCDK,
 	(SELECT dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3)) AS FCHU1 ,(YL.FCMJ +N' 平方米') AS FCMJ,(YL.SZLC +N' 层') AS SZLC,
 	(YL.GYLC +N' 层') AS GYLC,YL.JZNF,YL.MSF,TL2.Description AS ZXYQ,TL3.Description AS FWCX,TL4.Description AS XQXZ,YL.XQDZ,
-	(SELECT dbo.fnYL_GetFCTS(YL.FCTS)) AS FCTS,YL.FXBT,YL.FXMS,CP.DisplayName AS ModifiedBy,
+	CASE WHEN YL.JYLX IN('1','3','5') THEN (SELECT dbo.fnYL_GetFCTS(YL.FCTS,YL.JYLX)) ELSE '' END AS FCTS,
+	CASE WHEN YL.JYLX IN('2','4') THEN (SELECT dbo.fnYL_GetFCTS(YL.FCTS,YL.JYLX)) ELSE '' END AS FCPZ,YL.FXBT,YL.FXMS,CP.DisplayName AS ModifiedBy,
 	(SELECT CONVERT(nvarchar(10), YL.ModifiedDate, 121)) AS ModifiedDate FROM tblYLHouses YL
 	LEFT JOIN dbo.tblTicketLookup TL ON YL.HousesType=TL.LookupKey AND TL.LookupCat=N'房产类型'
 	LEFT JOIN dbo.tblTicketLookup TL1 ON YL.JYLX=TL1.LookupKey AND TL1.LookupCat=N'发布类型'

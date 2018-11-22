@@ -34,7 +34,7 @@
 <div id="PayDialog" title="zhifu" style="display: none;">
 </div>
 <script type="text/javascript">
-    var $filters = $('#Filters'), $MTool = $('#MTool');
+    var $filters = $('#Filters'), $MTool = $('#MTool'),FBLX='';
     var $PayDialog = $('#PayDialog');
     $(document).ready(function () {
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
@@ -100,6 +100,18 @@
             }
         });
     }
+
+    function EditOrView(ID, JYFlag, ViewOrEdit) {
+        
+        if (JYFlag == '2' || JYFlag == '4') {
+            var Url1 = '../BCMain/basepg.htm?widgets=../HR/HRPaymentVoucher/Widgets/HousTransaction2.bcw.htm&ID=' + ID + '&ViewOrEdit=' + ViewOrEdit;
+            window.open(Url1, '', 'height=800, width=1400, top=100, left=150, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no')
+        } else if (JYFlag == '1' || JYFlag == '3' || JYFlag == '5') {
+            var Url2 = '../BCMain/basepg.htm?widgets=../HR/HRPaymentVoucher/Widgets/HousTransaction1.bcw.htm&ID=' + ID + '&ViewOrEdit=' + ViewOrEdit;
+            window.open(Url2, '', 'height=800, width=1400, top=100, left=150, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no')
+        }
+    }
+   
     function GetDropdownList(id, category) {
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
