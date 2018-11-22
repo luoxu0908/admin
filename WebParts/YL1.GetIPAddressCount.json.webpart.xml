@@ -26,7 +26,10 @@ Elements
 	<SGAction></SGAction>
 	<SQL><![CDATA[DECLARE @InputDate DATETIME;
 SELECT @InputDate= [dbo].[fnYL_ChangeTime]({{TgtDate}})
-SELECT OrderNo,(SELECT CONVERT(nvarchar(11), DayDt, 113)) AS DayDt,Number  FROM [dbo].[tfYL_GetIPAccount] (@InputDate);]]></SQL>
+
+SELECT DayDt,SUM(Number) AS  Number FROM (
+SELECT (SELECT CONVERT(nvarchar(11), DayDt, 113)) AS DayDt,Number FROM [dbo].[tfYL_GetIPAccount] (@InputDate)) T
+GROUP BY DayDt]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

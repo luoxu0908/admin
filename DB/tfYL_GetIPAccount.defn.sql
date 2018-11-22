@@ -4,7 +4,7 @@ SELECT * FROM [dbo].[tfYL_GetIPAccount] (''); --Guest request for current month 
 BEGIN TRY DROP FUNCTION [dbo].[tfYL_GetIPAccount] END TRY BEGIN CATCH END CATCH
 GO
 CREATE FUNCTION [dbo].[tfYL_GetIPAccount] (@TgtDate NVARCHAR(30))
-RETURNS @OutputTable TABLE ( OrderNo int, DayDt smalldatetime, Number int)
+RETURNS @OutputTable TABLE ( OrderNo int, DayDt NVARCHAR(50), Number int)
 AS
 BEGIN
 	DECLARE @Number INT,@ym NVARCHAR(6);
