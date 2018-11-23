@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>杨凌之家</title>
     <meta name="description" content="杨凌之家|杨凌|房产">
-    <meta name="keywords" content="index">
+    <meta name="keywords" content="杨凌之家|杨凌|房产">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -217,29 +217,31 @@
     <script src="assets/js/dataTables.responsive.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        window.ifrC = $('#contentframe');
+        window.ifrC = $('#contentframe'); defaultPageUrl='';
         window.ifrCDiv = $('#ifrCDiv'); //iOS compatability hack
-        GetMenu();
         $(function () {
             CookieIsActive();
             LoginInfo().done(function (data) {
                 if (data.d.RetData.LoginID <= 0) {
-                    window.top.location = 'login.htm';
-                } else {
+                    window.top.location = 'login.html';
+                } else {   
                     $('#dispname').html(data.d.RetData.DispName);
                     $('#UserName').html(data.d.RetData.Username);
                     if ($.cookie('Menu') !== null && parseInt($.cookie('Menu')) === 0) { } else { $('nav').removeClass('bchide'); GetMenu(); }
-                    if ($.cookie('CurrPage') !== null) {
+                    if($.cookie('CurrPage')){
+                        if($.cookie('CurrPage')=='index.html'){
+                            ChangeFrameSrc(defaultPageUrl);return;
+                        }
                         ChangeFrameSrc($.cookie('CurrPage'));
-                    } else {
-                        ChangeFrameSrc('landing.htm');
+                    }else{
+                        ChangeFrameSrc(defaultPageUrl);
                     }
                 }
             });
 
         });
         function GetMenu(callback) {
-            $.JSONPost('iCtc1.GetOwnPersonID.json')
+         return   $.JSONPost('iCtc1.GetOwnPersonID.json')
                 .done(function (data) {
                     var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
                     if (RowCnt > 0) { window.PID = R[0].PersonID; }
@@ -254,7 +256,7 @@
             });
         }
         function loadMenu() {
-            $.JSONPost('Sec1.Menu.json', { '': '' })
+         return   $.JSONPost('Sec1.Menu.json', { '': '' })
                 .done(function (data) {
                     var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
                     if (RowCnt > 0) {
@@ -286,7 +288,7 @@
                                 }
                             }
                             var menuHtml = '';
-                            var defaultPageUrl=''
+                        
                             var arry = new Array('home', 'search', 'wpforms', 'user', 'phone', 'ship', 'simplybuilt', 'server', 'search', 'table', 'phone', 'search', 'table', 'phone', 'search', 'table', 'phone', 'search')
                             for (var i = 0; i < menuList.length; i++) {
                                 menuHtml += '<li class="sidebar-nav-link">';
@@ -306,9 +308,7 @@
                                 menuHtml += '</ul>';
                                 menuHtml += '</li>';
                             }
-
                             $('#menuContent').html(menuHtml); BindEvent();
-                            ChangeFrameSrc(defaultPageUrl);
                         }
                     }
                 });
@@ -356,7 +356,6 @@
             return $.JSONPost('Sec1.Logout.json', {})
                 .then(function (data) {
                     $.cookie('CurrPage', null, { 'expires': 1 });
-                    //window.top.location = (data.d.RetData || 'index.html');
                     window.top.location = ('login.html');
                 });
         }
