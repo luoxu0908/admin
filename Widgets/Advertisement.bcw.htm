@@ -42,9 +42,11 @@
     </div>
 </div>
 <script type="text/javascript">
-    var $AddNewImage = $('#Image');
+    var $AddNewImage = $('#Image');window.MaxUploadCount=1;
     $(document).ready(function () {
         $AddNewImage.load('../Widgets/FileUpload.bcw.htm');
+           
+       
         GetGGWZ();
         GetGGSX();
         $('#GGWZ').change(function () {

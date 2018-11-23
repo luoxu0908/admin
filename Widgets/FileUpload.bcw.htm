@@ -7,7 +7,7 @@
 <div class="large-12 columns end">
     <div class="row">
         <div id="preview"></div>
-        <div class="large-3 columns end">
+        <div class="large-3 columns end" id="fileloadRow">
             <div class="large-12 columns">
                 <div class="uploadDiv">+</div>
                 <input type="file" id="Attachment" name="files[]" class="files">
@@ -21,7 +21,7 @@
 <noscript>
     <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
 <script type="text/javascript">
-    window.ServerTempFolder = "../../../UploadImages/Temp/";
+    window.ServerTempFolder = "../../../UploadImages/Temp/"; 
     var jqXHR = null;
     $('#Attachment').fileupload({
         dataType: 'json',
@@ -51,10 +51,17 @@
                     $.JSONPost('HR2.DeleteFile.json', { 'LookupCat': 'LeaveSettings', 'FileName': $delete.parent('.filename').data('filename'), 'Folder': $delete.data('fld') })
                         .done(function (data) {
                             $.jGrowl(filename + ' 图片删除成功!', { 'theme': 'growlsuccess', 'life': 10000 });
-                            $delete.parent().parent().parent().remove();
+                            $delete.parent().parent().parent().remove(); $('#fileloadRow').show();
                         });
                 });
+                var count = GetFilesCount();          
+                var maxCount=window.MaxUploadCount||10;
                 $.jGrowl('图片上传成功!.', { 'theme': 'growlsuccess', 'life': 10000 });
+                if(count>=maxCount){
+                    $.jGrowl('上传图片达到最大值!.', { 'theme': 'growlsuccess', 'life': 10000 });
+                       $('#fileloadRow').hide();
+                }
+               
             }
         },
         fail: function (e, data) {
@@ -84,6 +91,7 @@
             .done(function (data) {
                 $.jGrowl(img.split("/")[1] + ' 图片删除成功!', { 'theme': 'growlsuccess', 'life': 10000 });
                 $('#' + img.split("/")[0]).remove();
+                $('#fileloadRow').show();
                 DeleteImagData(img.split("/")[0]);
             });
     }
@@ -92,6 +100,10 @@
         return $.JSONPost('YL2.DeleteYLFile.json', { 'img': img })
             .done(function (data) { });
     }
+    function GetFilesCount() {
+        var PicList = GetPicture().split('•').length - 1;
+        return PicList;
+    }
     //获取页面上传图片 返回图片集合；
     function GetPicture() {
         var PicList = ''
@@ -99,7 +111,7 @@
             $('#preview').find(".filename").each(function (index, item) {
                 var src = $(item).find("img").attr("src").replace(window.ServerTempFolder, "");
                 PicList += src.replace("/", "|") + '•';
-            })
+            });
         }
         return PicList;
     }
