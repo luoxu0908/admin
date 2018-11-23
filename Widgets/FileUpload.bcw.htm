@@ -21,7 +21,7 @@
 <noscript>
     <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
 <script type="text/javascript">
-    window.ServerTempFolder = "../../../UploadImages/Temp/"; 
+    window.ServerTempFolder = "../../../UploadImages/Temp/";
     var jqXHR = null;
     $('#Attachment').fileupload({
         dataType: 'json',
@@ -54,14 +54,8 @@
                             $delete.parent().parent().parent().remove(); $('#fileloadRow').show();
                         });
                 });
-                var count = GetFilesCount();          
-                var maxCount=window.MaxUploadCount||10;
+                CaclCount();
                 $.jGrowl('图片上传成功!.', { 'theme': 'growlsuccess', 'life': 10000 });
-                if(count>=maxCount){
-                    $.jGrowl('上传图片达到最大值!.', { 'theme': 'growlsuccess', 'life': 10000 });
-                       $('#fileloadRow').hide();
-                }
-               
             }
         },
         fail: function (e, data) {
@@ -72,7 +66,7 @@
     //初始化文件
     function IntiUploadFiles(ImageList) {
         if (ImageList) {
-            var images = Tbl.Rows[0].ImageList.split(";");
+            var images = ImageList.split("•");
             var html = '';
             for (let index = 0; index < images.length; index++) {
                 if (images[index].length <= 0) {
@@ -82,7 +76,11 @@
                 html += ' <img  src="' + window.ServerTempFolder + images[index] + '" class="uploadimg" ><img onclick="DeleteFile(\'' + images[index] + '\');return false;" src="../styles/images/ui/cross-20.png" alt="Delete Attachment" class="delbutton"  data-fld="' + images[index].split('/')[0] + '"></span>';
                 html += '</div></div>';
             }
+            CaclCount();
             $('#preview').html(html);
+        }
+        else {
+            $('#preview').html('');
         }
     }
     //删除编辑图片
@@ -101,7 +99,7 @@
             .done(function (data) { });
     }
     function GetFilesCount() {
-        var PicList = GetPicture().split('•').length - 1;
+        var PicList = GetPicture().split('•').length;
         return PicList;
     }
     //获取页面上传图片 返回图片集合；
@@ -112,7 +110,18 @@
                 var src = $(item).find("img").attr("src").replace(window.ServerTempFolder, "");
                 PicList += src.replace("/", "|") + '•';
             });
+            alert(PicList);
+            PicList= PicList.substring(0,PicList.length-1);
+         
         }
         return PicList;
+    }
+    function CaclCount() {
+        var count = GetFilesCount();
+        var maxCount = window.MaxUploadCount || 10;
+        if (count >= maxCount) {
+            $.jGrowl('上传图片达到最大值!.', { 'theme': 'alert', 'life': 10000 });
+            $('#fileloadRow').hide();
+        }
     }
 </script>

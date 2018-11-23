@@ -35,25 +35,25 @@
     <div class="row">
         <div class="large-12 columns">
             <br>
-            <button id="Save" onclick="Save();return fasle">
-                保  存
+            <button id="Save" onclick="Save();return false;">
+                保 存
             </button>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    var $AddNewImage = $('#Image');window.MaxUploadCount=1;
+    var $AddNewImage = $('#Image'); window.MaxUploadCount = 1;
     $(document).ready(function () {
         $AddNewImage.load('../Widgets/FileUpload.bcw.htm');
-           
-       
+
+
         GetGGWZ();
         GetGGSX();
         $('#GGWZ').change(function () {
             if ($('#GGWZ').val().length > 0 && $('#GGSX').val().length > 0) {
                 GetAdvertisement();
             }
-            
+
         });
         $('#GGSX').change(function () {
             if ($('#GGWZ').val().length > 0 && $('#GGSX').val().length > 0) {
@@ -100,19 +100,10 @@
                         $('#GGLJ').val(Tbl.Rows[0].GGLJ || '');
                         $('#GGBT').val(Tbl.Rows[0].GGBT || '');
                         //加载图片
-                        if (Tbl.Rows[0].ImageList) {
-                            var images = Tbl.Rows[0].ImageList.split("•");
-                            var html = '';
-                            for (let index = 0; index < images.length; index++) {
-                                if (images[index].length <= 0) {
-                                    break;
-                                }
-                                html += '<div class="upFile large-3 columns end" id="' + images[index].split("/")[0] + '"><div class="large-12 columns"><span class="filename">';
-                                html += ' <img  src="' + window.ServerTempFolder + images[index] + '" class="uploadimg" ><img onclick="DeleteFile(\'' + images[index] + '\');return false;" src="../styles/images/ui/cross-20.png" alt="Delete Attachment" class="delbutton"  data-fld="' + images[index].split('/')[0] + '"></span>';
-                                html += '</div></div>';
-                            }
-                            $('#preview').html(html);
-                        }
+                        IntiUploadFiles(Tbl.Rows[0].ImageList || '');
+                    }
+                    else{
+                        $('#preview').html('');
                     }
                 }
             });
@@ -143,14 +134,13 @@
             'GGWZ': GGWZ, 'GGSX': $('#GGSX').val() || '', 'GGLJ': $('#GGLJ').val() || '', 'GGBT': $('#GGBT').val() || '',
             'Picture': window.Pic || '', 'PictureGUID': window.TempFolder || ''
         }
-     
+
         return $.JSONPost('YL1.SaveAdvertisement.json', data)
             .then(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
                     if (data.d.RetData.Tbl.Rows[0].Success == true) {
                         $('#Save').attr('disabled', 'disabled');
                         alert('保存成功！');
-                       
                     } else {
                         $('#Save').removeAttr('disabled', 'disabled');
                         $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
