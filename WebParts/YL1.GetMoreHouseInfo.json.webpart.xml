@@ -27,7 +27,7 @@ Elements
 	<SQL><![CDATA[DECLARE @Type NVARCHAR(30),@InputStr NVARCHAR(150),@Page int,@PageNum INT;
 DECLARE @Temp TABLE(ID  NVARCHAR(50),ModifiedDate datetime)
 
-SELECT @Type='1',@InputStr='',@Page=1,@PageNum=30;
+SELECT @Type={{Type}},@InputStr={{InputStr}},@Page={{page}},@PageNum={{pageNum}};
 INSERT @Temp(ID,ModifiedDate)
 SELECT YLF.FCID,YLF.ModifiedDate FROM dbo.tblYLHouses YLH INNER JOIN dbo.tblYLFCZD YLF ON YLH.ID=YLF.FCID
 WHERE ZDSJ>GETDATE() AND YLH.JYLX=@Type;
