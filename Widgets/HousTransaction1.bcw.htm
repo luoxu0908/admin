@@ -80,10 +80,10 @@
                         <td>总价&nbsp;<input id="FCZJ" />&nbsp;&nbsp;万元<span id="FCZJSpan" class="cssSpan">*</span></td>
                     </tr>
                     <tr>
-                        <td>首付</td>
+                        <td>参考首付</td>
                         <td><input id="FirstPayment" />&nbsp;&nbsp;万元<span id="FirstPaymentSpan" class="cssSpan">*</span></td>
                         <td>
-                            <span id="UnitPriceSpan">单价</span> <input id="UnitPrice" />&nbsp;&nbsp;元<span class="cssSpan">*</span>
+                            <span>面　　积</span> <input id="FCMJ" />&nbsp;&nbsp;元
                         </td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
@@ -98,8 +98,8 @@
                         <td><input id="FCHU3" />&nbsp;&nbsp;卫<span class="cssSpan">*</span></td>
                     </tr>
                     <tr>
-                        <td>面　　积</td>
-                        <td><input id="FCMJ" />&nbsp;&nbsp;平米<span class="cssSpan">*</span></td>
+                        <td>单 价</td>
+                        <td><input id="UnitPrice" />&nbsp;&nbsp;元</td>
                         <td>所在楼层<input id="SZLC" /></td>
                         <td>共有楼层<input id="GYLC" /></td>
                     </tr>
@@ -145,7 +145,7 @@
     </fieldset>
     <fieldset>
         <legend>标题及房源描述</legend>
-       
+
         <div class="row">
             <br>
             <div class="large-offset-1 large-9 columns end">
@@ -157,7 +157,7 @@
             <div class="large-offset-1 large-9 columns end">
                 <span>详细描述</span>
                 <textarea id="FXMS" cols="2" rows="2" />
-            </div>
+                </div>
         </div>
     </fieldset>
     <fieldset>
@@ -186,7 +186,7 @@
         </div>
     </fieldset>
     <fieldset>
-        <legend>业主心态<span class="cssSpan">*</span></legend>
+        <legend>业主心态</legend>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
                 <textarea id="OwnerMentality" cols="3" rows="3"></textarea>
@@ -194,7 +194,7 @@
         </div>
     </fieldset>
     <fieldset>
-        <legend>小区配套<span class="cssSpan">*</span></legend>
+        <legend>小区配套</legend>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
                 <textarea id="VillageMatch" cols="3" rows="3"></textarea>
@@ -213,7 +213,7 @@
         <legend>置顶推荐</legend>
         <div class="row">
             <div class="large-offset-1 large-9 columns end">
-                <span style="color:red">  信息黄金位置展示，效果提高 6~8 倍！</span>
+                <span style="color:red"> 信息黄金位置展示，效果提高 6~8 倍！</span>
             </div>
             <div class="large-offset-1 large-9 columns end">
                 <br>
@@ -232,7 +232,8 @@
 </div>
 <script src="../blueimp/js/jquery.fileupload.js"></script>
 <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui.css">
-<noscript><link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
+<noscript>
+    <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
 <script type="text/javascript">
     window.ServerTempFolder = "../../../UploadImages/Temp/";
     $(document).ready(function () {
@@ -294,19 +295,47 @@
 
         });
 
-        $('#JYLX').change(function () {
-            var JYLX = $('#JYLX').val() || '';
-            if (JYLX == '2' || JYLX == '4') {
-                $('#FCZJSpan').html('');
-                $('#FirstPaymentSpan').html('');
-                $('#JZNFSpan').html('');
-                $('#UnitPriceSpan').html('租金');
-            } else {
-                $('#FCZJSpan').html('*');
-                $('#FirstPaymentSpan').html('*');
-                $('#JZNFSpan').html('*');
-                $('#UnitPriceSpan').html('单价');
+        // $('#JYLX').change(function () {
+        //     var JYLX = $('#JYLX').val() || '';
+        //     if (JYLX == '2' || JYLX == '4') {
+        //         $('#FCZJSpan').html('');
+        //         $('#FirstPaymentSpan').html('');
+        //         $('#JZNFSpan').html('');
+        //         $('#UnitPriceSpan').html('租金');
+        //     } else {
+        //         $('#FCZJSpan').html('*');
+        //         $('#FirstPaymentSpan').html('*');
+        //         $('#JZNFSpan').html('*');
+        //         $('#UnitPrice').html('单价');
+        //     }
+        // });
+        $('#FCZJ').change(function () {
+            var FCZJ = $('#FCZJ').val() || '';
+            var FCMJ = $('#FCMJ').val() || '';
+            var FirstPayment = 0;
+            if (FCZJ.length > 0) {
+                FCZJ = parseFloat(FCZJ) || 0;
+                $('#FirstPayment').val(parseInt(FCZJ * 0.3));
             }
+            if (FCZJ.length > 0 && FCMJ.length > 0) {
+                FCZJ = parseFloat(FCZJ) || 0;
+                FCMJ = parseFloat(FCMJ) || 0;
+                FirstPayment = parseInt(FCZJ * 10000 / FCMJ);
+                $('#UnitPrice').val(FirstPayment);
+            }
+
+        });
+        $('#FCMJ').change(function () {
+            var FCZJ = $('#FCZJ').val() || '';
+            var FCMJ = $('#FCMJ').val() || '';
+            var FirstPayment = 0;
+            if (FCZJ.length > 0 && FCMJ.length > 0) {
+                FCZJ = parseFloat(FCZJ) || 0;
+                FCMJ = parseFloat(FCMJ) || 0;
+                FirstPayment = parseInt(FCZJ * 10000 / FCMJ);
+                $('#UnitPrice').val(FirstPayment);
+            }
+
         });
         $('#Save').click(function () {
             if (SaveCheck()) {
@@ -343,7 +372,7 @@
             for (var i = 0; i < RowCnt; i++) {
                 if (flag == 'JaoYi' && R[i]["LookupKey"] == '1' || R[i]["LookupKey"] == '3' || R[i]["LookupKey"] == '5') {
                     return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
-                } 
+                }
             }
             $("#" + id).select2({
                 data: return_data
@@ -521,9 +550,9 @@
 
         var UnitPrice = $('#UnitPrice').val() || '';
         if (UnitPrice.length <= 0) {
-            $.alert('单价 必填.');
-            ResultFlag = false;
-            return false;
+            // $.alert('单价 必填.');
+            // ResultFlag = false;
+            // return false;
         } else {
             if (!IsValidMoney(UnitPrice)) {
                 $('#UnitPrice').addClass('cssInput');
@@ -633,18 +662,18 @@
             ResultFlag = false;
             return false;
         }
-        var OwnerMentality = $('#OwnerMentality').val() || '';
-        if (OwnerMentality.length <= 0) {
-            $.alert('业主心态 必填.');
-            ResultFlag = false;
-            return false;
-        }
-        var VillageMatch = $('#VillageMatch').val() || '';
-        if (VillageMatch.length <= 0) {
-            $.alert('小区配套 必填.');
-            ResultFlag = false;
-            return false;
-        }
+        // var OwnerMentality = $('#OwnerMentality').val() || '';
+        // if (OwnerMentality.length <= 0) {
+        //     $.alert('业主心态 必填.');
+        //     ResultFlag = false;
+        //     return false;
+        // }
+        // var VillageMatch = $('#VillageMatch').val() || '';
+        // if (VillageMatch.length <= 0) {
+        //     $.alert('小区配套 必填.');
+        //     ResultFlag = false;
+        //     return false;
+        // }
         return ResultFlag;
 
     }
