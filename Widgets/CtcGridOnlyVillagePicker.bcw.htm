@@ -25,7 +25,7 @@
 	function CtcGridOnlyVillagePicker(args) {
 	    var $select, defaultValue, scope = this, lookupJsonURL = (args.column.lookupjson || 'YL1.SearchTextEntityVillage.json'), searchJsonURL = (args.column.searchjson || 'YL1.SearchEntityVillage.json');
 		this.init = function () {
-			$select = $("<input type='hidden' tabindex='-1' style='width: 100%;' />").appendTo(args.container).select2({ minimumInputLength: 1, query: GetEntitySearchMatches, placeholder: "Search contacts", initSelection: InitEntityItemSelection }).on("change", function (e) {
+			$select = $("<input type='hidden' tabindex='-1' style='width: 100%;' />").appendTo(args.container).select2({ minimumInputLength: 1, query: GetEntitySearchMatches, placeholder: "搜索", initSelection: InitEntityItemSelection }).on("change", function (e) {
 			    if (e.val.length > 0) {
 			    } else { $select.select2("val", ""); }
 			});

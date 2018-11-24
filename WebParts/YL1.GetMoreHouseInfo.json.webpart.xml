@@ -27,20 +27,20 @@ Elements
 	<SQL><![CDATA[DECLARE @Type NVARCHAR(30),@InputStr NVARCHAR(150),@Page int,@PageNum INT;
 DECLARE @Temp TABLE(ID  NVARCHAR(50),ModifiedDate datetime)
 
-SELECT @Type='1',@InputStr='',@Page=1,@PageNum=30;
+SELECT @Type={{Type}},@InputStr={{InputStr}},@Page={{page}},@PageNum={{pageNum}};
 INSERT @Temp(ID,ModifiedDate)
 SELECT YLF.FCID,YLF.ModifiedDate FROM dbo.tblYLHouses YLH INNER JOIN dbo.tblYLFCZD YLF ON YLH.ID=YLF.FCID
 WHERE ZDSJ>GETDATE() AND YLH.JYLX=@Type;
 
 SELECT * FROM (
-SELECT 1 AS Flag,FXBT,SZLC,GYLC,FWCX,FCPublish,UDF2 AS FCDJ,TL.Description,FCZJ,FCMJ,YL.ID,T.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'http://web.tool8.cc/UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc,N'优' AS WordSrc,CP.DisplayName
+SELECT 1 AS Flag,FXBT,SZLC,GYLC,FWCX,FCPublish,UDF2 AS FCDJ,TL.Description,FCZJ,FCMJ,YL.ID,T.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'http://web.tool8.cc/UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc,N'优' AS WordSrc,CP.DisplayName,YL.UDF2,YL.JYLX
 FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 INNER JOIN @Temp T ON T.ID = YL.ID
 LEFT JOIN dbo.tblCtcPersons CP ON CP.LoginID = YL.ModifiedBy
 WHERE LEN(YL.XQXZ)>0 AND YL.JYLX=@Type AND YL.Status='A'
 UNION ALL
-SELECT 0 AS Flag,FXBT,SZLC,GYLC,FWCX,FCPublish,UDF2 AS FCDJ,TL.Description,FCZJ,FCMJ,YL.ID,YL.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'http://web.tool8.cc/UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc,N'' AS WordSrc,CP.DisplayName
+SELECT 0 AS Flag,FXBT,SZLC,GYLC,FWCX,FCPublish,UDF2 AS FCDJ,TL.Description,FCZJ,FCMJ,YL.ID,YL.ModifiedDate,dbo.fnYL_GetFCHX(YL.FCHU1,YL.FCHU2,YL.FCHU3) AS HouseLevelDetail,(SELECT TOP 1 'http://web.tool8.cc/UploadImages/Temp/'+ImageID+'/'+FileName FROM tblYLFCImage WHERE ItemKey=YL.ID) AS ImageSrc,N'' AS WordSrc,CP.DisplayName,YL.UDF2,YL.JYLX
 FROM tblYLHouses YL LEFT JOIN tblTicketLookup TL 
 ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称' 
 LEFT JOIN dbo.tblCtcPersons CP ON CP.LoginID = YL.ModifiedBy
