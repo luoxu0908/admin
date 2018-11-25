@@ -61,7 +61,7 @@ BEGIN
 		 SELECT @CurrentID= dbo.fnSF_GetNextHouseInfoID ('XXXYLZJ');
 
 		 DECLARE @FCPublish NVARCHAR(10);
-		 SELECT @FCPublish='';
+		 SELECT @FCPublish='I';
 		 IF EXISTS (SELECT TOP 1 1  FROM tblSecGroupPersons WHERE LoginID=@LoginID AND SecGroupID<>(SELECT SecGroupID FROM dbo.tblSecGroups WHERE SecGroupName='Everyone'))
 		 BEGIN
 			SELECT @FCPublish='O';
