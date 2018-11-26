@@ -24,12 +24,13 @@ Elements
 <WebPart WPType="SlickGrid" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Security Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction>DelRow</SGAction>
-	<SQL><![CDATA[DELETE FROM tblYLHouses WHERE [ID] IN (SELECT Val FROM dbo.tfMain_StrToTblStr({{RowIDs}},N'•'));
-	IF @@ROWCOUNT>0 BEGIN
-		SELECT 1 AS Success,{{RowIDs}} AS DelIDs,'' AS RetMsg;
-	END ELSE BEGIN
-		SELECT 0 AS Success,'' AS DelIDs,'Error deleting row(s)' AS RetMsg;
-	END;]]></SQL>
+	<SQL><![CDATA[DELETE FROM tblYLHouses WHERE [ID] IN(SELECT Val FROM dbo.tfMain_StrToTblStr({{RowIDs}},N'•')) AND CreatedBy={{@@LoginID}};
+IF @@ROWCOUNT>0 
+BEGIN
+	SELECT 1 AS Success,{{RowIDs}} AS DelIDs,'' AS RetMsg;
+END ELSE BEGIN
+	SELECT 0 AS Success,'' AS DelIDs,N'删除数据错误' AS RetMsg;
+END;]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

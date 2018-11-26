@@ -100,8 +100,8 @@
                     <tr>
                         <td>单 价</td>
                         <td><input id="UnitPrice" />&nbsp;&nbsp;元</td>
-                        <td>所在楼层<input id="SZLC" /></td>
-                        <td>共有楼层<input id="GYLC" /></td>
+                        <td>所在楼层&nbsp;&nbsp;<input id="SZLC" /><span class="cssSpan">*</span></td>
+                        <td>共有楼层&nbsp;&nbsp;<input id="GYLC" /><span class="cssSpan">*</span></td>
                     </tr>
                     <tr>
                         <td>建筑年份</td>
@@ -111,24 +111,22 @@
                                 <input id="MSF" type="checkbox" name="MSF" value="1">&nbsp;免税房
                             </div>
                         </td>
+                        <td>装修要求&nbsp;&nbsp;<input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>房屋朝向</td>
+                        <td><input id="FWCX" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td>小区选择&nbsp;&nbsp;<input id="XQXZ" tabindex="-1" type="hidden" style="width: 60%" /><span class="cssSpan">*</span></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td>装修要求</td>
-                        <td><input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
-                        <td style="text-align:right">房屋朝向</td>
-                        <td><input id="FWCX" tabindex="-1" title="" style="width: 50%" /></td>
-                    </tr>
-                    <tr>
-                        <td>小区选择</td>
-                        <td><input id="XQXZ" tabindex="-1" type="hidden" style="width: 60%" /><span class="cssSpan">*</span></td>
-                        <td colspan="2">
-                            <span style="width:30%;text-align:right">小区地址</span><input id="XQDZ" style="width: 80%" />
+                        <td>
+                            小区地址
                         </td>
+                        <td colspan="3"><input id="XQDZ" style="width: 80%" /></td>
                     </tr>
                 </table>
             </div>
-
             <div class="large-2 columns">
             </div>
         </div>
@@ -157,7 +155,7 @@
             <div class="large-offset-1 large-9 columns end">
                 <span>详细描述</span>
                 <textarea id="FXMS" cols="2" rows="2" />
-                </div>
+            </div>
         </div>
     </fieldset>
     <fieldset>
@@ -233,7 +231,8 @@
 <script src="../blueimp/js/jquery.fileupload.js"></script>
 <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui.css">
 <noscript>
-    <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css">
+</noscript>
 <script type="text/javascript">
     window.ServerTempFolder = "../../../UploadImages/Temp/";
     $(document).ready(function () {
@@ -603,6 +602,35 @@
                 $.alert('请输入大于零的正整数.'); return false;
             } else {
                 $('#FCHU3').removeClass('cssInput');
+            }
+        }
+        //
+        var SZLC = $('#SZLC').val() || '';
+        if (SZLC.length <= 0) {
+            $.alert('所在楼层 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(SZLC)) {
+                $('#SZLC').addClass('cssInput');
+                ResultFlag = false;
+                $.alert('请输入大于零的正整数.'); return false;
+            } else {
+                $('#SZLC').removeClass('cssInput');
+            }
+        }
+        var GYLC = $('#GYLC').val() || '';
+        if (GYLC.length <= 0) {
+            $.alert('共有楼层 必填.');
+            ResultFlag = false;
+            return false;
+        } else {
+            if (!IsValidPositive(GYLC)) {
+                $('#GYLC').addClass('cssInput');
+                ResultFlag = false;
+                $.alert('请输入大于零的正整数.'); return false;
+            } else {
+                $('#GYLC').removeClass('cssInput');
             }
         }
 
