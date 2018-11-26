@@ -80,7 +80,7 @@
             $('#preview').html(html);
         }
         else {
-            $('#preview').html('');
+            $('#preview').html(''); $('#fileloadRow').show();
         }
     }
     //删除编辑图片
@@ -110,7 +110,7 @@
                 var src = $(item).find("img").attr("src").replace(window.ServerTempFolder, "");
                 PicList += src.replace("/", "|") + '•';
             });
-            alert(PicList);
+
             PicList= PicList.substring(0,PicList.length-1);
          
         }

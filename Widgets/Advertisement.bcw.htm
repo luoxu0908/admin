@@ -100,11 +100,13 @@
                         $('#GGLJ').val(Tbl.Rows[0].GGLJ || '');
                         $('#GGBT').val(Tbl.Rows[0].GGBT || '');
                         //加载图片
-                        IntiUploadFiles(Tbl.Rows[0].ImageList || '');
+                        IntiUploadFiles(Tbl.Rows[0].ImageList);
+
                     }
                     else{
-                        $('#preview').html('');
+                        IntiUploadFiles('');
                     }
+                   
                 }
             });
     }
@@ -139,7 +141,6 @@
             .then(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
                     if (data.d.RetData.Tbl.Rows[0].Success == true) {
-                        $('#Save').attr('disabled', 'disabled');
                         alert('保存成功！');
                     } else {
                         $('#Save').removeAttr('disabled', 'disabled');
