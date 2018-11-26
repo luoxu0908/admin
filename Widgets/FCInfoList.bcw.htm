@@ -28,6 +28,7 @@
             <button onclick="exportData(); return false;">导出Excel</button>
             <button onclick="XXLH(); return false;" style="display:none" id="XXLH">信息拉黑</button>
             <button onclick="XXJH(); return false;" style="display:none" id="XXJH">信息激活</button>
+            <button onclick="delSelRows(); return false;"  id="Delete">删除</button>
         </div>
     </div>
 </div>
@@ -91,6 +92,10 @@
                 }
                 else { $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open'); }
             });
+    }
+
+    function delSelRows() {
+        SGH.GridRowDel({ 'RowIDs': SGH.getSelectedRowIDsStr() });
     }
     function RefershInfo(ID) {
         return $.JSONPost('YL1.OrderInfoRefresh.json', { 'ProductID': ID }).done(function (data) {
