@@ -52,7 +52,7 @@
                     <div class="am-form-group tpl-login-remember-me">
                         <input id="rememberme" type="checkbox">
                         <label for="remember-me">
-                            记住密码<a href="sign-up.html">&nbsp;&nbsp;&nbsp;&nbsp;注册</a><a href="">&nbsp;&nbsp;&nbsp;&nbsp;忘记密码</a>
+                            记住密码<a href="sign-up.html">&nbsp;&nbsp;&nbsp;&nbsp;注册</a><a href="ForgotPassword.html">&nbsp;&nbsp;&nbsp;&nbsp;忘记密码</a>
                         </label>
                     </div>
                     <div class="am-form-group">
@@ -146,7 +146,7 @@
             });
         });
         function PageIsValid() {
-            var isValid = true;
+            var isValid = true;$userDiv
             $userDiv = $('#username').parent('div'), $passDiv = $('#password').parent('div');
             $userDiv.children('small').remove(); $passDiv.children('small').remove();
             if ($('#username').val() === '') {
