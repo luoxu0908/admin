@@ -64,7 +64,7 @@
                                 <li class="tpl-dropdown-menu-messages">
                                     <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
                                         <div class="menu-messages-ico">
-                                            <img src="assets/img/user04.png" alt="">
+                                            <img src="assets/img/user04.png" alt="" class="ImgPhoto">
                                         </div>
                                         <div class="menu-messages-time">
                                             3小时前
@@ -83,7 +83,7 @@
                                 <li class="tpl-dropdown-menu-messages">
                                     <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
                                         <div class="menu-messages-ico">
-                                            <img src="assets/img/user02.png" alt="">
+                                            <img src="assets/img/user02.png" alt="" class="ImgPhoto">
                                         </div>
                                         <div class="menu-messages-time">
                                             5天前
@@ -170,7 +170,7 @@
             <div class="tpl-sidebar-user-panel">
                 <div class="tpl-user-panel-slide-toggleable">
                     <div class="tpl-user-panel-profile-picture">
-                        <img src="assets/img/user04.png" alt="">
+                        <img src="assets/img/user04.png" alt="" class="ImgPhoto">
                     </div>
                     <span class="user-panel-logged-in-text">
                         <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
@@ -212,27 +212,29 @@
     <script src="assets/js/dataTables.responsive.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        window.ifrC = $('#contentframe'); defaultPageUrl='';
+
+        window.ifrC = $('#contentframe'); defaultPageUrl = '';
         window.ifrCDiv = $('#ifrCDiv'); //iOS compatability hack
         $(function () {
             CookieIsActive();
             LoginInfo().done(function (data) {
                 if (data.d.RetData.LoginID <= 0) {
                     window.top.location = 'login.html';
-                } else {   
+                } else {
                     $('#dispname').html(data.d.RetData.DispName);
                     $('#UserName').html(data.d.RetData.Username);
-                    if ($.cookie('Menu') !== null && parseInt($.cookie('Menu')) === 0) { } 
-                    else { $('nav').removeClass('bchide'); 
-                    GetMenu(); 
-                }
-                    if($.cookie('CurrPage')){
-                        if($.cookie('CurrPage')=='index.html'){
+                    if ($.cookie('Menu') !== null && parseInt($.cookie('Menu')) === 0) { }
+                    else {
+                        $('nav').removeClass('bchide');
+                        GetMenu();
+                    }
+                    if ($.cookie('CurrPage')) {
+                        if ($.cookie('CurrPage') == 'index.html') {
                             ChangeFrameSrc(defaultPageUrl);
                             return;
                         }
                         ChangeFrameSrc($.cookie('CurrPage'));
-                    }else{
+                    } else {
                         ChangeFrameSrc(defaultPageUrl);
                     }
                 }
@@ -240,10 +242,11 @@
 
         });
         function GetMenu(callback) {
-         return   $.JSONPost('iCtc1.GetOwnPersonID.json')
+            return $.JSONPost('iCtc1.GetOwnPersonID.json')
                 .done(function (data) {
                     var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
-                    if (RowCnt > 0) { window.PID = R[0].PersonID; }
+                    if (RowCnt > 0) { window.PID = R[0].PersonID; RefreshPhoto('Photo', 'ImgPhoto', window.PID, function () { }); }
+
                     loadMenu();
                 });
         }
@@ -255,7 +258,7 @@
             });
         }
         function loadMenu() {
-         return   $.JSONPost('Sec1.Menu.json', { '': '' })
+            return $.JSONPost('Sec1.Menu.json', { '': '' })
                 .done(function (data) {
                     var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
                     if (RowCnt > 0) {
@@ -287,7 +290,7 @@
                                 }
                             }
                             var menuHtml = '';
-                        
+
                             var arry = new Array('home', 'search', 'wpforms', 'user', 'phone', 'ship', 'simplybuilt', 'server', 'search', 'table', 'phone', 'search', 'table', 'phone', 'search', 'table', 'phone', 'search')
                             for (var i = 0; i < menuList.length; i++) {
                                 menuHtml += '<li class="sidebar-nav-link">';
@@ -295,10 +298,10 @@
                                 menuHtml += '<a href="javascript:;" class="sidebar-nav-sub-title"><i class="am-icon-' + arry[i] + ' sidebar-nav-link-logo"></i> ' + menuList[i].Name + '<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span></a>';
                                 menuHtml += '<ul class="sidebar-nav sidebar-nav-sub">';
                                 for (var j = 0; j < menuList[i].URLList.length; j++) {
-                                   if(menuList[i].URLList[j].Name == "个人资料"){
-                                    defaultPageUrl=menuList[i].URLList[j].Value + '&PID=' + window.PID; console.log(defaultPageUrl);
-                                   }
-                                    if (menuList[i].URLList[j].Name == "架构中心" || menuList[i].URLList[j].Name == "我的收藏"|| menuList[i].URLList[j].Name == "日访问量") {
+                                    if (menuList[i].URLList[j].Name == "个人资料") {
+                                        defaultPageUrl = menuList[i].URLList[j].Value + '&PID=' + window.PID; console.log(defaultPageUrl);
+                                    }
+                                    if (menuList[i].URLList[j].Name == "架构中心" || menuList[i].URLList[j].Name == "我的收藏" || menuList[i].URLList[j].Name == "日访问量") {
                                         menuHtml += '<li class="sidebar-nav-link"><i class="fa fa-phone"></i><a target="_top" onclick="ChangeFrameSrc(\'' + menuList[i].URLList[j].Value + '?PID=' + window.PID + '\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + (menuList[i].URLList[j].Name || menuList[i].Name) + '</a></li>';
                                     } else {
                                         menuHtml += '<li class="sidebar-nav-link"><i class="fa fa-phone"></i><a target="_top" onclick="ChangeFrameSrc(\'' + menuList[i].URLList[j].Value + '&PID=' + window.PID + '\');return false;" href="javascript:;" "> <span class="am-icon-angle-right sidebar-nav-link-logo"></span> ' + (menuList[i].URLList[j].Name || menuList[i].Name) + '</a></li>';
@@ -307,8 +310,8 @@
                                 menuHtml += '</ul>';
                                 menuHtml += '</li>';
                             }
-                            $('#menuContent').html(menuHtml); 
-                            $.cookie('CurrPage',defaultPageUrl);  ChangeFrameSrc(defaultPageUrl);
+                            $('#menuContent').html(menuHtml);
+                            $.cookie('CurrPage', defaultPageUrl); ChangeFrameSrc(defaultPageUrl);
                             BindEvent();
                         }
                     }
@@ -359,6 +362,27 @@
                     $.cookie('CurrPage', null, { 'expires': 1 });
                     window.top.location = ('login.html');
                 });
+        }
+
+
+
+        function RefreshPhoto(HID, IID, PID, callback) {
+            $.JSONPost('iCtc1.GetEntityPhotoInfo.json', { 'EntityID': PID })
+                .done(function (data) {
+                    SetPhotoSrc(data.d.RetMsg, data.d.RetData);
+                    if (callback) { callback(); }
+                });
+        }
+        function SetPhotoSrc(InfoID, FileID) {
+            var HID = 'Photo', IID = 'ImgPhoto';
+            var PID = window.PID;
+            $("." + HID).data("EntityID", PID).data("InfoID", InfoID).data("FileID", FileID).data("HID", HID).data("IID", IID); ////save the info to the a href element
+            //update img source
+            if ((FileID || 0) > 0) {
+                $("." + IID).attr("src", ("iKB/InfoNugget/ExtFunc/ThumbnailAccess.aspx?fileid=" + FileID + "&" + new Date().getTime())).attr("alt", "Click to replace the photo");
+            } else {
+                $("." + IID).attr("src", "styles/default/images/iContact/NoPhoto.gif").attr("alt", "Click to upload a photo");
+            }
         }
     </script>
 </body>
