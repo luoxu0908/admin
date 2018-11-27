@@ -64,6 +64,10 @@
     .cssSpan {
         color: red;
     }
+    input[type="text"], input[type="file"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"]{
+        width: auto;
+        display: inline;
+    }
 </style>
 <div id="mainform" class="large-12 columns end">
     <fieldset>
@@ -77,13 +81,13 @@
                         <td>发布类型</td>
                         <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
-                        <td>总价&nbsp;<input id="FCZJ" />&nbsp;&nbsp;万元<span id="FCZJSpan" class="cssSpan">*</span></td>
+                        <td>总价&nbsp;<input id="FCZJ" type="text"/>&nbsp;&nbsp;万元<span id="FCZJSpan" class="cssSpan">*</span></td>
                     </tr>
                     <tr>
                         <td>参考首付</td>
-                        <td><input id="FirstPayment" />&nbsp;&nbsp;万元<span id="FirstPaymentSpan" class="cssSpan">*</span></td>
+                        <td><input id="FirstPayment" type="text"/>&nbsp;&nbsp;万元<span id="FirstPaymentSpan" class="cssSpan">*</span></td>
                         <td>
-                            <span>面　　积</span> <input id="FCMJ" />&nbsp;&nbsp;元
+                            <span>面　　积</span> <input id="FCMJ" type="text"/>&nbsp;&nbsp;元
                         </td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
@@ -93,15 +97,15 @@
                     </tr>
                     <tr>
                         <td>户　　型</td>
-                        <td><input id="FCHU1" />&nbsp;&nbsp;室<span class="cssSpan">*</span></td>
-                        <td style="width: 30%"><input id="FCHU2" />&nbsp;&nbsp;厅<span class="cssSpan">*</span></td>
-                        <td><input id="FCHU3" />&nbsp;&nbsp;卫<span class="cssSpan">*</span></td>
+                        <td><input id="FCHU1" type="text"/>&nbsp;&nbsp;室<span class="cssSpan">*</span></td>
+                        <td style="width: 30%"><input id="FCHU2" type="text"/>&nbsp;&nbsp;厅<span class="cssSpan">*</span></td>
+                        <td><input id="FCHU3" type="text"/>&nbsp;&nbsp;卫<span class="cssSpan">*</span></td>
                     </tr>
                     <tr>
                         <td>单 价</td>
-                        <td><input id="UnitPrice" />&nbsp;&nbsp;元</td>
-                        <td>所在楼层&nbsp;&nbsp;<input id="SZLC" /><span class="cssSpan">*</span></td>
-                        <td>共有楼层&nbsp;&nbsp;<input id="GYLC" /><span class="cssSpan">*</span></td>
+                        <td><input id="UnitPrice" type="text"/>&nbsp;&nbsp;元</td>
+                        <td>所在楼层&nbsp;&nbsp;<input id="SZLC" type="text"/><span class="cssSpan">*</span></td>
+                        <td>共有楼层&nbsp;&nbsp;<input id="GYLC" /type="text"><span class="cssSpan">*</span></td>
                     </tr>
                     <tr>
                         <td>建筑年份</td>
@@ -123,7 +127,7 @@
                         <td>
                             小区地址
                         </td>
-                        <td colspan="3"><input id="XQDZ" style="width: 80%" /></td>
+                        <td colspan="3"><input id="XQDZ" style="width: 80%" type="text"/></td>
                     </tr>
                 </table>
             </div>
@@ -148,7 +152,7 @@
             <br>
             <div class="large-offset-1 large-9 columns end">
                 <span>标题<span class="cssSpan">*</span></span>
-                <input id="FXBT" style="width:80%;"> <br> <br>
+                <input id="FXBT" style="width:80%;" type="text"> <br> <br>
             </div>
         </div>
         <div class="row" style="display:none">
