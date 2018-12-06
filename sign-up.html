@@ -116,7 +116,7 @@
                             $("#my-alert").modal('open')
                         }
                         else {
-                             $('#my-alertError .am-modal-bd').html(data.d.RetData.RetMsg);
+                             $('#my-alertError .am-modal-bd').html(data.d.RetData.Tbl.Rows[0].ReturnMsg);
                             $("#my-alertError").modal('open')
                         }
                     }

@@ -31,7 +31,7 @@ BEGIN
 	END
 	ELSE
     BEGIN
-		 SELECT @RetMsg=N'该用户名已经存在!';
+		 SELECT @RetMsg=N'手机号码已存在!';
 	END
 	
 	IF LEN(@RetMsg)=0 BEGIN SET @Success=1;END
