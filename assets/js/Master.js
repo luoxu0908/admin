@@ -118,7 +118,7 @@ jQuery.fn.extend({
 					} catch (e) {
 						RetVal = 404;
 						if (jqXHR.responseText) {
-							ReMsg="请求数据发生错误！请联系管理员！";
+							ReMsg=jqXHR.responseText;
 							//RetMsg = 'Request error (404A) - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
 						} else { //empty response - blocked or does not exist or false
 							ReMsg="请求数据发生错误！请联系管理员！";
@@ -151,7 +151,7 @@ jQuery.fn.extend({
 					return;
 				}
 				else if (Opt.ShowErrMsg) {
-					if (RetMsg.length > 0) { $.alert('请求数据发生错误！请联系管理员！'); return; }
+					if (RetMsg.length > 0) { $.alert(RetMsg); return; }
 					else {
 						$.alert('请求数据发生错误！请联系管理员！'); 
 						 //$.alert('Request error - please check with support (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')'); 
@@ -162,7 +162,7 @@ jQuery.fn.extend({
 			RetVal = 408; RetMsg="请求超时！";
 			//RetMsg = 'Request timeout or network error - please try again and check with support if it recurs (The following info may help in tracing the issue: ' + Opt.URL + ', ' + Opt.ReqGUID + ')';
 			if (typeof (Opt.FailFN) === "function") { Opt.FailFN(RetVal, RetMsg, data, Opt); }
-			if (Opt.ShowErrMsg) { $.alert('请求数据发生错误！请联系管理员！'); return; }
+			if (Opt.ShowErrMsg) { $.alert(RetMsg); return; }
 		}
 	}
 
