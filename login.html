@@ -12,32 +12,21 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="icon" type="image/png" href="assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <meta name="apple-mobile-web-app-title" content="杨凌之家" />
     <link rel="stylesheet" href="assets/css/amazeui.min.css" />
-    <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/Master.js"></script>
     <script src="assets/js/Security.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/amazeui.min.js"></script>
+    <script src="assets/js/app.js"></script>
 </head>
 
 <body data-type="login">
-    <script src="assets/js/theme.js"></script>
+   
     <div class="am-g tpl-g">
-        <!-- 风格切换 -->
-        <div class="tpl-skiner" style="display:none">
-            <div class="tpl-skiner-toggle am-icon-cog">
-            </div>
-            <div class="tpl-skiner-content">
-                <div class="tpl-skiner-content-title">
-                    选择主题
-                </div>
-                <div class="tpl-skiner-content-bar">
-                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
-                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
-                </div>
-            </div>
-        </div>
+      
         <div class="tpl-login">
             <div class="tpl-login-content">
                 <div class="tpl-login-logo">
@@ -62,8 +51,7 @@
             </div>
         </div>
     </div>
-    <script src="assets/js/amazeui.min.js"></script>
-    <script src="assets/js/app.js"></script>
+
     <script>
         function GetConfig(callback) {
             $.JSONPost('Main1.GetLookup.json', { 'TblName': 'tblMainLookup', 'LookupCat': 'MenuConfig', 'LookupKey': 'Title' })
@@ -159,9 +147,6 @@
             }
             return isValid;
         }
-    </script>
-    <script>
-        //window.Utils.CheckBrowserWarn();
     </script>
 </body>
 
