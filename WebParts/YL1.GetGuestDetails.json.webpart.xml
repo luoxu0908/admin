@@ -24,8 +24,22 @@ Elements
 <WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Guest">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[select ID,GGWZ,GGSX,GGLJ,GGBT,ImagePath ,'../../../UploadImages/Temp/'+REPLACE(REPLACE(ImageName,'|','/'),'•','') AS ImageList 
-FROM tblYLAdvertisement WHERE GGWZ=6 ORDER BY GGSX]]></SQL>
+	<SQL><![CDATA[DECLARE @ImageList nvarchar(max);
+SELECT @ImageList='';
+SELECT @ImageList=@ImageList+ImageID+'/'+FileName+';' FROM tblYLFCImage 
+where ItemKey={{ID}};
+
+SELECT @ImageList AS ImageList,JYLX,FirstPayment,TL.Description AS XQMC,TL2.Description AS FWCXD,FXBT,FCZJ,UDF2,FCHU1,FCHU2,FCHU3,FCMJ,XQDZ,FCTS,CoreSellingPoint,OwnerMentality,VillageMatch,ServiceIntroduction,JZNF,FXMS,TL3.Description ZXYQ,TL4.Description AS FCLX,vw.Mobile AS LXDH,
+(CASE WHEN LEN(GYLC)>0 THEN GYLC ELSE N'高' END) AS GYLC,
+(CASE  WHEN TRY_CONVERT(DECIMAL(12,2),ISNULL(SZLC,0))/TRY_CONVERT(DECIMAL(12,2),ISNULL(GYLC,7))<=0.33 THEN N'低' WHEN TRY_CONVERT(DECIMAL(12,2),ISNULL(SZLC,0))/TRY_CONVERT(DECIMAL(12,2),ISNULL(GYLC,7)) BETWEEN 0.33 AND 0.66 THEN N'中'  WHEN TRY_CONVERT(DECIMAL(12,2),ISNULL(SZLC,0))/TRY_CONVERT(DECIMAL(12,2),ISNULL(GYLC,7)) BETWEEN 0.66 AND 1 THEN N'高' ELSE N'低' END) as SZLC
+FROM tblYLHouses YL
+left JOIN dbo.tblTicketLookup TL ON YL.XQXZ=TL.LookupKey AND TL.LookupCat=N'小区名称'
+left JOIN dbo.tblTicketLookup TL2 ON YL.FWCX=TL2.LookupKey AND TL2.LookupCat=N'房屋朝向'
+left JOIN dbo.tblTicketLookup TL3 ON YL.ZXYQ=TL3.LookupKey AND TL3.LookupCat=N'装修要求'
+left JOIN dbo.tblTicketLookup TL4 ON YL.HousesType=TL4.LookupKey AND TL4.LookupCat=N'房产类型'
+INNER JOIN dbo.vwCtcPRoles vw ON YL.CreatedBy=vw.LoginID 
+ WHERE ID={{ID}}
+]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>
