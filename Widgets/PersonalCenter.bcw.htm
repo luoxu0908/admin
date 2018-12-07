@@ -90,7 +90,7 @@
         <div class="row">
             <div class="large-6 columns end">
                 <label for="Email">
-                    邮箱<span class="cssSpan">*</span>
+                    邮箱
                 </label>
                 <input type="text" id="Email" />
             </div>
@@ -241,22 +241,19 @@
         }
         var TelPhone = $('#TelPhone').val() || '';
         if (TelPhone.length > 0) {
-            if (!isTel(TelPhone)) {
+            if ((isTel(TelPhone)) || (isPhoneNo(TelPhone))) {
+                 $('#TelPhone').css('border-color', '');
+            } else {
                 $('#TelPhone').css('border-color', 'red');
                 ResultFlag = false;
-                $.alert('固定电话 格式不对.'); return false;
-            } else {
-                $('#TelPhone').css('border-color', '');
+                $.alert('固定电话或手机 格式不对.'); return false;
             }
         }
      
        
         var Email = $('#Email').val() || '';
-        if (Email.length <= 0) {
-            $.alert('邮箱 必填.');
-            ResultFlag = false;
-            return false;
-        } else {
+
+        if (Email.length > 0) {
             if (!IsValidEmail(Email)) {
                 $('#Email').css('border-color', 'red');
                 ResultFlag = false;
@@ -264,7 +261,7 @@
             } else {
                 $('#Email').css('border-color', '');
             }
-        }
+        } 
       
         return ResultFlag;
     }
