@@ -81,7 +81,7 @@
                         <td>发布类型</td>
                         <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
-                        <td>租金&nbsp;<input id="UnitPrice" type="text"/>&nbsp;&nbsp;元<span class="cssSpan">*</span></td>
+                        <td>租　　金&nbsp;<input id="UnitPrice" type="text"/>&nbsp;&nbsp;元<span class="cssSpan">*</span></td>
                     </tr>
                     <tr style="display:none">
                         <td>总价</td>
@@ -100,28 +100,38 @@
                     </tr>
                     <tr>
                         <td>户　　型</td>
-                        <td><input id="FCHU1" type="text"/>&nbsp;&nbsp;室<span class="cssSpan">*</span></td>
-                        <td style="width: 30%"><input id="FCHU2" type="text"/>&nbsp;&nbsp;厅<span class="cssSpan">*</span></td>
-                        <td><input id="FCHU3" type="text"/>&nbsp;&nbsp;卫<span class="cssSpan">*</span></td>
-                    </tr>
-                    <tr>
-                        <td>面　　积</td>
-                        <td><input id="FCMJ" type="text"/>&nbsp;&nbsp;平米<span class="cssSpan">*</span></td>
-                        <td>所在楼层&nbsp;&nbsp;<input id="SZLC" type="text"/><span class="cssSpan">*</span></td>
-                        <td>共有楼层&nbsp;&nbsp;<input id="GYLC" type="text"/><span class="cssSpan">*</span></td>
-                    </tr>
-                    <tr>
-                        <td>建筑年份</td>
-                        <td><input id="JZNF" tabindex="-1" title="" style="width: 50%" /></td>
-                        <td>
-                            装修要求&nbsp;&nbsp;<input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span>
+                        <td colspan="2">
+                            <div class="row">
+                                <div class="large-4 columns">
+                                    <input id="FCHU1" type="text" />&nbsp;室<span class="cssSpan">*</span>
+                                </div>
+                                <div class="large-4 columns">
+                                    <input id="FCHU2" type="text" />&nbsp;厅<span class="cssSpan">*</span>
+                                </div>
+                                <div class="large-4 columns end">
+                                    <input id="FCHU3" type="text" />&nbsp;卫<span class="cssSpan">*</span>
+                                </div>
+                            </div>
                         </td>
-                        <td>房屋朝向&nbsp;&nbsp;<input id="FWCX" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td>面　　积&nbsp;&nbsp;<input id="FCMJ" type="text" />&nbsp;&nbsp;平<span class="cssSpan">*</span></td>
                     </tr>
                     <tr>
-                        <td>小区选择&nbsp;&nbsp;</td>
-                        <td><input id="XQXZ" tabindex="-1" type="hidden" style="width: 60%" placeholder="请输入小区名称"/><span class="cssSpan">*</span></td>
-                        <td colspan="2">小区地址&nbsp;&nbsp;<input id="XQDZ" type="text" style="width: 80%" placeholder="请输入小区地址"/></td>
+                        <td>所在楼层</td>
+                        <td><input id="SZLC" type="text" /><span class="cssSpan">*</span></td>
+                        <td>共有楼层&nbsp;&nbsp;<input id="GYLC" type="text"/><span class="cssSpan">*</span></td>
+                        <td>建筑年份&nbsp;&nbsp;<input id="JZNF" tabindex="-1" title="" style="width: 50%" /></td>
+                    </tr>
+                    <tr>
+                        <td>装修要求</td>
+                        <td><input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                        <td>房屋朝向&nbsp;&nbsp;<input id="FWCX" tabindex="-1" title="" style="width: 50%" /></td>
+                        <td>
+                            小区选择&nbsp;&nbsp;<input id="XQXZ" tabindex="-1" type="hidden" style="width: 60%" placeholder="请输入小区名称" /><span class="cssSpan">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>小区地址</td>
+                        <td colspan="3">小区地址&nbsp;&nbsp;<input id="XQDZ" type="text" style="width: 80%" placeholder="请输入小区地址"/></td>
                     </tr>
                 </table>
             </div>
@@ -221,6 +231,7 @@
 </div>
 <div id="PayDialog" title="zhifu" style="display: none;">
 </div>
+
 <script type="text/javascript">
     var $AddNewImage = $('#Image'); window.MaxUploadCount = 3;
     window._Delim = String.fromCharCode(8226); window.Category = '', window.CostCenter = ''; //•
@@ -258,7 +269,7 @@
             } else { $("#XQXZ").select2("val", ""); }
         });
     });
-  
+
     function GetDropdownList(id, category) {
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
@@ -380,15 +391,15 @@
 
                         $('#FXBT').val(Tbl.Rows[0].FXBT || '');
                         $('#FXMS').val(Tbl.Rows[0].FXMS || '');
-                        IntiUploadFiles(Tbl.Rows[0].ImageList,';');
+                        IntiUploadFiles(Tbl.Rows[0].ImageList, ';');
                     }
-                    else{
+                    else {
                         IntiUploadFiles('');
                     }
                 }
             });
     }
-    
+
     function SaveCheck() {
         var ResultFlag = true;
         var JYLX = $('#JYLX').val() || '';
@@ -413,7 +424,7 @@
             if (!IsValidMoney(UnitPrice)) {
                 $('#UnitPrice').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正数.'); return false;
+                $.alert('请输入正数.'); return false;
             } else {
                 $('#UnitPrice').removeClass('cssInput');
             }
@@ -428,7 +439,7 @@
             if (!IsValidPositive(FCHU1)) {
                 $('#FCHU1').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#FCHU1').removeClass('cssInput');
             }
@@ -441,7 +452,7 @@
             if (!IsValidPositive(FCHU2)) {
                 $('#FCHU2').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#FCHU2').removeClass('cssInput');
             }
@@ -454,7 +465,7 @@
             if (!IsValidPositive(FCHU3)) {
                 $('#FCHU3').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#FCHU3').removeClass('cssInput');
             }
@@ -469,7 +480,7 @@
             if (!IsValidPositive(FCMJ)) {
                 $('#FCMJ').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正数.'); return false;
+                $.alert('请输入正数.'); return false;
             } else {
                 $('#FCMJ').removeClass('cssInput');
             }
@@ -484,7 +495,7 @@
             if (!IsValidPositive(SZLC)) {
                 $('#SZLC').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#SZLC').removeClass('cssInput');
             }
@@ -498,7 +509,7 @@
             if (!IsValidPositive(GYLC)) {
                 $('#GYLC').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#GYLC').removeClass('cssInput');
             }
@@ -633,7 +644,7 @@
     }
 
     function IsValidPositive(data) {
-        var re = /^[1-9]+\d*$/;
+        var re = /^(0|\+?[1-9][0-9]*)$/;
         return re.test(data);
     }
     function IsValidMoney(data) {

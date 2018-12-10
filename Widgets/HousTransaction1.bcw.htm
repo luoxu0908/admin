@@ -18,7 +18,7 @@
             background-color: white;
             color: white;
         }
-
+       
     .delbutton {
         display: inline;
         right: 10px;
@@ -26,7 +26,6 @@
         top: -5px;
         cursor: pointer;
         background-color: #f5f5f5;
-        ;
         border-radius: 50%;
     }
 
@@ -78,7 +77,7 @@
             <div class="large-9 columns">
                 <table>
                     <tr>
-                        <td>发布类型</td>
+                        <td style="width:8%">发布类型</td>
                         <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td>总价&nbsp;<input id="FCZJ" type="text"/>&nbsp;&nbsp;万元<span id="FCZJSpan" class="cssSpan">*</span></td>
@@ -87,41 +86,46 @@
                         <td>参考首付</td>
                         <td><input id="FirstPayment" type="text"/>&nbsp;&nbsp;万元<span id="FirstPaymentSpan" class="cssSpan">*</span></td>
                         <td>
-                            <span>面　　积</span> <input id="FCMJ" type="text"/>&nbsp;&nbsp;元
+                            <span>面　　积</span> <input id="FCMJ" type="text"/>&nbsp;&nbsp;平
                         </td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
-                                <input id="FCDK" type="checkbox" name="FCDK" value="1">&nbsp;不能贷款
+                                <input id="FCDK" type="checkbox" name="FCDK" value="1">&nbsp;&nbsp;不能贷款&nbsp;&nbsp;
+                                <input id="MSF" type="checkbox" name="MSF" value="1">&nbsp;&nbsp;免税房
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>户　　型</td>
-                        <td><input id="FCHU1" type="text"/>&nbsp;&nbsp;室<span class="cssSpan">*</span></td>
-                        <td style="width: 30%"><input id="FCHU2" type="text"/>&nbsp;&nbsp;厅<span class="cssSpan">*</span></td>
-                        <td><input id="FCHU3" type="text"/>&nbsp;&nbsp;卫<span class="cssSpan">*</span></td>
-                    </tr>
-                    <tr>
-                        <td>单 价</td>
-                        <td><input id="UnitPrice" type="text"/>&nbsp;&nbsp;元</td>
-                        <td>所在楼层&nbsp;&nbsp;<input id="SZLC" type="text"/><span class="cssSpan">*</span></td>
-                        <td>共有楼层&nbsp;&nbsp;<input id="GYLC" /type="text"><span class="cssSpan">*</span></td>
-                    </tr>
-                    <tr>
-                        <td>建筑年份</td>
-                        <td><input id="JZNF" tabindex="-1" title="" style="width: 50%" /><span id="JZNFSpan" class="cssSpan">*</span></td>
-                        <td style="width: 30%">
-                            <div class="paddingcolumns">
-                                <input id="MSF" type="checkbox" name="MSF" value="1">&nbsp;免税房
+                        <td colspan="2">
+                            <div class="row">
+                                <div class="large-4 columns">
+                                    <input id="FCHU1" type="text" />&nbsp;室<span class="cssSpan">*</span>
+                                </div>
+                                <div class="large-4 columns">
+                                    <input id="FCHU2" type="text" />&nbsp;厅<span class="cssSpan">*</span>
+                                </div>
+                                <div class="large-4 columns end">
+                                    <input id="FCHU3" type="text"/>&nbsp;卫<span class="cssSpan">*</span>
+                                </div>
                             </div>
                         </td>
-                        <td>装修要求&nbsp;&nbsp;<input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                        <td>
+                            <span>单　　价</span><input id="UnitPrice" type="text" />&nbsp;&nbsp;元
+                        </td>
                     </tr>
                     <tr>
-                        <td>房屋朝向</td>
-                        <td><input id="FWCX" tabindex="-1" title="" style="width: 50%" /></td>
-                        <td>小区选择&nbsp;&nbsp;<input titlt="请选择小区" id="XQXZ" tabindex="-1" type="text" style="width: 60%" placeholder="请输入小区名称"/><span class="cssSpan">*</span></td>
-                        <td></td>
+                        <td>所在楼层</td>
+                        <td><input id="SZLC" type="text" /><span class="cssSpan">*</span></td>
+                        <td>共有楼层&nbsp;&nbsp;<input type="text" id="GYLC" /><span class="cssSpan">*</span></td>
+                        <td>建筑年份&nbsp;&nbsp;<input id="JZNF" tabindex="-1" title="" style="width: 50%" /><span id="JZNFSpan" class="cssSpan">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>装修要求</td>
+                        <td><input id="ZXYQ" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
+                        <td>房屋朝向&nbsp;&nbsp;<input id="FWCX" tabindex="-1" title="" style="width: 50%" /></td>
+                       
+                        <td>小区选择&nbsp;&nbsp;<input title="请选择小区" id="XQXZ" tabindex="-1" type="text" style="width: 60%" placeholder="请输入小区名称" /><span class="cssSpan">*</span></td>
                     </tr>
                     <tr>
                         <td>
@@ -164,7 +168,7 @@
     </fieldset>
     <fieldset>
         <legend>上传图片</legend>
-        <div class="row" >
+        <div class="row">
             <div class="large-offset-1 large-9 columns end">
                 <div class="row" id="Image">
                 </div>
@@ -289,7 +293,7 @@
             } else { $("#XQXZ").select2("val", ""); }
         });
     });
-  
+
     function GetDropdownList(id, category) {
         return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
             var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
@@ -414,9 +418,9 @@
                         $('#FXBT').val(Tbl.Rows[0].FXBT || '');
                         $('#FXMS').val(Tbl.Rows[0].FXMS || '');
                         //加载图片
-                        IntiUploadFiles(Tbl.Rows[0].ImageList,';');
+                        IntiUploadFiles(Tbl.Rows[0].ImageList, ';');
                     }
-                    else{
+                    else {
                         IntiUploadFiles('');
                     }
                 }
@@ -445,7 +449,7 @@
             if (!IsValidMoney(FCZJ)) {
                 $('#FCZJ').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正数.'); return false;
+                $.alert('请输入正数.'); return false;
             } else {
                 $('#FCZJ').removeClass('cssInput');
             }
@@ -460,7 +464,7 @@
             if (!IsValidMoney(FirstPayment)) {
                 $('#FirstPayment').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正数.'); return false;
+                $.alert('请输入正数.'); return false;
             } else {
                 $('#FirstPayment').removeClass('cssInput');
             }
@@ -475,7 +479,7 @@
             if (!IsValidMoney(UnitPrice)) {
                 $('#UnitPrice').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正数.'); return false;
+                $.alert('请输入正数.'); return false;
             } else {
                 $('#UnitPrice').removeClass('cssInput');
             }
@@ -492,7 +496,7 @@
             if (!IsValidPositive(FCHU1)) {
                 $('#FCHU1').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#FCHU1').removeClass('cssInput');
             }
@@ -505,7 +509,7 @@
             if (!IsValidPositive(FCHU2)) {
                 $('#FCHU2').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#FCHU2').removeClass('cssInput');
             }
@@ -518,7 +522,7 @@
             if (!IsValidPositive(FCHU3)) {
                 $('#FCHU3').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#FCHU3').removeClass('cssInput');
             }
@@ -533,7 +537,7 @@
             if (!IsValidPositive(SZLC)) {
                 $('#SZLC').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#SZLC').removeClass('cssInput');
             }
@@ -547,7 +551,7 @@
             if (!IsValidPositive(GYLC)) {
                 $('#GYLC').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正整数.'); return false;
+                $.alert('请输入正整数.'); return false;
             } else {
                 $('#GYLC').removeClass('cssInput');
             }
@@ -562,7 +566,7 @@
             if (!IsValidPositive(FCMJ)) {
                 $('#FCMJ').addClass('cssInput');
                 ResultFlag = false;
-                $.alert('请输入大于零的正数.'); return false;
+                $.alert('请输入正数.'); return false;
             } else {
                 $('#FCMJ').removeClass('cssInput');
             }
@@ -718,7 +722,7 @@
     }
 
     function IsValidPositive(data) {
-        var re = /^[1-9]+\d*$/;
+        var re = /^(0|\+?[1-9][0-9]*)$/;
         return re.test(data);
     }
     function IsValidMoney(data) {
