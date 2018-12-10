@@ -302,7 +302,7 @@
                                 menuHtml += '<a href="javascript:;" class="sidebar-nav-sub-title"><i class="am-icon-' + arry[i] + ' sidebar-nav-link-logo"></i> ' + menuList[i].Name + '<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span></a>';
                                 menuHtml += '<ul class="sidebar-nav sidebar-nav-sub">';
                                 for (var j = 0; j < menuList[i].URLList.length; j++) {
-                                    if (menuList[i].URLList[j].Name == "个人资料") {
+                                    if (menuList[i].URLList[j].Name == "房屋出售") {
                                         defaultPageUrl = menuList[i].URLList[j].Value + '&PID=' + window.PID; console.log(defaultPageUrl);
                                     }
                                     if (menuList[i].URLList[j].Name == "架构中心" || menuList[i].URLList[j].Name == "我的收藏" || menuList[i].URLList[j].Name == "日访问量") {
@@ -315,8 +315,10 @@
                                 menuHtml += '</li>';
                             }
                             $('#menuContent').html(menuHtml);
+                          
                             $.cookie('CurrPage', defaultPageUrl); ChangeFrameSrc(defaultPageUrl);
                             BindEvent();
+                            $('.sidebar-nav-sub-title').eq(0).click(); $('.sidebar-nav-sub-title').eq(1).click();
                         }
                     }
                 });
