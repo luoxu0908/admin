@@ -22,13 +22,14 @@
     <link rel="stylesheet" href="../blueimp/css/jquery.fileupload-ui-noscript.css"></noscript>
 <script type="text/javascript">
     window.ServerTempFolder = "../../../UploadImages/Temp/";
-    var jqXHR = null;
+    var jqXHR = null,split=null;
     $('#Attachment').fileupload({
         dataType: 'json',
         url: '../HR/FileHandler.ashx?Action=FileUpload',
         sequentialUploads: true,
         maxFileSize: 500000000,
         add: function (e, data) {
+            console.log(1111);
             var $preview = $('#preview');
             $.each(data.files, function (index, file) {
                 data.context = $('<div class="upFile large-3 columns end">').html('<div class="large-12 columns"><span class="filename">' + data.files[0].name + '</span></div></div>').appendTo($preview);
@@ -41,6 +42,7 @@
             data.context.children('div:first').children('.progress').children('.bar').css({ 'width': progress + '%' });
         },
         done: function (e, data) {
+            console.log(2222);
             data.context.parent('p').children('.cancelupload').addClass('bchide');
             if (data.result.d.RetVal === -1) {
                 var filename = data.context.children('div:first').children('.filename').html();
@@ -64,9 +66,10 @@
     });
 
     //初始化文件
-    function IntiUploadFiles(ImageList) {
+    function IntiUploadFiles(ImageList,split) {
+        split=split||"•"
         if (ImageList) {
-            var images = ImageList.split("•");
+            var images = ImageList.split(split);
             var html = '';
             for (let index = 0; index < images.length; index++) {
                 if (images[index].length <= 0) {
