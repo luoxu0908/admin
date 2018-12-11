@@ -24,7 +24,10 @@ Elements
 <WebPart WPType="Exec SQL" AllowedExternalDomains="" ReqSecret="0" LogType="0" CacheDurationS="0" CacheOnParams="" SecGroupNames="Everyone|Security Admin">
 	<HandlerURL><![CDATA[]]></HandlerURL>
 	<SGAction></SGAction>
-	<SQL><![CDATA[SELECT TOP 1  Step FROM TblYLPersonContracts WHERE PersonID={{PersonID}} ORDER BY CreatedDate DESC]]></SQL>
+	<SQL><![CDATA[DECLARE @RoleID INT;
+SELECT @RoleID=DefaultRoleID FROM dbo.tblCtcPersons WHERE PersonID={{PersonID}}
+SELECT TOP 1  Step FROM TblYLPersonContracts WHERE PersonID=@RoleID
+ORDER BY CreatedDate DESC]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
 </WebPart>

@@ -13,7 +13,7 @@
               $(function () {
                   $.when(GetQueryString('PID')).then(function () {
                       if (PID.length > 0) {
-                          $.when(GetStepByPersonID()).then(function () {
+                          $.when(GetDropdownList('ContractSteps', '步骤'), GetStepByPersonID()).then(function () {
                               if (Step.length > 0) {
                                   $(".container ul").find('li').each(function (index, element) {
                                       index += 1;
@@ -54,28 +54,26 @@
                   r = null;
                   PID = (context == null || context == "" || context == "undefined" ? "" : context);
               }
+
+              function GetDropdownList(id, category) {
+                  return $.JSONPost('YL1.Lookup_Get.json', { 'LookupCat': category }).done(function (data) {
+                      var R = data.d.RetData.Tbl.Rows, RowCnt = R.length;
+                      var return_data = { results: [] };
+                      var html = '';
+                      for (var i = 0; i < RowCnt; i++) {
+                          html += '<li ><a>' + R[i]["Description"] + '</a></li>'
+                      }
+                      $("#" + id).html(html);
+                  });
+              }
           </script>
 	</head>
 
 	<body>
         <!--class="active"-->
 		<div class="container" style="margin-top:15%">
-			<ul class="nav nav-pills nav-justified step step-arrow">
-				<li >
-					<a>第一步</a>
-				</li>
-				<li>
-					<a>第二步</a>
-				</li>
-				<li>
-					<a>第三步</a>
-				</li>
-				<li>
-					<a>第四步</a>
-				</li>
-				<li>
-					<a>第五步</a>
-				</li>
+			<ul class="nav nav-pills nav-justified step step-arrow" id="ContractSteps">
+				
 			</ul>
 		</div>
 		
