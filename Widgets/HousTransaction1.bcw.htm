@@ -72,12 +72,10 @@
     <fieldset>
         <legend>房产信息</legend>
         <div class="row">
-            <div class="large-1 columns">
-            </div>
-            <div class="large-9 columns">
+            <div class="large-12 columns">
                 <table>
                     <tr>
-                        <td style="width:8%">发布类型</td>
+                        <td style="width:8%;min-width: 100px;">发布类型</td>
                         <td><input id="JYLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td>房产类型&nbsp;&nbsp;<input id="FCLX" tabindex="-1" title="" style="width: 50%" /><span class="cssSpan">*</span></td>
                         <td>总价&nbsp;<input id="FCZJ" type="text"/>&nbsp;&nbsp;万元<span id="FCZJSpan" class="cssSpan">*</span></td>
@@ -90,8 +88,8 @@
                         </td>
                         <td style="width: 30%">
                             <div class="paddingcolumns">
-                                <input id="FCDK" type="checkbox" name="FCDK" value="1">&nbsp;&nbsp;不能贷款&nbsp;&nbsp;
-                                <input id="MSF" type="checkbox" name="MSF" value="1">&nbsp;&nbsp;免税房
+                                    <label for="FCDK" class="inlineblock"><input type="checkbox" value="1" name="FCDK" id="FCDK"> 不能贷款</label>
+                                    <label for="MSF" class="inlineblock"><input type="checkbox" value="1" name="MSF" id="MSF"> 免税房</label>
                             </div>
                         </td>
                     </tr>
@@ -135,15 +133,13 @@
                     </tr>
                 </table>
             </div>
-            <div class="large-2 columns">
-            </div>
         </div>
 
     </fieldset>
     <fieldset>
         <legend>房产特色</legend>
         <div class="row">
-            <div class="large-offset-1 large-9 columns">
+            <div class="large-10 columns">
                 <div class="paddingcolumns" id="HouseCharacteristic">
                 </div>
             </div>
@@ -154,13 +150,13 @@
 
         <div class="row">
             <br>
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <span>标题<span class="cssSpan">*</span></span>
                 <input id="FXBT" style="width:80%;" type="text"> <br> <br>
             </div>
         </div>
         <div class="row" style="display:none">
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <span>详细描述</span>
                 <textarea id="FXMS" cols="2" rows="2" />
             </div>
@@ -169,7 +165,7 @@
     <fieldset>
         <legend>上传图片</legend>
         <div class="row">
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <div class="row" id="Image">
                 </div>
             </div>
@@ -178,7 +174,7 @@
     <fieldset>
         <legend>核心卖点<span class="cssSpan">*</span></legend>
         <div class="row">
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <textarea id="CoreSellingPoint" cols="3" rows="3"></textarea>
             </div>
         </div>
@@ -186,7 +182,7 @@
     <fieldset>
         <legend>业主心态</legend>
         <div class="row">
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <textarea id="OwnerMentality" cols="3" rows="3"></textarea>
             </div>
         </div>
@@ -194,7 +190,7 @@
     <fieldset>
         <legend>小区配套</legend>
         <div class="row">
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <textarea id="VillageMatch" cols="3" rows="3"></textarea>
             </div>
         </div>
@@ -202,7 +198,7 @@
     <fieldset>
         <legend>服务介绍</legend>
         <div class="row">
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <textarea id="ServiceIntroduction" cols="3" rows="3"></textarea>
             </div>
         </div>
@@ -210,10 +206,10 @@
     <fieldset>
         <legend>置顶推荐</legend>
         <div class="row">
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <span style="color:red"> 信息黄金位置展示，效果提高 6~8 倍！</span>
             </div>
-            <div class="large-offset-1 large-9 columns end">
+            <div class="large-10 columns end">
                 <br>
                 <div class="paddingcolumns" id="ZDTJ">
                 </div>
@@ -221,7 +217,7 @@
         </div>
     </fieldset>
     <div class="row">
-        <div class="large-offset-1 large-9 columns">
+        <div class="large-10 columns">
             <button id="Save">信息发布</button>
         </div>
     </div>
@@ -313,7 +309,7 @@
             var return_data = { results: [] };
             return_data.results.push({ id: "", text: "请选择" });
             for (var i = 0; i < RowCnt; i++) {
-                if (flag == 'JaoYi' && R[i]["LookupKey"] == '1' || R[i]["LookupKey"] == '3' || R[i]["LookupKey"] == '5') {
+                if (flag == 'JaoYi' && R[i]["LookupKey"] == '1' || R[i]["LookupKey"] == '3' || R[i]["LookupKey"] == '4') {
                     return_data.results.push({ id: R[i]["LookupKey"], text: R[i]["Description"] });
                 }
             }
@@ -342,10 +338,11 @@
             var html = '';
             var Name = 'ZDTJ';
             for (var i = 0; i < RowCnt; i++) {
-                html += '<label for="' + Name + R[i]["LookupKey"] + '" class="inlineblock"><input id="' + Name + R[i]["LookupKey"] + '" type="radio" name="ZDTJ" value="' + R[i]["LookupKey"] + '">&nbsp;&nbsp;' + R[i]["Description"] + '&nbsp;&nbsp;&nbsp;</label>';
+                html += '<label for="' + Name + R[i]["LookupKey"] + '" class="inlineblock"><input disabled="disabled" id="' + Name + R[i]["LookupKey"] + '" type="radio" name="ZDTJ" value="' + R[i]["LookupKey"] + '">&nbsp;&nbsp;' + R[i]["Description"] + '&nbsp;&nbsp;&nbsp;</label>';
 
             }
             $("#" + id).html(html);
+            $('[name=ZDTJ][type=radio]').eq('0').prop('checked',true);
         });
     }
 
@@ -663,18 +660,16 @@
             .then(function (data) {
                 if ((data) && (data.d.RetVal === -1)) {
                     if (data.d.RetData.Tbl.Rows[0].Success == true) {
-                        $('#Save').attr('disabled', 'disabled');
                         alert('发布成功！');
+                        location.reload();
                         if (ZDTJ.length > 0 && ZDTJ != "0") {
                             ShowPayFrame(data.d.RetData.Tbl.Rows[0].ProductID);
                         }
                     } else {
-                        $('#Save').removeAttr('disabled', 'disabled');
                         $.alert(data.d.RetData.Tbl.Rows[0].ReturnMsg, { sticky: false, 'life': 60000 }); return false;
                     }
                 }
                 else {
-                    $('#Save').removeAttr('disabled', 'disabled');
                     $('#msgbox').dialog({ 'title': 'Update Failed' }).html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 5px 7px 50px 0;"></span>' + data.d.RetMsg + '</p>').dialog('open');
                 }
             });
