@@ -108,10 +108,10 @@
 
     function EditOrView(ID, JYFlag, ViewOrEdit) {
         
-        if (JYFlag == '2' || JYFlag == '4') {
+        if (JYFlag == '2' || JYFlag == '5') {
             var Url1 = '../BCMain/basepg.htm?widgets=../HR/HRPaymentVoucher/Widgets/HousTransaction2.bcw.htm&ID=' + ID + '&ViewOrEdit=' + ViewOrEdit;
             window.open(Url1, '', 'height=800, width=1400, top=100, left=150, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no')
-        } else if (JYFlag == '1' || JYFlag == '3' || JYFlag == '5') {
+        } else if (JYFlag == '1' || JYFlag == '3' || JYFlag == '4') {
             var Url2 = '../BCMain/basepg.htm?widgets=../HR/HRPaymentVoucher/Widgets/HousTransaction1.bcw.htm&ID=' + ID + '&ViewOrEdit=' + ViewOrEdit;
             window.open(Url2, '', 'height=800, width=1400, top=100, left=150, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no')
         }
