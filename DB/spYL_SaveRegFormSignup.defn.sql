@@ -17,7 +17,7 @@ BEGIN
 	SELECT @Success=0, @RetMsg='';
 
 
-	IF NOT EXISTS(SELECT TOP 1 1 FROM dbo.tblSecLogins WHERE UserName=@Mobile)
+	IF NOT EXISTS(SELECT TOP 1 1 FROM dbo.tblCtcPersons WHERE EntityKey=@Mobile ) 
 	BEGIN
 	
 		EXEC [dbo].[spCtc_CreateNewEntity] 'I', @UserName, @Mobile, '', 0, @LoginID, @PersonID OUTPUT, @RoleID OUTPUT, @SuccessSub OUTPUT, @RetMsg OUTPUT;
@@ -29,7 +29,14 @@ BEGIN
 		UPDATE dbo.tblCtcRoles SET Tel1=@Mobile,Mobile=@Mobile,Tel2=@Mobile WHERE PersonID=@PersonID
 		 
 	END
-	ELSE
+	ELSE IF  EXISTS (SELECT TOP 1 1 FROM dbo.tblCtcPersons WHERE EntityKey=@Mobile AND ISNULL(LoginID,0)=0)
+	BEGIN
+	    SELECT @PersonID=PersonID FROM dbo.tblCtcPersons WHERE EntityKey=@Mobile
+		EXEC [dbo].[spSec_CreateNewLogin] @Mobile, @UserName, N'A', @Pwd, '', @LoginID OUTPUT, @PasswordIfLoginCreated OUTPUT, @RetMsg OUTPUT;
+	 	UPDATE dbo.tblCtcPersons SET LoginID=@LoginID WHERE PersonID=@PersonID;
+		UPDATE dbo.tblCtcRoles SET Tel1=@Mobile,Mobile=@Mobile,Tel2=@Mobile WHERE PersonID=@PersonID
+	END
+	ELSE 
     BEGIN
 		 SELECT @RetMsg=N'手机号码已存在!';
 	END
