@@ -9,7 +9,7 @@
           <script type="text/javascript" src="index_files/lib.js"></script>
          
           <script type="text/javascript">
-              var PID = '', Step = '';
+              var PID = '', Step = '', Remarks='';
               $(function () {
                   $.when(GetQueryString('PID')).then(function () {
                       if (PID.length > 0) {
@@ -18,9 +18,11 @@
                                   $(".container ul").find('li').each(function (index, element) {
                                       index += 1;
                                       if (Step == index) {
-                                          $(this).addClass("active")
+                                          $(this).addClass("active");
+                                          $('#Remarks').val(Remarks);
                                       } else {
                                           $(this).removeClass("active")
+                                          $('#Remarks').val(Remarks);
                                       }
                                   });
                               }
@@ -38,7 +40,7 @@
                               var RowCnt = Tbl.Rows.length;
                               if (RowCnt > 0) {
                                   Step = Tbl.Rows[0].Step;
-                                 
+                                  Remarks = Tbl.Rows[0].Remarks;
                               }
                           }
                       });
@@ -76,7 +78,9 @@
 				
 			</ul>
 		</div>
-		
+        <div class="container">
+            <textarea cols="2" rows="4" id="Remarks" style="width:100%;margin-top:2%" disabled="disabled"></textarea>
+        </div>
         <script src="scripts/Master.js"></script>
         <script src="assets/js/app.js"></script>
 </body></html>

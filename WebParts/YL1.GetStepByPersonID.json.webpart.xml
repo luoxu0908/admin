@@ -26,7 +26,7 @@ Elements
 	<SGAction></SGAction>
 	<SQL><![CDATA[DECLARE @RoleID INT;
 SELECT @RoleID=DefaultRoleID FROM dbo.tblCtcPersons WHERE PersonID={{PersonID}}
-SELECT TOP 1  Step FROM TblYLPersonContracts WHERE PersonID=@RoleID
+SELECT TOP 1  Step,Remarks FROM TblYLPersonContracts WHERE PersonID=@RoleID
 ORDER BY CreatedDate DESC]]></SQL>
 	<SQLAsyncKey></SQLAsyncKey>
 	<UsageRemarks><![CDATA[]]></UsageRemarks>
